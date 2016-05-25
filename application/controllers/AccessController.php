@@ -36,7 +36,6 @@ class AccessController extends Zend_Controller_Action
     public function authenticateAction()
     {        
         $request = $this->getRequest();
-        $this->view->assign('msg',$request);
         if (!$request->isPost()) {
             return $this->_helper->redirector('login');
         }
