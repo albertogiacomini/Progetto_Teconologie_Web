@@ -1,0 +1,47 @@
+ <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+                  <h5 class="centered">Accedi per utilizzare i servizi</h5>
+                  <h6 class="centered" style="background-color:lightgrey;">Registrati per utilizzare le funzionalità offerte</h6>
+                  
+                  <li class="mt">
+                      <a class="active" href="<?= $this->url(array(
+                                                    'controller' => 'public',
+                                                    'action'     => 'index', ), 
+                                                    'default',true );?>">
+                          <i class="fa fa-dashboard"></i>
+                          <span>HOME</span>
+                      </a>
+                  </li>
+                  
+                  <li class="mt">
+                      <a class="active" href="<?= $this->url(array(
+                                                    'controller' => 'access',
+                                                    'action'     => 'registrazione', ), 
+                                                    'default',true );?>">
+                          <i class="fa fa-dashboard"></i>
+                          <span>REGISTRATI</span>
+                      </a>
+                  </li>
+                  
+                  <li class="mt">
+                      <a class="active" href="<?= $this->url(array(
+                                                    'controller' => 'public',
+                                                    'action'     => 'faq', ), 
+                                                    'default',true );?>">
+                          <i class="fa fa-dashboard"></i>
+                          <span>FAQ</span>
+                      </a>
+                  </li>
+                  
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+      <!--sidebar end-->
+      

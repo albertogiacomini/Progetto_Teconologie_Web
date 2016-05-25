@@ -1,0 +1,14 @@
+<div class="login-wrap">
+    <?=$this->loginForm; ?>
+    <hr>
+        <div class="registration">
+            Non hai ancora un account?<br/>
+                <a data-toggle="modal" class="registrazione" href="
+                <?= $this->url(array(
+                    'controller'=>'access',   
+                    'action'=>'registrazione',), 
+                    'default',true);?>"">
+                            Crea un nuovo account
+                        </a>
+                    </div> 
+                    

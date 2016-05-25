@@ -1,0 +1,23 @@
+<?php echo $this->doctype() ?>
+<html>
+<head>
+    <?= $this->headMeta(); ?>
+    <?= $this->headLink(); ?>
+    <?= $this->headTitle(); ?>
+</head>
+<body>
+    <div id="login-page">
+        <div class="container">
+              <form class="form-login">
+                <h2 class="form-login-heading">login</h2>
+                
+                <?php echo $this->layout()->content; ?>
+                
+                 
+        </div>
+     
+      <?= $this->render('imgBackgroundlogin.phtml') ?>
+    
+    <?= $this->render('js.phtml') ?>
+  </body>
+</html>

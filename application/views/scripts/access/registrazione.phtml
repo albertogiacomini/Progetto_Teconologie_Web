@@ -1,0 +1,13 @@
+<h2>REGISTRAZIONE</h2>
+<?=$this->registerForm; ?>
+<hr>
+    <div class="registration">
+        Hai già un'account? Accedi!<br/>    
+            <a data-toggle="modal" class="registrazione" href="
+            <?= $this->url(array(
+                'controller'=>'access',
+                'action'=>'login',), 
+                'default',true);?>"">
+            Accedi
+            </a>
+    </div> 
