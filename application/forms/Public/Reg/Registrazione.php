@@ -2,8 +2,11 @@
 
 class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
 {
+	protected $_userModel;
+	
 	public function init()
-    {               
+    {
+    	$this->_userModel = new Application_Model_User();              
         $this->setMethod('post');
         $this->setName('registrazione');
         $this->setAction('');
@@ -28,7 +31,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'decorators' => $this->elementDecorators,
             ));
             
-        $this->addElement('text', 'email', array(
+        $this->addElement('text', 'username', array(
             'filters'    => array('StringTrim', 'StringToLower'),
             'validators' => array(
                 array('StringLength', true, array(3, 25))
