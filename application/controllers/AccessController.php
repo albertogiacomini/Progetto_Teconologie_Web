@@ -3,6 +3,7 @@
 class AccessController extends Zend_Controller_Action
 {
     protected $_form;
+	protected $_regForm;
     protected $_authService;
 	protected $_userModel;
     
@@ -68,13 +69,13 @@ class AccessController extends Zend_Controller_Action
     private function getRegForm()
     {
         $urlHelper = $this->_helper->getHelper('url');
-        $this->_form = new Application_Form_Public_Reg_Registrazione();
-        $this->_form->setAction($urlHelper->url(array(
+        $this->_regForm = new Application_Form_Public_Reg_Registrazione();
+        $this->_regForm->setAction($urlHelper->url(array(
                 'controller' => 'access',
                 'action' => 'newreg'),
                 'default'
                 ));
-        return $this->_form;
+        return $this->_regForm;
     
     }
 	
@@ -83,7 +84,7 @@ class AccessController extends Zend_Controller_Action
         if (!$this->getRequest()->isPost()) {
             $this->_helper->redirector('index');
         }
-		$form=$this->_form;
+		$form=$this->_regForm;
         if (!$form->isValid($_POST)) {
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('registrazione');
