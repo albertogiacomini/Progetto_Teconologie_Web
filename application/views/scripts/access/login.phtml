@@ -1,14 +1,23 @@
+<h2 class="form-login-heading">login</h2>
 <div class="login-wrap">
-    <?=$this->loginForm; ?>
-    <hr>
-        <div class="registration">
-            Non hai ancora un account?<br/>
-                <a data-toggle="modal" class="registrazione" href="
+<?=$this->loginForm; ?>
+<hr>
+    <div class="registration">
+        Non hai ancora un account?<br/>
+            <a data-toggle="modal" class="registrazione" href="
+            <?= $this->url(array(
+                'controller'=>'access',   
+                'action'=>'registrazione',), 
+                'default',true);?>"">
+                Crea un nuovo account
+            </a><br/>
+            oppure<br/>
+            <a data-toggle="modal" class="registrazione" href="
                 <?= $this->url(array(
-                    'controller'=>'access',   
-                    'action'=>'registrazione',), 
-                    'default',true);?>"">
-                            Crea un nuovo account
-                        </a>
-                    </div> 
+                'controller'=>'public',   
+                'action'=>'index',), 
+                'default',true);?>"">
+                torna alla home
+            </a>
+    </div> 
                     
