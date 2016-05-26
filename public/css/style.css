@@ -1916,7 +1916,7 @@ label {
 
 
 /*LOGIN CONFIGURATION PAGE*/
-.form-login {
+.css-reg-log {
 	max-width: 330px;
 	margin: 100px auto 0;
 	background: #fff;
@@ -1924,7 +1924,7 @@ label {
 	-webkit-border-radius: 5px;
 }
 
-.form-login h2.form-login-heading {
+.css-reg-log h2.form-login-reg-heading {
 	margin: 0;
 	padding: 25px 20px;
 	text-align: center;
@@ -1939,13 +1939,13 @@ label {
 .login-wrap {
 	padding: 20px;
 }
-.login-wrap .registration {
+
+.registration {
 	text-align: center;
-}
-.login-social-link {
-	display: block;
-	margin-top: 20px;
-	margin-bottom: 15px;
+	
+.login {
+	text-align: center;
+	
 }
 
 

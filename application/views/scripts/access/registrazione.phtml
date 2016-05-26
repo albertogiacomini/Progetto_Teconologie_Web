@@ -1,10 +1,11 @@
-<h2 class="form-login-heading">registrazione</h2>
-<div class="login-wrap">
+<div class="css-reg-log">
+    <h2 class="form-login-reg-heading">login</h2>
+    <div class="login-wrap">
 <?=$this->registerForm; ?>
 <hr>
     <div class="registration">
         Hai già un'account?<br/>    
-            <a data-toggle="modal" class="registrazione" href="
+            <a class="registrazione" href="
             <?= $this->url(array(
                 'controller'=>'access',
                 'action'=>'login',), 
@@ -12,11 +13,11 @@
                 Accedi
             </a><br/>
             oppure<br/>
-            <a data-toggle="modal" class="registrazione" href="
+            <a class="registration" href="
                 <?= $this->url(array(
                 'controller'=>'public',   
                 'action'=>'index',), 
                 'default',true);?>"">
-                 torna alla home
+                torna alla home
             </a>
     </div> 

@@ -6,11 +6,8 @@
     <?= $this->headTitle(); ?>
 </head>
 <body>
-    <div id="login-page">
-        <div class="container">
-              <form class="form-login">
-                 <?php echo $this->layout()->content; ?>
-        </div>
-        
+   <?php echo $this->layout()->content; ?>
+   <?= $this->render('js.phtml') ?> 
+</div>
 </body>
 </html>
