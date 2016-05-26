@@ -3,7 +3,7 @@
 class Application_Form_Public_Auth_Login extends App_Form_Abstract
 {
 	public function init()
-    {               
+    {
         $this->setMethod('post');
         $this->setName('login');
         $this->setAction('');

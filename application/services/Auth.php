@@ -7,19 +7,19 @@ class Application_Service_Auth
 
     public function __construct()
     {
-        $this->_adminModel = new Application_Model_Admin();
+        $this->_adminModel=new Application_Model_Admin();
     }
     
     public function authenticate($credentials)
     {
-        $adapter = $this->getAuthAdapter($credentials);
-        $auth    = $this->getAuth();
-        $result  = $auth->authenticate($adapter);
+        $adapter=$this->getAuthAdapter($credentials);
+        $auth=$this->getAuth();
+        $result=$auth->authenticate($adapter);
 
         if (!$result->isValid()) {
             return false;
         }
-        $user = $this->_adminModel->getUserByName($credentials['username']);
+        $user=$this->_adminModel->getUserByName($credentials['username']);
         $auth->getStorage()->write($user);
         return true;
     }

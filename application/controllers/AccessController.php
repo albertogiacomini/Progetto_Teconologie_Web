@@ -21,9 +21,9 @@ class AccessController extends Zend_Controller_Action
         
     } 
     
-    public function viewstaticAction () {
-        $page = $this->_getParam('staticPage');
-        $this->render($page);
+    public function viewstaticAction () 
+    {
+        
     }
     
     public function loginAction()
@@ -39,26 +39,32 @@ class AccessController extends Zend_Controller_Action
     public function authenticateAction()
     {        
         $request = $this->getRequest();
+        
         if (!$request->isPost()) {
             return $this->_helper->redirector('login');
         }
+        
         $form = $this->_form;
+        
         if (!$form->isValid($request->getPost())) {
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('login');
         }
+        
         if (false === $this->_authService->authenticate($form->getValues())) {
             $form->setDescription('Autenticazione fallita. Riprova');
             return $this->render('login');
         }
-        return $this->_helper->redirector('index', $this->_authService->getIdentity()->livello);
+        
+        $livello=$this->_authService->getIdentity()->livello;
+        return $this->_helper->redirector('index', $livello);
     }
     
     private function getLoginForm()
     {
-            $urlHelper = $this->_helper->getHelper('url');
-            $this->_form = new Application_Form_Public_Auth_Login();
-            $this->_form->setAction($urlHelper->url(array(
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_form = new Application_Form_Public_Auth_Login();
+        $this->_form->setAction($urlHelper->url(array(
             'controller' => 'access',
             'action' => 'authenticate'),
             'default'
@@ -71,10 +77,10 @@ class AccessController extends Zend_Controller_Action
         $urlHelper = $this->_helper->getHelper('url');
         $this->_regForm = new Application_Form_Public_Reg_Registrazione();
         $this->_regForm->setAction($urlHelper->url(array(
-                'controller' => 'access',
-                'action' => 'newreg'),
-                'default'
-                ));
+            'controller' => 'access',
+            'action' => 'newreg'),
+            'default'
+        ));
         return $this->_regForm;
     
     }
