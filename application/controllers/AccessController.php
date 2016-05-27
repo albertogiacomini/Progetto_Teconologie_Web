@@ -10,10 +10,10 @@ class AccessController extends Zend_Controller_Action
     public function init()
     {
         $this->_helper->layout->setLayout('login');
+        $this->_userModel = new Application_Model_User();
         $this->_authService = new Application_Service_Auth();
         $this->view->loginForm = $this->getLoginForm();
         $this->view->registerForm=$this->getRegForm();
-		$this->_userModel = new Application_Model_User();
     }
     
     public function indexAction()
