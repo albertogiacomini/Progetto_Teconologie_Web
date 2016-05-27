@@ -10,6 +10,7 @@ class App_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
 	{
         $this->_auth = Zend_Auth::getInstance();
 	    $this->_livello = !$this->_auth->hasIdentity() ? 'unregistered' : $this->_auth->getIdentity()->livello;
+		Zend_Debug::dump($this->_livello, $label = null, $echo = true);
         $this->_acl = new Application_Model_Acl();
     }
 
