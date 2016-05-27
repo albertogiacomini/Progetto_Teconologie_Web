@@ -62,7 +62,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
 		$this->addElement('text', 'email', array(
 			'filters'    => array('StringTrim', 'StringToLower'),
             'validators' => array(
-                array('StringLength', true, array(3, 25))
+                array('StringLength', true, array(3, 35))
             ),
             'required'   => true,
             'label'      => 'E-mail',
