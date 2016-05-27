@@ -2140,7 +2140,7 @@ label {
     display: block;
     font-size: 16px;
 }
-.panel-footer.revenue-foot ul li a:hover i, .panel-footer.revenue-foot ul li.active a i {
+.panel-site-footer.revenue-foot ul li a:hover i, .panel-footer.revenue-foot ul li.active a i {
     color: #ff6c60;
     display: block;
     font-size: 16px;
