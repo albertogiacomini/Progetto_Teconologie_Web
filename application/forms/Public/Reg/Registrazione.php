@@ -82,6 +82,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
 		$this->addElement('text', 'telefono', array(
 			'filters'    => array('StringTrim', 'StringToLower'),
             'validators' => array(
+            	array('Int'),
                 array('StringLength', true, array(3, 25))
             ),
             'required'   => true,
