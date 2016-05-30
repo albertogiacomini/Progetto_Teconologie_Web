@@ -9,14 +9,10 @@ class StaffController extends Zend_Controller_Action
     }
     
     public function indexAction()
-    {
-        
-    } 
+    {} 
     
     public function viewstaticAction () 
-    {
-        
-    }
+    {}
     
     public function logoutAction()
     {

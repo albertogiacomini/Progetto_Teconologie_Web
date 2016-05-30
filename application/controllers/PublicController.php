@@ -11,21 +11,12 @@ class PublicController extends Zend_Controller_Action
     }
     
     public function indexAction()
-    {
-        
-    } 
+    {} 
     
     public function faqAction()
     {
          $Faq=$this->_vistaFaq->getFaqOrderById();
          $this->view->assign(array('faq'=>$Faq));
-    } 
-    
-    public function notificheAction()
-    {
-         //collegamento al db per le notifiche e indirizzamento alla view
-    }
-    
-    
+    }    
     
 }

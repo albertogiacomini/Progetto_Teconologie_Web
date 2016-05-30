@@ -1,5 +1,7 @@
 <?php
 
+//Zend_debug::dump($this->_livello, $label='livello',$echo=true);
+
 class AccessController extends Zend_Controller_Action
 {
     protected $_form;
@@ -17,24 +19,16 @@ class AccessController extends Zend_Controller_Action
     }
     
     public function indexAction()
-    {
-        
-    } 
+    {} 
     
     public function viewstaticAction () 
-    {
-        
-    }
+    {}
     
     public function loginAction()
-    {
-        
-    }
+    {}
        
     public function registrazioneAction()
-    {
-
-    }
+    {}
 
     public function authenticateAction()
     {        
