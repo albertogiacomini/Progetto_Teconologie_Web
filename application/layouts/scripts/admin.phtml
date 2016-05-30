@@ -6,14 +6,13 @@
     <?= $this->headTitle(); ?>
 </head>
 <body>
-<div id="wrapper">
 <section id="container" >
       <!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
       <!--header start-->
       <header class="header black-bg">
-              <?= $this->render('_top.phtml') ?>
+              <?= $this->render('_topacc.phtml') ?>
       </header>
       <!--header end-->
       
@@ -21,7 +20,7 @@
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
       <!--sidebar start-->
-      <?= $this->render('_sidebarAdmin.phtml') ?>
+      <?= $this->render('_sidebarPublic.phtml') ?>
       <!--sidebar end-->
       
       <!-- **********************************************************************************************************************************************************
@@ -37,41 +36,13 @@
                     <?php echo $this->layout()->content; ?>
                     
                   </div><!-- /col-lg-9 END SECTION MIDDLE -->
-                  
-                  
-      <!-- **********************************************************************************************************************************************************
-      RIGHT SIDEBAR CONTENT
-      *********************************************************************************************************************************************************** -->                  
-                  
-                  <div class="col-lg-3 ds">
-                    <!--COMPLETED ACTIONS DONUTS CHART-->
-                        <h3>NOTIFICHE</h3>
-                                        
-                      <!-- First Action -->
-                      <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p><muted>2 Minutes Ago</muted><br/>
-                                Principio d'incendio edificio Ingegneria Brecce Bianche. Evacuare piano 140<br/>
-                            </p>
-                        </div>
-                      </div>
-                     
-                  </div><!-- /col-lg-3 -->
-              </div><! --/row -->
+              </div> 
           </section>
       </section>
-
-      <!--main content end-->
       <!--footer start-->
-      <footer class="site-footer">
-          <?= $this->render('footer.phtml') ?>
-      </footer>
+      <?= $this->render('footer.phtml') ?>
       <!--footer end-->
-  </section>
-  <?= $this->render('js.phtml') ?>
-</div>
+ </section>
+  <?= $this->render('js.phtml') ?> 
 </body>
 </html>
