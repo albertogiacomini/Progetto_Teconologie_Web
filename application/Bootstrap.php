@@ -18,10 +18,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->_view = $this->getResource('view');
         $this->_view->headMeta()->setCharset('UTF-8');
         $this->_view->headMeta()->appendHttpEquiv('Content-Language', 'it-IT');
-        $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/style.css'));
+        $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/bootstrap.css'));
         $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/styleResponsive.css'));
         $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/tableResponsive.css'));
-        $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/bootstrap.css'));
+        $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/style.css'));
         $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/font.css'));
         $this->_view->headTitle('UNIVPM Emergenza');
     }
