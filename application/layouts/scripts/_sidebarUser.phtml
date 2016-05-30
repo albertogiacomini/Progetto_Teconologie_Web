@@ -29,9 +29,18 @@
                           <span>Profilo</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="Ingegneria_Segn.html">Modifica</a></li>
-                          <li><a  href="Medicina_Segn.html">Visualizza</a></li>
-                          <li><a  href="Economia_Segn.html">Credenziali</a></li>
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'user',
+                                                    'action'     => 'index', ), 
+                                                    'default',true );?>">Modifica</a></li>
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'user',
+                                                    'action'     => 'index', ), 
+                                                    'default',true );?>">Visualizza</a></li>
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'user',
+                                                    'action'     => 'index', ), 
+                                                    'default',true );?>">Credenziali</a></li>
                       </ul>
                   </li>
               </ul>
