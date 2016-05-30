@@ -15,6 +15,9 @@ class PublicController extends Zend_Controller_Action
     public function indexAction()
     {} 
     
+    public function viewstaticAction () 
+    {}
+    
     public function faqAction()
     {
          $Faq=$this->_vistaFaq->getFaqOrderById();
