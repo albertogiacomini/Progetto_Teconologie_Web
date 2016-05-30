@@ -37,7 +37,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
                 array('StringLength', true, array(3, 25))
             ),
             'required'   => true,
-            'label'      => 'Email',
+            'label'      => 'Username',
             'decorators' => $this->elementDecorators,
             ));
         
@@ -51,6 +51,45 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'decorators' => $this->elementDecorators,
             ));
             
+		$this->addElement('radio', 'genere', array(
+			'label'      => 'Genere',
+			'MultiOptions'=>array(
+                'male' => 'M',
+            	'female' => 'F',),
+			'decorators' => $this->elementDecorators, 
+		));
+			
+		$this->addElement('text', 'email', array(
+			'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 35))
+            ),
+            'required'   => true,
+            'label'      => 'E-mail',
+            'decorators' => $this->elementDecorators,
+		));	
+			
+		$this->addElement('text', 'eta', array(
+			'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Data di nascita',
+            'decorators' => $this->elementDecorators,
+		));	
+
+		$this->addElement('text', 'telefono', array(
+			'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+            	array('Int'),
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Telefono',
+            'decorators' => $this->elementDecorators,
+		));
+			
         $this->addElement('submit', 'login', array(
             'label'    => 'Registrati',
             'decorators' => $this->buttonDecorators,

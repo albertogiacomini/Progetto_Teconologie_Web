@@ -29,6 +29,22 @@ class AccessController extends Zend_Controller_Action
        
     public function registrazioneAction()
     {}
+	
+	public function newregAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('index');
+        }
+		$form=$this->_regForm;
+        if (!$form->isValid($_POST)) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('registrazione');
+        }
+        $values = $form->getValues();
+       	$this->_userModel->insertUser($values);
+		$this->_helper->redirector('login'); 
+    } 
+	
 
     public function authenticateAction()
     {        
@@ -79,19 +95,6 @@ class AccessController extends Zend_Controller_Action
     
     }
 	
-	private function newregAcion()
-    {
-        if (!$this->getRequest()->isPost()) {
-            $this->_helper->redirector('index');
-        }
-		$form=$this->_regForm;
-        if (!$form->isValid($_POST)) {
-            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-            return $this->render('registrazione');
-        }
-        $values = $form->getValues();
-       	$this->_userModel->insertUser($values);
-		$this->_helper->redirector('main'); 
-    }             
+            
 
 }
