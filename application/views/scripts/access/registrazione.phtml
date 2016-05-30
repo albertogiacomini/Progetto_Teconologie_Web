@@ -3,13 +3,13 @@
     <div class="login-wrap">
 <?=$this->registerForm; ?>
 <hr>
-    <div class="registration">
+    <div class="registration-login">
         Hai già un'account?<br/>    
             <a class="registrazione" href="
             <?= $this->url(array(
                 'controller'=>'access',
                 'action'=>'login',), 
-                'default',true);?>"">
+                'default',true);?>">
                 Accedi
             </a><br/>
             oppure<br/>
@@ -17,7 +17,7 @@
                 <?= $this->url(array(
                 'controller'=>'public',   
                 'action'=>'index',), 
-                'default',true);?>"">
+                'default',true);?>">
                 torna alla home
             </a>
     </div> 
