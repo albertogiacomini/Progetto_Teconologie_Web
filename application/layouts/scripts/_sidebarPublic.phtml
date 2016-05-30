@@ -1,13 +1,8 @@
- <!-- **********************************************************************************************************************************************************
-      MAIN SIDEBAR MENU
-      *********************************************************************************************************************************************************** -->
-      <!--sidebar start-->
-      <aside>
+<aside>
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-                  <h5 class="centered">Accedi per utilizzare i servizi</h5>
-                  <h6 class="centered" style="background-color:lightgrey;">Registrati per utilizzare le funzionalità offerte</h6>
+                  <h5 class="centered">Accedi o registrati per utilizzare i servizi</h5>
                   
                   <li class="mt">
                       <a class="active" href="<?= $this->url(array(
@@ -20,7 +15,7 @@
                   </li>
                   
                   <li class="mt">
-                      <a class="active" href="<?= $this->url(array(
+                      <a class="sub-menu" href="<?= $this->url(array(
                                                     'controller' => 'access',
                                                     'action'     => 'registrazione', ), 
                                                     'default',true );?>">
@@ -30,7 +25,7 @@
                   </li>
                   
                   <li class="mt">
-                      <a class="active" href="<?= $this->url(array(
+                      <a class="sub-menu" href="<?= $this->url(array(
                                                     'controller' => 'public',
                                                     'action'     => 'faq', ), 
                                                     'default',true );?>">

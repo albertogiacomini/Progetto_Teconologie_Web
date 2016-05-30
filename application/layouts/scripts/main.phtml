@@ -6,7 +6,6 @@
     <?= $this->headTitle(); ?>
 </head>
 <body>
-<div id="wrapper">
 <section id="container" >
       <!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
@@ -37,12 +36,13 @@
                     <?php echo $this->layout()->content; ?>
                     
                   </div><!-- /col-lg-9 END SECTION MIDDLE -->
-    
+              </div> 
+          </section>
+      </section>
       <!--footer start-->
       <?= $this->render('footer.phtml') ?>
       <!--footer end-->
-  </section>
+ </section>
   <?= $this->render('js.phtml') ?> 
-</div>
 </body>
 </html>
