@@ -20,6 +20,7 @@ class Application_Service_Auth
             return false;
         }
         $user=$this->_adminModel->getUserByUName($credentials['username']);
+        //Zend_Debug::dump($user, $label = 'user', $echo = true);
         $auth->getStorage()->write($user);
         return true;
     }
