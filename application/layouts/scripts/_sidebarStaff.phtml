@@ -6,8 +6,12 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-                  <p class="centered"><a href="profile.html"><img src="" class="img-circle" width="60"></a></p>
-                  <h5 class="centered">Mingo Filippo</h5>
+                   <?php
+                  $base64 = base64_encode($this->authInfo('imgprofilo'));
+                  $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-circle" width="60" />';
+                  ?>
+                  <p class="centered"><?php echo $image ?></a></p>
+                  <h5 class="centered"><?php echo $this->authInfo('nome') . ' ' . $this->authInfo('cognome') ?></h5>
                  
                   <li class="mt">
                       <a class="active" href="index.html">

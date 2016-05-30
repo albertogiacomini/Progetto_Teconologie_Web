@@ -6,11 +6,18 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-                  <p class="centered"><a href="profile.html"><img src="" class="img-circle" width="60"></a></p>
-                  <h5 class="centered">Mingo Filippo</h5>
+                  <?php
+                  $base64 = base64_encode($this->authInfo('imgprofilo'));
+                  $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-circle" width="60" />';
+                  ?>
+                  <p class="centered"><?php echo $image ?></a></p>
+                  <h5 class="centered"><?php echo $this->authInfo('nome') . ' ' . $this->authInfo('cognome') ?></h5>
                  
                   <li class="mt">
-                      <a class="active" href="index.html">
+                      <a class="active" href="<?= $this->url(array(
+                                                    'controller' => 'user',
+                                                    'action'     => 'index', ), 
+                                                    'default',true );?>">
                           <i class="fa fa-dashboard"></i>
                           <span>Home</span>
                       </a>
@@ -19,12 +26,12 @@
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-desktop"></i>
-                          <span>Segnalazioni</span>
+                          <span>Profilo</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="Ingegneria_Segn.html">Ingegneria</a></li>
-                          <li><a  href="Medicina_Segn.html">Medicina</a></li>
-                          <li><a  href="Economia_Segn.html">Economia</a></li>
+                          <li><a  href="Ingegneria_Segn.html">Modifica</a></li>
+                          <li><a  href="Medicina_Segn.html">Visualizza</a></li>
+                          <li><a  href="Economia_Segn.html">Credenziali</a></li>
                       </ul>
                   </li>
               </ul>
