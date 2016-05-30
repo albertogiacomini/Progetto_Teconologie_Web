@@ -23,18 +23,27 @@
                           <span>REGISTRATI</span>
                       </a>
                   </li>
-                  
-                  <li class="mt">
-                      <a class="sub-menu" href="<?= $this->url(array(
+                 
+                   <li class="mt">
+                       <a href="javascript:;" >
+                          <i class="fa fa-dashboard"></i>  
+                          <span>INFORMAZIONI</span>  
+                       </a>
+                      	  <ul class="sub">
+                         	 <li><a  class="sub-menu" href="<?= $this->url(array(
                                                     'controller' => 'public',
-                                                    'action'     => 'faq', ), 
-                                                    'default',true );?>">
-                          <i class="fa fa-dashboard"></i>
-                          <span>FAQ</span>
-                      </a>
-                  </li>
-                  
-              </ul>
+                                                    'action'     => 'informazioni generali', ), 
+                                                    'default',true );?>">Modifica</a></li>
+                          	<li><a  class="sub-menu" href="<?= $this->url(array(
+                                                    'controller' => 'public',
+                                                    'action'     => 'index', ), 
+                                                    'default',true );?>">Visualizza</a></li>
+                         	<li><a  class="sub-menu" href="<?= $this->url(array(
+                                                    'controller' => 'public',
+                                                    'action'     => 'FAQ', ), 
+                                                    'default',true );?>">Credenziali</a></li>
+                       </ul> 
+                   </li>
               <!-- sidebar menu end-->
           </div>
       </aside>
