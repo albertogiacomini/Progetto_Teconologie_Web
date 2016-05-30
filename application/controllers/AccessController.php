@@ -1,7 +1,5 @@
 <?php
 
-//Zend_debug::dump($this->_livello, $label='livello',$echo=true);
-
 class AccessController extends Zend_Controller_Action
 {
     protected $_form;
@@ -66,11 +64,10 @@ class AccessController extends Zend_Controller_Action
             return $this->render('login');
         }
         
-        $livello=$this->_authService->getIdentity()->livello;
-        return $this->_helper->redirector('index', $livello);
+        return $this->_helper->redirector('index', $this->_authService->getIdentity()->livello);
     }
     
-    private function getLoginForm()
+    protected function getLoginForm()
     {
         $urlHelper = $this->_helper->getHelper('url');
         $this->_form = new Application_Form_Public_Auth_Login();
@@ -82,7 +79,7 @@ class AccessController extends Zend_Controller_Action
         return $this->_form;
     }
     
-    private function getRegForm()
+    protected function getRegForm()
     {
         $urlHelper = $this->_helper->getHelper('url');
         $this->_regForm = new Application_Form_Public_Reg_Registrazione();

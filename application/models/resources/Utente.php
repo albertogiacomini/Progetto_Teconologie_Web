@@ -10,7 +10,7 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
     {
     }
 
-    public function getUserByName($name)
+    public function getUserByUName($name)
     {
         $select = $this->select()->where('username = ?', $name);
         return $this->fetchAll($select);

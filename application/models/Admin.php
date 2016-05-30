@@ -7,9 +7,9 @@ class Application_Model_Admin extends App_Model_Abstract
         
     }
     
-    public function getUserByName($info)
+    public function getUserByUName($info)
     {
-        return $this->getResource('Utente')->getUserByName($info);
+        return $this->getResource('Utente')->getUserByUName($info);
     }
 
 }
