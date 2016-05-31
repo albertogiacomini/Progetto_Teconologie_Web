@@ -5,7 +5,7 @@ class Application_Form_User_Modcredenziali extends App_Form_Abstract
     public function init()
     {
         $this->setMethod('post');
-        $this->setName('login');
+        $this->setName('modCredenziali');
         $this->setAction('');
         
         $this->addElement('text', 'username', array(
@@ -28,8 +28,8 @@ class Application_Form_User_Modcredenziali extends App_Form_Abstract
             'decorators' => $this->elementDecorators,
             ));
 
-        $this->addElement('submit', 'login', array(
-            'label'    => 'Entra',
+        $this->addElement('submit', 'aggiorna', array(
+            'label'    => 'Aggiorna',
             'decorators' => $this->buttonDecorators,
         ));
 

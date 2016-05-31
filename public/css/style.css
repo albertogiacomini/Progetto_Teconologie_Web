@@ -2215,12 +2215,11 @@ label {
 }
 
 /*footer*/
-.footer {
+.f-stile {
     background: #800000;
     color: #fff;
     padding: 10px 0;
 }
-
 
 .go-top {
     margin-right: 1%;
