@@ -11,6 +11,7 @@ class UserController extends Zend_Controller_Action
         $this->_authService = new Application_Service_Auth();
         $this->view->mcForm=$this->getModcredenzialiForm();
         $this->view->pForm=$this->getPosizioneForm();
+        $this->_pos=new Application_Model_User();
     }
     
     public function indexAction()
@@ -26,6 +27,9 @@ class UserController extends Zend_Controller_Action
     {}
     
     public function modcredenzialiAction () 
+    {}
+    
+    public function posizioneAction () 
     {}
     
     protected function getModcredenzialiForm()
@@ -49,6 +53,7 @@ class UserController extends Zend_Controller_Action
             'action' => 'index'),
             'default'
         ));
+        $this->pForm->addElement('edificio')->addMultiOptions(array('1'=>'USA', '2'=>'Canada'));
         return $this->_pform;
     }
 
