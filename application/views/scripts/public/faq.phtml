@@ -1,7 +1,9 @@
-<h2>FAQ</h2>
-<?php foreach ($this->faq as $f) :?>
-<div class="Domanda">
-    <?php echo '<h3>Domanda: ' . $f->domanda . '</h3>' ?>
+<div class="showback">
+    <h2><i class="fa fa-angle-right"></i>FAQ</h2>
+        <?php foreach ($this->faq as $f) :?>
+        <div class="Domanda">
+            <?php echo '<h3>Domanda: ' . $f->domanda . '</h3>' ?>
         </div>
             <?php echo'<h4">Risposta: ' . $f->risposta . '</h4>' ?>
-<?php endforeach ?>
+        <?php endforeach ?>
+</div>
