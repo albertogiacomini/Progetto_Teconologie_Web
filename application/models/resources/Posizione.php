@@ -7,11 +7,18 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
     protected $_rowClass = 'Application_Resource_Posizione_Item';
 
     public function init()
+    {}
+    
+    public function getEdifici()
     {
+        $select = $this->select('edificio');
+        return $this->fetchAll($select);
     }
     
-    public function getPosizioneById($Pos)
+    public function getPianoByEdificio($edificio)
     {
-        return $this->fetchRow($this->select()->where('idPosizione = ?', $Pos));
+        $select = $this->select('piano')->were('edificio = ?', $edificio);
+        return $this->fetchAll($select);
     }
+    
 }

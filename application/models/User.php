@@ -12,6 +12,17 @@ class Application_Model_User extends App_Model_Abstract
     {
         return $this->getResource('Utente')->insertUser($usrInfo);
     }
+    
+    public function getEdifici()
+    {
+        return $this->getResource('Posizione')->getEdifici();
+    }
+    
+    public function getPianoByEdificio($edif)
+    {
+        return $this->getResource('Posizione')->getPianoByEdificio($edif);
+    }
+    
 	
 	
 }
