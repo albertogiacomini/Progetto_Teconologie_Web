@@ -32,16 +32,18 @@
                       	  <ul class="sub">
                          	 <li><a  class="sub-menu" href="<?= $this->url(array(
                                                     'controller' => 'public',
-                                                    'action'     => 'informazioni generali', ), 
-                                                    'default',true );?>">Modifica</a></li>
+                                                    'action'     => 'viewstatic', 
+                                                    'staticPage' => 'where'),
+                                                    'default',true );?>">Dove siamo</a></li>
                           	<li><a  class="sub-menu" href="<?= $this->url(array(
                                                     'controller' => 'public',
-                                                    'action'     => 'index', ), 
-                                                    'default',true );?>">Visualizza</a></li>
+                                                    'action'     => 'viewstatic',
+                                                    'staticPage' => 'who'), 
+                                                    'default',true );?>">Chi siamo</a></li>
                          	<li><a  class="sub-menu" href="<?= $this->url(array(
                                                     'controller' => 'public',
-                                                    'action'     => 'FAQ', ), 
-                                                    'default',true );?>">Credenziali</a></li>
+                                                    'action'     => 'faq',), 
+                                                    'default',true );?>">FAQ</a></li>
                        </ul> 
                    </li>
               <!-- sidebar menu end-->
