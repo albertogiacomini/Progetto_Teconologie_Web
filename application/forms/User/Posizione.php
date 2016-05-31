@@ -2,8 +2,13 @@
 
 class Application_Form_User_Posizione extends App_Form_Abstract
 {
+    protected $_usr;
+    
     public function init()
     {
+        $this->_usr=new Application_Model_User();
+        $edificio=$this->_usr->getEdifici()->toArray();
+        
         $this->setMethod('post');
         $this->setName('setPosizione');
         $this->setAction('');
@@ -11,15 +16,14 @@ class Application_Form_User_Posizione extends App_Form_Abstract
         $this->addElement('select', 'edificio', array(
             'required'   => true,
             'label'      => 'Edificio',
-            'decorators' => $this->elementDecorators,
+            'MultiOptions' => $edificio,
             ));
             
         $this->addElement('select', 'piano', array(
             'required'   => true,
             'label'      => 'Piano',
-            'decorators' => $this->elementDecorators,
             ));
-
+            
         $this->setDecorators(array(
             'FormElements',
             array('HtmlTag', array('tag' => 'table', 'class' => 'zend_form')),
