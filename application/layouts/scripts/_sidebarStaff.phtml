@@ -14,28 +14,62 @@
                   <h5 class="centered"><?php echo $this->authInfo('nome') . ' ' . $this->authInfo('cognome') ?></h5>
                  
                   <li class="mt">
-                      <a class="active" href="index.html">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Home</span>
-                      </a>
+                  		 <a  href="<?= $this->url(array(
+                                            'controller' => 'staff',
+                                            'action'     => 'index',), 
+                                            'default',true );?>">
+                 		 	<i class="fa fa-dashboard"></i>	 
+                  		 	<span>Home</span>
+                  	 	 </a>  
                   </li>
 
+				 <li class="mt">
+				 	  <a  href="javascript:;" >
+                 		 <i class="fa fa-dashboard"></i>	 
+                   <span>Profilo</span></a>
+                  	
+                         <ul class="sub">
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'profilo', ), 
+                                                    'default',true );?>">Visualizza profilo</a></li>
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'modprofilo', ), 
+                                                    'default',true );?>">Modifica profilo</a></li>
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'modcredenziali', ), 
+                                                    'default',true );?>">Modifica credenziali</a></li>
+                    </ul>
+                  
                   <li class="mt">
-                      <a class="active" href="index.html">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Profilo</span>
-                      </a>
-                  </li>
-
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a  href="javascript:;" >
                           <i class="fa fa-desktop"></i>
                           <span>Evaquazione Area</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="Ingegneria_Segn.html">Ingegneria</a></li>
-                          <li><a  href="Medicina_Segn.html">Medicina</a></li>
-                          <li><a  href="Economia_Segn.html">Economia</a></li>
+                      	  <li><a href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'index',), 
+                                                    'default',true );?>">
+                         	  <span>Ingegneria</span></a>
+                          </li>
+                          
+                          <li><a href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'index',), 
+                                                    'default',true );?>">
+                         	  <span>Medicina</span></a>
+                          </li>
+                          
+                          <li><a href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'profilo',), 
+                                                    'default',true );?>">
+                         	  <span>Economia</span></a>
+                          </li>
+                          
                       </ul>
                   </li>
               </ul>

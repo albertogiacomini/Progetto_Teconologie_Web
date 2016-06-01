@@ -1955,7 +1955,7 @@ label {
 
 .registration-login {
 	text-align: center;
-
+}
 
 /*LOCK SCREEN CONF*/
 #showtime {
@@ -2219,7 +2219,6 @@ label {
     background: #800000;
     color: #fff;
     padding: 10px 0;
-    position:absolute;
 }
 
 .go-top {

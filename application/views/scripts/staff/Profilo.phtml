@@ -1,5 +1,25 @@
-<h2>INDICA LA TUA POSIZIONE</h2>
 <div class="showback">
-    <h4><i class="fa fa-angle-right"></i>inserisci le informazioni richieste</h4>
-    <?=$this->pForm; ?>
+                        <h4><i class="fa fa-angle-right"></i>IL TUO PROFILO</h4>
+                        
+                        <div>
+                          <h3>NOME:</h3><h5><?php echo $this->authInfo('nome')?></h5>
+                        </div>
+                        <div>
+                          <h3>COGNOME:</h3><h5><?php echo $this->authInfo('cognome')?></h5>
+                        </div>
+                        <div>
+                          <h3>ETA':</h3><h5><?php echo $this->authInfo('eta')?></h5>
+                        </div>
+                        <div>
+                          <h3>TELEFONO:</h3><h5><?php echo $this->authInfo('telefono')?></h5>
+                        </div>
+                        <div>
+                          <h3>INDIRIZZO:</h3><h5><?php echo $this->authInfo('indirizzo')?></h5>
+                        </div>
+                        <div>
+                          <h3>MAIL:</h3><h5><?php echo $this->authInfo('email')?></h5>
+                        </div>
+                        <div>
+                          <h3>SESSO:</h3><h5><?php echo $this->authInfo('genere')?></h5>
+                        </div>
 </div>
