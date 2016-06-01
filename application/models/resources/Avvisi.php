@@ -13,7 +13,7 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
     public function getAvvisi()
     {
         $select = $this->select(); 
-        return $this->fetchRow($select); 
+        return $this->fetchAll($select); 
     }
 }
 
