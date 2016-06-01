@@ -10,8 +10,11 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
     {
     }
     
-    public function getAvvisoById($A)
+    public function getAvvisi()
     {
-        return $this->fetchRow($this->select()->where('idAvviso = ?', $A));
+        $select = $this->select(); 
+        return $this->fetchRow($select); 
     }
 }
+
+        
