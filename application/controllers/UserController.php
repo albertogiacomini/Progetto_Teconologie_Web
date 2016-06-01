@@ -5,17 +5,22 @@ class UserController extends Zend_Controller_Action
     protected $_mcform;
     protected $_pform;
     protected $_ptform;
+    protected $_avvisi;
     
     public function init()
     {
         $this->_helper->layout->setLayout('user');    
         $this->_authService = new Application_Service_Auth();
+        $this->_avvisi=new Application_Model_User();
         $this->view->mcForm=$this->getModcredenzialiForm();
         $this->view->pForm=$this->getPosizioneForm();
     }
     
     public function indexAction()
-    {} 
+    {
+         $Not=$this->_avvisi->getAvvisi();
+         $this->view->assign(array('notif'=>$Not));
+    } 
     
     public function viewstaticAction () 
     {}

@@ -23,6 +23,9 @@ class Application_Model_User extends App_Model_Abstract
         return $this->getResource('Posizione')->getPianoByEdificio($edif);
     }
     
-	
+	public function getAvvisi()
+    {
+        return $this->getResource('Avvisi')->getAvvisi();
+    }
 	
 }

@@ -9,9 +9,5 @@ class Application_Resource_Categorie extends Zend_Db_Table_Abstract
     public function init()
     {
     }
-    
-    public function getCategoriaById($Cat)
-    {
-        return $this->fetchRow($this->select()->where('idCategoria = ?', $Cat));
-    }
+
 }
