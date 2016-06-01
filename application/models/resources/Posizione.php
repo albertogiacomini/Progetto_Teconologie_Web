@@ -20,7 +20,7 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
     
     public function getPianoByEdificio($edificio)
     {
-        $select = $this->select('piano')->were('edificio = ?', $edificio);
+        $select = $this->select('piano')->where('edificio = ?', $edificio);
         return $this->fetchAll($select);
     }
     

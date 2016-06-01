@@ -14,6 +14,7 @@ class UserController extends Zend_Controller_Action
         $this->_avvisi=new Application_Model_User();
         $this->view->mcForm=$this->getModcredenzialiForm();
         $this->view->pForm=$this->getPosizioneForm();
+        
     }
     
     public function indexAction()
@@ -37,12 +38,18 @@ class UserController extends Zend_Controller_Action
     public function posizioneAction () 
     {}
     
+    public function edificioAction () 
+    {}
+    
+    public function pianoAction () 
+    {}
+    
     protected function getModcredenzialiForm()
     {
         $urlHelper = $this->_helper->getHelper('url');
         $this->_mcform = new Application_Form_User_Modcredenziali();
         $this->_mcform->setAction($urlHelper->url(array(
-            'controller' => 'utente',
+            'controller' => 'user',
             'action' => 'index'),
             'default'
         ));
@@ -54,7 +61,7 @@ class UserController extends Zend_Controller_Action
         $urlHelper = $this->_helper->getHelper('url');
         $this->_pform = new Application_Form_User_Posizione();
         $this->_pform->setAction($urlHelper->url(array(
-            'controller' => 'utente',
+            'controller' => 'user',
             'action' => 'index'),
             'default'
         ));

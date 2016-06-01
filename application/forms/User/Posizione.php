@@ -8,6 +8,7 @@ class Application_Form_User_Posizione extends App_Form_Abstract
     {
         $this->_usr=new Application_Model_User();
         $edificio=$this->_usr->getEdifici()->toArray();
+        
         $this->setMethod('post');
         $this->setName('setPosizione');
         $this->setAction('');
@@ -18,11 +19,15 @@ class Application_Form_User_Posizione extends App_Form_Abstract
             'MultiOptions' => $edificio,
             ));
             
-        $this->addElement('select', 'posizione', array(
+         $this->addElement('select', 'piano', array(
             'required'   => true,
-            'label'      => 'Livello',
-            //'MultiOptions' => '',
+            'label'      => 'Piano',
             ));
+                
+        $this->addElement('submit', 'subed', array(
+            'label'    => 'Prosegui',
+            'decorators' => $this->buttonDecorators,
+        ));
         
         $this->setDecorators(array(
             'FormElements',
