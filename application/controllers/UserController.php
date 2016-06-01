@@ -19,7 +19,7 @@ class UserController extends Zend_Controller_Action
     public function indexAction()
     {
          $Not=$this->_avvisi->getAvvisi();
-         $this->view->assign(array('notif'=>$Not));
+         Zend_Layout::getMvcInstance()->assign('notifiche', array('arg'=>$Not));
     } 
     
     public function viewstaticAction () 
