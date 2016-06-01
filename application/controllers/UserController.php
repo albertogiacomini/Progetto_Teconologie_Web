@@ -4,6 +4,7 @@ class UserController extends Zend_Controller_Action
 {
     protected $_mcform;
     protected $_pform;
+    protected $_ptform;
     
     public function init()
     {
@@ -54,5 +55,4 @@ class UserController extends Zend_Controller_Action
         ));
         return $this->_pform;
     }
-
 }
