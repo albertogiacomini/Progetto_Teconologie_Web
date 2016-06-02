@@ -17,19 +17,22 @@ class Application_Form_User_Posizione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Edificio',
             'MultiOptions' => $edificio,
+            'onChange' => 'FillPiani()',
             ));
             
         $this->addElement('select', 'piano', array(
             'required'   => true,
             'label'      => 'Piano',
-            'MultiOptions' => $edificio,
+            'MultiOptions' => array('0' => '-- Seleziona Piano --'),
+            'onChange' => 'FillMap()',
+
             ));
-                
-        $this->addElement('submit', 'subed', array(
-            'label'    => 'Prosegui',
-            'decorators' => $this->buttonDecorators,
-        ));
-        
+			
+		$this->addElement('image', 'mappa', array(
+            'required'   => true,
+            'label'      => 'Mappa',
+            ));
+			
         $this->setDecorators(array(
             'FormElements',
             array('HtmlTag', array('tag' => 'table', 'class' => 'zend_form')),

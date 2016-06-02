@@ -4,9 +4,11 @@ class UserController extends Zend_Controller_Action
 {
     protected $_mcform;
     protected $_pform;
-    protected $_avvisi;
+    protected $_utente;
     protected $_mpform;
     protected $_epform;
+	protected $_edificio;
+	protected $_piano;
     
     public function init()
     {
@@ -55,6 +57,7 @@ class UserController extends Zend_Controller_Action
     }
     
     public function modcredenzialiAction () 
+
     {
         $un=$this->_authService->getIdentity()->username;
         $this->_mcform->populate($this->_utente->getUserByUName($un)->toArray());
@@ -77,14 +80,37 @@ class UserController extends Zend_Controller_Action
         $this->view->assign('description','Aggiornamento eseguito con successo.');
     }
     
-    public function posizioneAction () 
-    {}
     
     public function edificioAction () 
     {}
+	
+    public function posizioneAction () 
+    {
+    	$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $_piano = $this->_getParam('pia');
+			$_edificio = $this->_getParam('edif');
+            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($_edificio, $_piano);
+			$mappa = $this->_utente->getPlanimetriaById('1');
+            $dojoData= new Zend_Dojo_Data('mappa',$mappa);
+            echo $dojoData->toJson();
+        } 
+    }
     
     public function pianoAction () 
-    {}
+    {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $_edificio = $this->_getParam('edif');
+            $edif = $this->_utente->getPianoByEdificio($_edificio);
+            $dojoData= new Zend_Dojo_Data('edificio',$edif);
+            echo $dojoData->toJson();
+        } 
+    }
     
     public function eliminaprofiloAction () 
     {}

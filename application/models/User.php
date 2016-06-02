@@ -42,4 +42,14 @@ class Application_Model_User extends App_Model_Abstract
         return $this->getResource('Avvisi')->getAvvisi();
     }
 	
+	public function getIdPlanimetriaByEdificioPiano($edificio, $piano)
+	{
+		return $this->getResource('Posizione')->getIdPlanimetriaByEdificioPiano($edificio, $piano);
+	}
+	
+	public function getPlanimetriaById($idPlanimetria)
+	{
+		return $this->getResource('Planimetrie')->getPlanimetriaById($idPlanimetria);
+	}
+	
 }
