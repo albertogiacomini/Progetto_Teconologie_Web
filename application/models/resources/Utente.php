@@ -20,5 +20,16 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
     {
         $this->insert($usrInfo);
     }
+    
+    public function updateUser($usrInfo,$username)
+    {
+        $dove="username='". $username. "'";
+        $this->update($usrInfo,$dove);
+    }
+    
+    public function deleteUser($username)
+    {
+        $dove="username='". $username. "'";
+        $this->delete($dove);
+    }
 }
-

@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_User_Posizione extends App_Form_Abstract
+class Application_Form_User_Eliminaprofilo extends App_Form_Abstract
 {
     protected $_usr;
     
@@ -10,23 +10,11 @@ class Application_Form_User_Posizione extends App_Form_Abstract
         $edificio=$this->_usr->getEdifici()->toArray();
         
         $this->setMethod('post');
-        $this->setName('setPosizione');
+        $this->setName('eliminaProf');
         $this->setAction('');
-        
-        $this->addElement('select', 'edificio', array(
-            'required'   => true,
-            'label'      => 'Edificio',
-            'MultiOptions' => $edificio,
-            ));
-            
-        $this->addElement('select', 'piano', array(
-            'required'   => true,
-            'label'      => 'Piano',
-            'MultiOptions' => $edificio,
-            ));
                 
-        $this->addElement('submit', 'subed', array(
-            'label'    => 'Prosegui',
+        $this->addElement('submit', 'elimina', array(
+            'label'    => 'Eliminati',
             'decorators' => $this->buttonDecorators,
         ));
         
