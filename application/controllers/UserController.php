@@ -6,6 +6,8 @@ class UserController extends Zend_Controller_Action
     protected $_pform;
     protected $_ptform;
     protected $_avvisi;
+	protected $_edificio;
+	protected $_piano;
     
     public function init()
     {
@@ -34,15 +36,37 @@ class UserController extends Zend_Controller_Action
     
     public function modcredenzialiAction () 
     {}
-    
-    public function posizioneAction () 
-    {}
-    
+	
     public function edificioAction () 
     {}
+	
+    public function posizioneAction () 
+    {
+    	$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $_piano = $this->_getParam('pia');
+			$_edificio = $this->_getParam('edif');
+            $idPlan = $this->_avvisi->getIdPlanimetriaByEdificioPiano($_edificio, $_piano);
+			$mappa = $this->_avvisi->getPlanimetriaById('1');
+            $dojoData= new Zend_Dojo_Data('mappa',$mappa);
+            echo $dojoData->toJson();
+        } 
+    }
     
     public function pianoAction () 
-    {}
+    {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $_edificio = $this->_getParam('edif');
+            $edif = $this->_avvisi->getPianoByEdificio($_edificio);
+            $dojoData= new Zend_Dojo_Data('edificio',$edif);
+            echo $dojoData->toJson();
+        } 
+    }
     
     protected function getModcredenzialiForm()
     {
