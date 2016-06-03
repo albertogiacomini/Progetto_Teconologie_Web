@@ -18,7 +18,7 @@ class StaffController extends Zend_Controller_Action
     {
         $this->_helper->layout->setLayout('staff');    
         $this->_authService = new Application_Service_Auth();
-		$this->_utente=new Application_Model_Staff();
+		$this->_staff=new Application_Model_Staff();
 		$this->view->gForm = $this->getGestioneForm();
 		$this->view->mcForm=$this->getModcredenzialiForm();
         $this->view->pForm=$this->getPosizioneForm();
@@ -27,7 +27,7 @@ class StaffController extends Zend_Controller_Action
 	
     public function indexAction()
     {
-    	 $Not=$this->_utente->getAvvisi();
+    	 $Not=$this->_staff->getAvvisi();
          Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
 	} 
 	
@@ -51,15 +51,48 @@ class StaffController extends Zend_Controller_Action
     
     public function modcredenzialiAction () 
     {}
-    
-    public function posizioneAction () 
-    {}
 	
     public function gestioneAction()
 	{}
 	
 	public function homeAction () //home action
-    {}
+    {
+    	$this->_sede=new Application_Model_Staff();
+		$this->_authService = Zend_Auth::getInstance();
+		$un=$this->_authService->getIdentity()->username;
+		$planimetria=$this->_sede->getIdPlanimetriabyUName($username)->toArray();	
+		
+    	$un=$this->_authService->getIdentity()->username;
+		//$this->_homeform->
+	}
+	
+	public function posizioneAction () 
+    {
+    	$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $_piano = $this->_getParam('pia');
+			$_edificio = $this->_getParam('edif');
+            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($_edificio, $_piano);
+			$mappa = $this->_utente->getPlanimetriaById('1');
+            $dojoData= new Zend_Dojo_Data('mappa',$mappa);
+            echo $dojoData->toJson();
+        } 
+    }
+    
+    public function pianoAction () 
+    {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $_edificio = $this->_getParam('edif');
+            $edif = $this->_utente->getPianoByEdificio($_edificio);
+            $dojoData= new Zend_Dojo_Data('edificio',$edif);
+            echo $dojoData->toJson();
+        } 
+    }
 	
 	protected function gethomeForm()
 	{

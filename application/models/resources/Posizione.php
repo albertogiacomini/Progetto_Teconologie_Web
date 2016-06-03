@@ -29,4 +29,14 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
         return $this->getAdapter()->fetchRow($this->select('idPlanimetria')->where('edificio = ?', $edificio)
         									  				->where('piano = ?', $piano));
     }
+	
+	public function getIdPlanimetriaByIdPosizione($idposizione)
+	{
+		return $this->getAdapter()->fetchRow($this->select('idPlanimetria')->where('idPosizione = ?', $idposizione));
+	}
+	
+	public function getIdPosizioneByUName($username)
+	{
+		return $this->getAdapter()->fetchRow($this->select('idPosizione')->where('username= ?', $username));  									  				
+	}
 }
