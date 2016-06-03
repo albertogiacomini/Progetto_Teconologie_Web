@@ -13,6 +13,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
     	
         $this->addElement('file', 'image', array(
             'label' => 'Img profilo',
+            'destination' => APPLICATION_PATH . '/../public/images/products',
             'validators' => array( 
                     array('Count', false, 1),
                     array('Size', false, 102400),
