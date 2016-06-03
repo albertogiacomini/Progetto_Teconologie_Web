@@ -2,18 +2,19 @@
 
 class Application_Form_Staff_Home extends App_Form_Abstract
 {
+	protected $_sede='sede';
+	
     public function init()
-    {
+    {	
         $this->setMethod('post');
         $this->setName('getHome');
         $this->setAction('');
 		
-		$this->addElement('radio', 'facoltà', array(
-			'label'      => 'Facoltà',
-			'MultiOptions'=>array(
-                'ingegneria' => ' INGEGNERIA',
-            	'medicina' => ' MEDICINA',
-            	'economia' => ' ECONOMIA',),
+		$this->addElement('radio', 'sede', array(
+			'label' 	 =>  $this->_sede,
+				'MultiOptions'=>array(
+                'male' => 'M',
+            	'female' => 'F',),
 			'decorators' => $this->elementDecorators, 
 		));
 		
