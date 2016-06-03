@@ -76,9 +76,30 @@ class UserController extends Zend_Controller_Action
         $values=$form->getValues();
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
+        $this->_authService->getAuth()->clearIdentity();
+        
+        
+        
+        
+        
+        $request = $this->getRequest();
+        
+        $form = $this->_form;
+
+        return $this->_helper->redirector('index', $this->_authService->getIdentity()->livello);
+    
+        
+        
+        
+        
+        
+        
+        
         $this->_helper->redirector('index');
-        $this->view->assign('description','Aggiornamento eseguito con successo.');
     }
+    
+           
+       
     
     
     public function edificioAction () 
