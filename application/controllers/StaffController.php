@@ -56,7 +56,15 @@ class StaffController extends Zend_Controller_Action
 	{}
 	
 	public function homeAction () //home action
-    {}
+    {
+    	$this->_sede=new Application_Model_Staff();
+		$this->_authService = Zend_Auth::getInstance();
+		$un=$this->_authService->getIdentity()->username;
+		$planimetria=$this->_sede->getIdPlanimetriabyUName($username)->toArray();	
+		
+    	$un=$this->_authService->getIdentity()->username;
+		//$this->_homeform->
+	}
 	
 	public function posizioneAction () 
     {

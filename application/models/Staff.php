@@ -8,16 +8,32 @@ class Application_Model_Staff extends App_Model_Abstract
         
     }
 	
-	    public function getUserByUName($info)
+	public function getUserByUName($info)
     {
         return $this->getResource('Utente')->getUserByUName($info);
     }
+	
+	public function getIdPlanimetriabyUName($username)
+	{
+		$pos=$this->getResource('Posizione')->getIdPosizioneByUName($username);
+		return $this->getResource('Posizione')->getIdPlanimetriaByIdPosizione($pos);
+	}
 	
 	public function getEdifici()
     {
         return $this->getResource('Posizione')->getEdifici();
     }
     
+	 public function getIdPosizioneByUName($username)
+    {
+        return $this->getResource('Posizione')->getIdPosizioneByUName($username);
+    }
+	
+	public function getIdPlanimetriaByIdPosizione($idposizione)
+    {
+        return $this->getResource('Posizione')->getIdPlanimetriaByIdPosizione($idposizione);
+    }
+	
     public function getPianoByEdificio($edif)
     {
         return $this->getResource('Posizione')->getPianoByEdificio($edif);
