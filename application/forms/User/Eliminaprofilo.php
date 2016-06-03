@@ -2,13 +2,8 @@
 
 class Application_Form_User_Eliminaprofilo extends App_Form_Abstract
 {
-    protected $_usr;
-    
     public function init()
     {
-        $this->_usr=new Application_Model_User();
-        $edificio=$this->_usr->getEdifici()->toArray();
-        
         $this->setMethod('post');
         $this->setName('eliminaProf');
         $this->setAction('');
