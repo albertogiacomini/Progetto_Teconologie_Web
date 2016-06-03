@@ -13,6 +13,7 @@ class StaffController extends Zend_Controller_Action
 	protected $_edificio;
 	protected $_piano;
 	protected $_staff;
+	protected $_sede;
 	
     public function init()
     {
@@ -60,10 +61,13 @@ class StaffController extends Zend_Controller_Action
     	$this->_sede=new Application_Model_Staff();
 		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
-		$planimetria=$this->_sede->getIdPlanimetriabyUName($username)->toArray();	
 		
-    	$un=$this->_authService->getIdentity()->username;
-		//$this->_homeform->
+		$idPos=$this->_sede->getIdPosizioneByUName($un);
+		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
+		$plan=$this->_sede->getMappaById($idPlan['idPlanimetria']);
+              		  
+		$base64 = base64_encode($plan['mappa']);
+				$image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="200 height=200" />';   
 	}
 	
 	public function posizioneAction () 

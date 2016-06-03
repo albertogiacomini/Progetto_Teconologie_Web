@@ -5,7 +5,6 @@ class Application_Form_Staff_Home extends App_Form_Abstract
 	protected $_sede;
 	
 
-	
     public function init()
     {
 		
@@ -13,34 +12,6 @@ class Application_Form_Staff_Home extends App_Form_Abstract
         $this->setName('getHome');
         $this->setAction('');
 		
-		$this->addElement('radio', 'sede', array(
-			    'label'  =>  $this->_sede,
-				'MultiOptions'=>array(
-                'male'   => 'M',
-            	'female' => 'F',),
-			'decorators' => $this->elementDecorators, 
-		));
-		
-		$i=0;
-		foreach ($_edificio as $floor)
-		{
-			$i++;
-			$this->addElement('image', 'floor'.$i, array(
-				'label'  => $this->_sede,
-				'required'   => true,
-				'onClick' => 'sceltaEvaq()',
-		));
-		}
-		
-        $this->addElement('text', 'username', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
-            'validators' => array(
-                array('StringLength', true, array(3, 25))
-            ),
-            'required'   => true,
-            'label'      => 'Username',
-            'decorators' => $this->elementDecorators,
-        ));
   
         $this->addElement('submit', 'aggiorna', array(
             'label'    => 'Fottiti Home',

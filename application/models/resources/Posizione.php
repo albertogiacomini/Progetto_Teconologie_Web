@@ -30,13 +30,8 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
         									  				->where('piano = ?', $piano));
     }
 	
-	public function getIdPlanimetriaByIdPosizione($idposizione)
+	public function getIdPlanimetriaByIdPosizione($idpos)
 	{
-		return $this->getAdapter()->fetchRow($this->select('idPlanimetria')->where('idPosizione = ?', $idposizione));
-	}
-	
-	public function getIdPosizioneByUName($username)
-	{
-		return $this->getAdapter()->fetchRow($this->select('idPosizione')->where('username= ?', $username));  									  				
+		return $this->getAdapter()->fetchRow($this->select('idPlanimetria')->where('idPosizione = ?', $idpos));
 	}
 }
