@@ -52,8 +52,11 @@ class UserController extends Zend_Controller_Action
         $values=$form->getValues();
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
-        $this->_helper->redirector('index');
-        $this->view->assign('description','Aggiornamento eseguito con successo.');
+        $us=$this->_authService->getIdentity()->username;
+        $pa=$this->_authService->getIdentity()->password;
+        $a=array("username"=>$us,"password"=>$pa);
+        $this->_authService->getAuth()->clearIdentity();
+        $this->_authService->authenticate($a);
     }
     
     public function modcredenzialiAction () 
@@ -77,30 +80,8 @@ class UserController extends Zend_Controller_Action
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
         $this->_authService->getAuth()->clearIdentity();
-        
-        
-        
-        
-        
-        $request = $this->getRequest();
-        
-        $form = $this->_form;
-
-        return $this->_helper->redirector('index', $this->_authService->getIdentity()->livello);
-    
-        
-        
-        
-        
-        
-        
-        
-        $this->_helper->redirector('index');
+        $this->_authService->authenticate($values);
     }
-    
-           
-       
-    
     
     public function edificioAction () 
     {}
