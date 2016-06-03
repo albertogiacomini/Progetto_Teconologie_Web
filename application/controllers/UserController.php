@@ -4,21 +4,26 @@ class UserController extends Zend_Controller_Action
 {
     protected $_mcform;
     protected $_pform;
-    protected $_ptform;
-    protected $_avvisi;
+    protected $_utente;
+    protected $_mpform;
+    protected $_epform;
+	protected $_edificio;
+	protected $_piano;
     
     public function init()
     {
         $this->_helper->layout->setLayout('user');    
         $this->_authService = new Application_Service_Auth();
-        $this->_avvisi=new Application_Model_User();
-        $this->view->mcForm=$this->getModcredenzialiForm();
+        $this->_utente=new Application_Model_User();
+        $this->view->mcForm=$this->getModCredenzialiForm();
         $this->view->pForm=$this->getPosizioneForm();
+        $this->view->mpForm=$this->getModProfiloForm();
+        $this->view->epForm=$this->getEliminaProfiloForm();
     }
     
     public function indexAction()
     {
-         $Not=$this->_avvisi->getAvvisi();
+         $Not=$this->_utente->getAvvisi();
          Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
     } 
     
@@ -29,24 +34,129 @@ class UserController extends Zend_Controller_Action
     {}
     
     public function modprofiloAction () 
-    {}
+    {
+        $un=$this->_authService->getIdentity()->username;
+        $this->_mpform->populate($this->_utente->getUserByUName($un)->toArray());
+    }
+    
+    public function salvamodprofiloAction () 
+    {
+        if(!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('index');
+        }
+        $form=$this->_mpform;
+        if (!$form->isValid($_POST)) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('modprofilo');
+        }
+        $values=$form->getValues();
+        $un=$this->_authService->getIdentity()->username;
+        $this->_utente->updateUser($values,$un);
+        $this->_helper->redirector('index');
+        $this->view->assign('description','Aggiornamento eseguito con successo.');
+    }
     
     public function modcredenzialiAction () 
-    {}
+
+    {
+        $un=$this->_authService->getIdentity()->username;
+        $this->_mcform->populate($this->_utente->getUserByUName($un)->toArray());
+    }
     
+    public function salvamodcredenzialiAction () 
+    {
+        if(!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('index');
+        }
+        $form=$this->_mcform;
+        if (!$form->isValid($_POST)) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('modcredenziali');
+        }
+        $values=$form->getValues();
+        $un=$this->_authService->getIdentity()->username;
+        $this->_utente->updateUser($values,$un);
+        $this->_helper->redirector('index');
+        $this->view->assign('description','Aggiornamento eseguito con successo.');
+    }
+    
+    
+    public function edificioAction () 
+    {}
+	
     public function posizioneAction () 
+    {
+    	$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $_piano = $this->_getParam('pia');
+			$_edificio = $this->_getParam('edif');
+            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($_edificio, $_piano);
+			$mappa = $this->_utente->getPlanimetriaById('1');
+            $dojoData= new Zend_Dojo_Data('mappa',$mappa);
+            echo $dojoData->toJson();
+        } 
+    }
+    
+    public function pianoAction () 
+    {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $_edificio = $this->_getParam('edif');
+            $edif = $this->_utente->getPianoByEdificio($_edificio);
+            $dojoData= new Zend_Dojo_Data('edificio',$edif);
+            echo $dojoData->toJson();
+        } 
+    }
+    
+    public function eliminaprofiloAction () 
     {}
     
-    protected function getModcredenzialiForm()
+    public function confermaeliminazioneprofiloAction()
+    {
+        $un=$this->_authService->getIdentity()->username;
+        if($this->_utente->deleteUser($un)){
+            $this->view->assign('description','Eliminazione eseguita con successo.');
+        }$this->view->assign('description','Eliminazione non riuscita.');
+    }
+    
+    protected function getEliminaProfiloForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_epform = new Application_Form_User_Eliminaprofilo();
+        $this->_epform->setAction($urlHelper->url(array(
+            'controller' => 'user',
+            'action' => 'confermaeliminazioneprofilo'),
+            'default'
+        ));
+        return $this->_epform;
+    }
+    
+    protected function getModCredenzialiForm()
     {
         $urlHelper = $this->_helper->getHelper('url');
         $this->_mcform = new Application_Form_User_Modcredenziali();
         $this->_mcform->setAction($urlHelper->url(array(
-            'controller' => 'utente',
-            'action' => 'index'),
+            'controller' => 'user',
+            'action' => 'salvamodcredenziali'),
             'default'
         ));
         return $this->_mcform;
+    }
+    
+    protected function getModProfiloForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_mpform = new Application_Form_User_Modprofilo();
+        $this->_mpform->setAction($urlHelper->url(array(
+            'controller' => 'user',
+            'action' => 'salvamodprofilo'),
+            'default'
+        ));
+        return $this->_mpform;
     }
     
     protected function getPosizioneForm()
@@ -54,7 +164,7 @@ class UserController extends Zend_Controller_Action
         $urlHelper = $this->_helper->getHelper('url');
         $this->_pform = new Application_Form_User_Posizione();
         $this->_pform->setAction($urlHelper->url(array(
-            'controller' => 'utente',
+            'controller' => 'user',
             'action' => 'index'),
             'default'
         ));

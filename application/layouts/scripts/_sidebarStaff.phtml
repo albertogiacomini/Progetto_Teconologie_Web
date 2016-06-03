@@ -16,7 +16,7 @@
                   <li class="mt">
                   		 <a  href="<?= $this->url(array(
                                             'controller' => 'staff',
-                                            'action'     => 'index',), 
+                                            'action'     => 'home',), 
                                             'default',true );?>">
                  		 	<i class="fa fa-dashboard"></i>	 
                   		 	<span>Home</span>
@@ -26,8 +26,7 @@
 				 <li class="mt">
 				 	  <a  href="javascript:;" >
                  		 <i class="fa fa-dashboard"></i>	 
-                   <span>Profilo</span></a>
-                  	
+                   <span>Profilo</span></a>         	
                          <ul class="sub">
                           <li><a  href="<?= $this->url(array(
                                                     'controller' => 'staff',
@@ -41,7 +40,24 @@
                                                     'controller' => 'staff',
                                                     'action'     => 'modcredenziali', ), 
                                                     'default',true );?>">Modifica credenziali</a></li>
-                    </ul>
+                    	</ul>
+                  </li>
+                  
+                  <li class="mt">
+				 	  <a  href="javascript:;" >
+                 		 <i class="fa fa-dashboard"></i>	 
+                   <span>Gestione Evaquazione</span></a>
+                         <ul class="sub">
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'gestione', ), 
+                                                    'default',true );?>">Percorsi</a></li>
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'modprofilo', ), 
+                                                    'default',true );?>">Segnalazioni</a></li>
+                    	</ul>
+                  </li>
                   
                   <li class="mt">
                       <a  href="javascript:;" >
@@ -51,21 +67,21 @@
                       <ul class="sub">
                       	  <li><a href="<?= $this->url(array(
                                                     'controller' => 'staff',
-                                                    'action'     => 'index',), 
+                                                    'action'     => 'evaing',), 
                                                     'default',true );?>">
                          	  <span>Ingegneria</span></a>
                           </li>
                           
                           <li><a href="<?= $this->url(array(
                                                     'controller' => 'staff',
-                                                    'action'     => 'index',), 
+                                                    'action'     => 'evamed',), 
                                                     'default',true );?>">
                          	  <span>Medicina</span></a>
                           </li>
                           
                           <li><a href="<?= $this->url(array(
                                                     'controller' => 'staff',
-                                                    'action'     => 'profilo',), 
+                                                    'action'     => 'evaeco',), 
                                                     'default',true );?>">
                          	  <span>Economia</span></a>
                           </li>

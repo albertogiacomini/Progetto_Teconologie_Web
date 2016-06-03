@@ -20,7 +20,10 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'user',), 
+                                                    'default',true );?>"> 
                           <i class="fa fa-user"></i>
                           <span>Gestione utenti</span>
                       </a>
