@@ -8,17 +8,17 @@ class Application_Model_Staff extends App_Model_Abstract
         
     }
 	
-	public function getUserByUName($info)
-    {
-        return $this->getResource('Utente')->getUserByUName($info);
-    }
-	
 	/*public function getIdMappabyUName($username)
 	{
 		$pos=$this->getResource('Utente')->getIdPosizioneByUName($username);
 		$plan=$this->getResource('Posizione')->getIdPlanimetriaByIdPosizione($pos);
 		return 	$this->getResource('Planimetrie')->getMappaById($plan);
 	}*/
+	
+    public function  getUserByUName($uname)
+    {
+        return $this->getResource('Utente')-> getUserByUName($uname);
+    }	
 	
 	public function getEdifici()
     {

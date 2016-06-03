@@ -14,6 +14,8 @@ class StaffController extends Zend_Controller_Action
 	protected $_piano;
 	protected $_staff;
 	protected $_sede;
+	protected $_image;
+	protected $_utente;
 	
     public function init()
     {
@@ -22,8 +24,13 @@ class StaffController extends Zend_Controller_Action
 		$this->_staff=new Application_Model_Staff();
 		$this->view->gForm = $this->getGestioneForm();
 		$this->view->mcForm=$this->getModcredenzialiForm();
+		$this->view->mpForm=$this->getModprofiloForm();
         $this->view->pForm=$this->getPosizioneForm();
 		$this->view->hForm=$this->getHomeForm();
+		$this->view->epForm=$this->geteliminaprofiloForm();
+		$this->view->evaingForm=$this->getEvaingForm();
+		$this->view->evamedForm=$this->getEvamedForm();
+		$this->view->evaecoForm=$this->getEvaecoForm();
     }
 	
     public function indexAction()
@@ -46,15 +53,40 @@ class StaffController extends Zend_Controller_Action
     
     public function evaecoAction () //evaquazione economia action
     {}
-	
-    public function modprofiloAction () 
-    {}
-    
+	public function modprofiloAction () 
+    {
+        $un=$this->_authService->getIdentity()->username;
+        $this->_mpform->populate($this->_utente->getUserByUName($un)->toArray());
+    }
+
     public function modcredenzialiAction () 
-    {}
+    {
+        $un=$this->_authService->getIdentity()->username;
+        $this->_mcform->populate($this->_utente->getUserByUName($un)->toArray());
+    }
 	
     public function gestioneAction()
 	{}
+	
+	public function salvamodprofiloAction () 
+    {
+        if(!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('index');
+        }
+        $form=$this->_mpform;
+        if (!$form->isValid($_POST)) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('modprofilo');
+        }
+        $values=$form->getValues();
+        $un=$this->_authService->getIdentity()->username;
+        $this->_utente->updateUser($values,$un);
+        $us=$this->_authService->getIdentity()->username;
+        $pa=$this->_authService->getIdentity()->password;
+        $a=array("username"=>$us,"password"=>$pa);
+        $this->_authService->getAuth()->clearIdentity();
+        $this->_authService->authenticate($a);
+    }
 	
 	public function homeAction () //home action
     {
@@ -67,8 +99,25 @@ class StaffController extends Zend_Controller_Action
 		$plan=$this->_sede->getMappaById($idPlan['idPlanimetria']);
               		  
 		$base64 = base64_encode($plan['mappa']);
-				$image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="200 height=200" />';   
+				$this->_image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="400 height=400" />';   
 	}
+	
+	public function salvamodcredenzialiAction () 
+    {
+        if(!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('index');
+        }
+        $form=$this->_mcform;
+        if (!$form->isValid($_POST)) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('modcredenziali');
+        }
+        $values=$form->getValues();
+        $un=$this->_authService->getIdentity()->username;
+        $this->_utente->updateUser($values,$un);
+        $this->_authService->getAuth()->clearIdentity();
+        $this->_authService->authenticate($values);
+    }
 	
 	public function posizioneAction () 
     {
@@ -104,7 +153,7 @@ class StaffController extends Zend_Controller_Action
         $this->_hform = new Application_Form_Staff_Home();
         $this->_hform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'index'),
+            'action' => 'home'),
             'default'
         ));
         return $this->_hform;
@@ -116,11 +165,34 @@ class StaffController extends Zend_Controller_Action
         $this->_gform = new Application_Form_Staff_Gestione();
         $this->_gform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'index'),
+            'action' => 'gestione'),
             'default'
         ));
         return $this->_gform;
 	}
+		
+	public function eliminaprofiloAction () 
+    {}
+		
+	public function confermaeliminazioneprofiloAction()
+    {
+        $un=$this->_authService->getIdentity()->username;
+        if($this->_utente->deleteUser($un)){
+            $this->view->assign('description','Eliminazione eseguita con successo.');
+        }$this->view->assign('description','Eliminazione non riuscita.');
+    }
+		
+	protected function getEliminaProfiloForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_epform = new Application_Form_Staff_Eliminaprofilo();
+        $this->_epform->setAction($urlHelper->url(array(
+            'controller' => 'user',
+            'action' => 'confermaeliminazioneprofilo'),
+            'default'
+        ));
+        return $this->_epform;
+    }
 		
     protected function getModcredenzialiForm()
     {
@@ -128,10 +200,22 @@ class StaffController extends Zend_Controller_Action
         $this->_mcform = new Application_Form_Staff_Modcredenziali();
         $this->_mcform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'index'),
+            'action' => 'modcredenziali'),
             'default'
         ));
         return $this->_mcform;
+    }
+	
+	    protected function getModProfiloForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_mpform = new Application_Form_Staff_Modprofilo();
+        $this->_mpform->setAction($urlHelper->url(array(
+            'controller' => 'user',
+            'action' => 'salvamodprofilo'),
+            'default'
+        ));
+        return $this->_mpform;
     }
 	
 	 protected function getEvaingForm()
@@ -140,7 +224,7 @@ class StaffController extends Zend_Controller_Action
         $this->_evaingform = new Application_Form_Staff_Evaing();
         $this->_evaingform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'index'),
+            'action' => 'evaing'),
             'default'
         ));
         return $this->_evaingform;
@@ -152,7 +236,7 @@ class StaffController extends Zend_Controller_Action
         $this->_evamedform = new Application_Form_Staff_Evamed();
         $this->_evamedform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'index'),
+            'action' => 'evamed'),
             'default'
         ));
         return $this->_evamedform;
@@ -164,7 +248,7 @@ class StaffController extends Zend_Controller_Action
         $this->_evaecoform = new Application_Form_Staff_Evaeco();
         $this->_evaecoform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'index'),
+            'action' => 'evaeco'),
             'default'
         ));
         return $this->_evaecoform;

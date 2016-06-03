@@ -83,12 +83,9 @@ class UserController extends Zend_Controller_Action
         $this->_authService->authenticate($values);
     }
 
-
-    
     public function edificioAction () 
     {}
 
-	
     public function posizioneAction () 
     {
     	$this->_helper->layout()->disableLayout();
