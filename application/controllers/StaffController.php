@@ -56,13 +56,13 @@ class StaffController extends Zend_Controller_Action
 	public function modprofiloAction () 
     {
         $un=$this->_authService->getIdentity()->username;
-        $this->_mpform->populate($this->_utente->getUserByUName($un)->toArray());
+        $this->_mpform->populate($this->_staff->getUserByUName($un)->toArray());
     }
 
     public function modcredenzialiAction () 
     {
         $un=$this->_authService->getIdentity()->username;
-        $this->_mcform->populate($this->_utente->getUserByUName($un)->toArray());
+        $this->_mcform->populate($this->_staff->getUserByUName($un)->toArray());
     }
 	
     public function gestioneAction()
