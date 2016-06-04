@@ -9,6 +9,7 @@ class UserController extends Zend_Controller_Action
     protected $_epform;
 	protected $_edificio;
 	protected $_piano;
+    protected $imageBlob;
     
     public function init()
     {
@@ -50,6 +51,11 @@ class UserController extends Zend_Controller_Action
             return $this->render('modprofilo');
         }
         $values=$form->getValues();
+        
+        $im = file_get_contents($values['imgprofilo']);
+        $imdata = base64_encode($im);
+        $values['imgprofilo']=$imdata;
+        
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
         $us=$this->_authService->getIdentity()->username;
