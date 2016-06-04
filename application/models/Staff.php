@@ -64,7 +64,7 @@ class Application_Model_Staff extends App_Model_Abstract
 	}
 	
 	//Staff
-	public function getPlanimetriaById($idPlanimetrie)
+	public function getPlanimetriaById($idPlanimetria)
 	{
 		return $this->getResource('Planimetrie')->getPlanimetriaById($idPlanimetria);
 	}
