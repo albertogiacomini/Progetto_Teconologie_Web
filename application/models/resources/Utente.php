@@ -32,4 +32,9 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
         $dove="username='". $username. "'";
         $this->delete($dove);
     }
+	public function getIdPosizioneByUName($user)
+	{
+		return $this->getAdapter()->fetchRow($this->select('idPosizione')->where('username = ?', $user));  									  				
+	}
+	
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_Staff_Evamed extends App_Form_Abstract
+class Application_Form_Staff_Evaing extends App_Form_Abstract
 {
     public function init()
     {

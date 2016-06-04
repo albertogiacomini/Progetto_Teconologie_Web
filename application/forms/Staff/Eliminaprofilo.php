@@ -1,23 +1,18 @@
 <?php
 
-class Application_Form_Staff_Home extends App_Form_Abstract
+class Application_Form_Staff_Eliminaprofilo extends App_Form_Abstract
 {
-	protected $_sede;
-	
-
     public function init()
     {
-		
         $this->setMethod('post');
-        $this->setName('getHome');
+        $this->setName('eliminaProf');
         $this->setAction('');
-		
-  
-        $this->addElement('submit', 'aggiorna', array(
-            'label'    => 'Fottiti Home',
+                
+        $this->addElement('submit', 'elimina', array(
+            'label'    => 'Eliminati',
             'decorators' => $this->buttonDecorators,
         ));
-
+        
         $this->setDecorators(array(
             'FormElements',
             array('HtmlTag', array('tag' => 'table', 'class' => 'zend_form')),

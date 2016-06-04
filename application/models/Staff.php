@@ -8,32 +8,42 @@ class Application_Model_Staff extends App_Model_Abstract
         
     }
 	
-	public function getUserByUName($info)
-    {
-        return $this->getResource('Utente')->getUserByUName($info);
-    }
-	
-	public function getIdPlanimetriabyUName($username)
+	/*public function getIdMappabyUName($username)
 	{
-		$pos=$this->getResource('Posizione')->getIdPosizioneByUName($username);
-		return $this->getResource('Posizione')->getIdPlanimetriaByIdPosizione($pos);
-	}
+		$pos=$this->getResource('Utente')->getIdPosizioneByUName($username);
+		$plan=$this->getResource('Posizione')->getIdPlanimetriaByIdPosizione($pos);
+		return 	$this->getResource('Planimetrie')->getMappaById($plan);
+	}*/
+	
+    public function  getUserByUName($uname)
+    {
+        return $this->getResource('Utente')-> getUserByUName($uname);
+    }	
 	
 	public function getEdifici()
     {
         return $this->getResource('Posizione')->getEdifici();
     }
-    
-	 public function getIdPosizioneByUName($username)
-    {
-        return $this->getResource('Posizione')->getIdPosizioneByUName($username);
-    }
+    //Staff
+ 	public function getMappaById($idPlanimetria)
+	{
+		return $this->getResource('Planimetrie')->getMappaById($idPlanimetria);
+	}   
 	
 	public function getIdPlanimetriaByIdPosizione($idposizione)
     {
         return $this->getResource('Posizione')->getIdPlanimetriaByIdPosizione($idposizione);
     }
 	
+	public function getIdPosizioneByUName($username)
+    {
+        return $this->getResource('Utente')->getIdPosizioneByUName($username);
+    }
+	
+	
+	
+
+	//Staff
     public function getPianoByEdificio($edif)
     {
         return $this->getResource('Posizione')->getPianoByEdificio($edif);
@@ -47,11 +57,6 @@ class Application_Model_Staff extends App_Model_Abstract
 	public function getIdPlanimetriaByEdificioPiano($edificio, $piano)
 	{
 		return $this->getResource('Posizione')->getIdPlanimetriaByEdificioPiano($edificio, $piano);
-	}
-	
-	public function getPlanimetriaById($idPlanimetria)
-	{
-		return $this->getResource('Planimetrie')->getPlanimetriaById($idPlanimetria);
 	}
 	
 	public function insertUser($usrInfo)
