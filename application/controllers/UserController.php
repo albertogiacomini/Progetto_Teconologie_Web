@@ -82,14 +82,14 @@ class UserController extends Zend_Controller_Action
         $this->_authService->getAuth()->clearIdentity();
         $this->_authService->authenticate($values);
     }
-<<<<<<< HEAD
+
 	
-=======
+
 
     public function edificioAction () 
     {}
 
->>>>>>> 5a3ecc97448b894ec248ec3b6c7d4d67d58a2692
+
     public function posizioneAction () 
     {
     	$this->_helper->layout()->disableLayout();
