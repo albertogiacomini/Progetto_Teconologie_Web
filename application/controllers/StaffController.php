@@ -48,7 +48,7 @@ class StaffController extends Zend_Controller_Action
 		
 		$idPos=$this->_sede->getIdPosizioneByUName($un);
 		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
-		$plan=$this->_sede->getMappaById($idPlan['idPlanimetria']);
+		$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
         $comp =$this->_sede->getZonacompetenzaByUName($un);
 		$this->view->assign(array('comp'=>$comp));
     }
@@ -99,7 +99,7 @@ class StaffController extends Zend_Controller_Action
 		
 		$idPos=$this->_sede->getIdPosizioneByUName($un);
 		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
-		$plan=$this->_sede->getMappaById($idPlan['idPlanimetria']);
+		$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
         $comp =$this->_sede->getZonacompetenzaByUName($un);
 				$this->view->assign(array('comp'=>$comp));
 		   		
