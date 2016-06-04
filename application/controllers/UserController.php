@@ -82,12 +82,6 @@ class UserController extends Zend_Controller_Action
         $this->_authService->getAuth()->clearIdentity();
         $this->_authService->authenticate($values);
     }
-<<<<<<< HEAD
-=======
-    
-    public function edificioAction () 
-    {}
->>>>>>> a061d24be0eaf3141a3ad5102535b850e84b2dbf
 	
     public function posizioneAction () 
     {
