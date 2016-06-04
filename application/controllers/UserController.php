@@ -81,8 +81,13 @@ class UserController extends Zend_Controller_Action
         $this->_utente->updateUser($values,$un);
         $this->_authService->getAuth()->clearIdentity();
         $this->_authService->authenticate($values);
-	}
+    }
+
 	
+    public function edificioAction () 
+    {}
+
+
     public function posizioneAction () 
     {
     	$this->_helper->layout()->disableLayout();
