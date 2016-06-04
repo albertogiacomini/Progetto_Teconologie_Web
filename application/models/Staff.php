@@ -69,6 +69,11 @@ class Application_Model_Staff extends App_Model_Abstract
 		return $this->getResource('Planimetrie')->getPlanimetriaById($idPlanimetria);
 	}
 	
+	public function getPlanimetrieOrderById($idPlanimetria)
+	{
+		return $this->getResource('Planimetrie')->getPlanimetrieOrderById($idPlanimetria);
+	}
+	
     public function getPianoByEdificio($edif)
     {
         return $this->getResource('Posizione')->getPianoByEdificio($edif);

@@ -99,13 +99,11 @@ class StaffController extends Zend_Controller_Action
 		
 		$idPos=$this->_sede->getIdPosizioneByUName($un);
 		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
-		$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
+		$planimetria=$this->_sede->getPlanimetrieOrderById($idPlan['idPlanimetria']);
         $comp =$this->_sede->getZonacompetenzaByUName($un);
 				$this->view->assign(array('comp'=>$comp));
-		   		
-		$base64 = base64_encode($plan['mappa']);
-				$image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="200 height=200" />';   
-				$this->view->assign(array('image'=>$image));
+	
+			$this->view->assign(array('Plan'=>$planimetria));		   
 	}
 	
 	public function salvamodcredenzialiAction () 
