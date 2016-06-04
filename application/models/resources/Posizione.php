@@ -20,7 +20,11 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
     
     public function getPianoByEdificio($edificio)
     {
-        $select = $this->select('piano')->where('edificio = ?', $edificio);
+        $select = $this->select()
+					   ->from(array('p' => 'posizione'),
+                              array('p.piano'))
+        			   ->where('edificio = ?', $edificio)->distinct();
+		
         return $this->getAdapter()->fetchAll($select);
     }
     
@@ -30,29 +34,21 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
         									  				->where('piano = ?', $piano));
     }
 	
-	public function getIdPlanimetriaByIdPosizione($idpos)
+	public function getIdPlanimetriaByIdPosizione($idPos)
 	{
-		return $this->getAdapter()->fetchRow($this->select('idPlanimetria')->where('idPosizione = ?', $idpos));
+		return $this->getAdapter()->fetchRow($this->select('idPlanimetria')->where('idPosizione = ?', $idPos));
 	}
 	
-	public function getIdPosizioneByEdPi($ed, $pi)
+	public function getIdPosizioneByEdPiAl($ed, $pi, $al)
 	{
 		return $this->getAdapter()->fetchRow($this->select('idPosizione')->where('edificio = ?', $ed)
-																		 ->where('piano = ?', $pi));
+																		 ->where('piano = ?', $pi)
+																		 ->where('aula = ?', $al));
 	}
 	
-	public function setAulaByIdPos($idPos, $aula)
+	public function getDataByIdPosizione($idPos)
 	{
-		
-		$db = new Zend_Db_Adapter_Pdo_Mysql(array(
-												    'host'     => 'localhost',
-												    'username' => 'root',
-												    'password' => 'root',
-												    'dbname'   => 'grp_04_db'
-												));
-		$data      = array('aula' => $aula); 
-		$where[] = $db->quoteInto('idPosizione = ?', $idPos); 
-		$db->update($this->_name, $data, $where); 
+		return $this->getAdapter()->fetchRow($this->select()->where('idPosizione = ?', $idPos));
 	}
 	
 	

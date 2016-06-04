@@ -53,11 +53,6 @@ class Application_Model_User extends App_Model_Abstract
 		return $this->getResource('Planimetrie')->getPlanimetriaById($idPlanimetria);
 	}
 	
-	public function setAulaByIdPos($idPos, $aula)
-	{
-		return $this->getResource('Posizione')->setAulaByIdPos($idPos, $aula);
-	}
-	
 	public function getIdPosizioneByUName($user)
 	{
 		return $this->getResource('Utente')->getIdPosizioneByUName($user);
@@ -68,8 +63,13 @@ class Application_Model_User extends App_Model_Abstract
 		return $this->getResource('Utente')->setIdPosByUName($idPos, $uName);
 	}
 	
-	public function getIdPosizioneByEdPi($ed, $pi)
+	public function getIdPosizioneByEdPiAl($ed, $pi, $al)
 	{
-		return $this->getResource('Posizione')->getIdPosizioneByEdPi($ed, $pi);
+		return $this->getResource('Posizione')->getIdPosizioneByEdPiAl($ed, $pi, $al);
+	}
+	
+	public function getDataByIdPosizione($idPos)
+	{
+		return $this->getResource('Posizione')->getDataByIdPosizione($idPos);
 	}
 }

@@ -1,13 +1,23 @@
 
+
+<?php if (($this->idPos) == NULL): ?>
 <h2>INDICA LA TUA POSIZIONE</h2>
 <div class="showback">
     <h3><i class="fa fa-angle-right"></i>DOVE SEI?</h3>
     <?=$this->pForm; ?>
-    <img id="mappa" />
-    <map id="map" name="map"></map>
-
 </div>
 <div class="showback">
     <h3><i class="fa fa-angle-right"></i>MAPPA</h3>
     Indica la tua posizione sulla mappa:
+    <br>
+    <img id="mappa" />
+    <map id="map" name="map"></map>
 </div>
+<?php else: ?>
+ <div class="showback">
+ 	<h3><i class="fa fa-angle-right"></i>POSIZIONE ATTUALE</h3>
+    <p>Edificio: <?=$this->data['edificio']; ?><br></p>
+    <p>Piano: <?=$this->data['piano']; ?><br></p>
+    <p>Aula: <?=$this->data['aula']; ?><br></p>
+</div> 
+<?php endif;?>
