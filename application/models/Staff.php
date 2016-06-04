@@ -24,7 +24,9 @@ class Application_Model_Staff extends App_Model_Abstract
     {
         return $this->getResource('Posizione')->getEdifici();
     }
-    //Staff
+	
+	
+    //Metodi Staff per prendere mappa associate ad esso
  	public function getMappaById($idPlanimetria)
 	{
 		return $this->getResource('Planimetrie')->getMappaById($idPlanimetria);
@@ -40,10 +42,33 @@ class Application_Model_Staff extends App_Model_Abstract
         return $this->getResource('Utente')->getIdPosizioneByUName($username);
     }
 	
+	public function getZonacompetenzaByUName($username)
+	{	
+		$idPos = $this->getResource('Utente')->getIdPosizioneByUName($username);
+		switch($idPos['idPosizione'])
+		{
+			case 1: 
+				$zona = 'Ingegneria';
+				break;
+			case 2:
+				$zona = 'Medicina';
+				break;
+			case 3:
+				$zona = 'Economia';
+				break;
+			default:
+				$zona = 'Il tuo amministratore non ha scelto una zona per te';
+				break;		
+		}
+			return $zona;
+	}
 	
-	
-
 	//Staff
+	public function getMappeById($idPlanimetrie)
+	{
+		return $this->getResource('Planimetrie')->getMappeById($idPlanimetria);
+	}
+	
     public function getPianoByEdificio($edif)
     {
         return $this->getResource('Posizione')->getPianoByEdificio($edif);

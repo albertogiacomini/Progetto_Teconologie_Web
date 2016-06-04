@@ -60,7 +60,6 @@ class UserController extends Zend_Controller_Action
     }
     
     public function modcredenzialiAction () 
-
     {
         $un=$this->_authService->getIdentity()->username;
         $this->_mcform->populate($this->_utente->getUserByUName($un)->toArray());

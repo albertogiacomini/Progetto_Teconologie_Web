@@ -7,15 +7,11 @@ class StaffController extends Zend_Controller_Action
     protected $_avvisi;
     protected $_mpform;
     protected $_epform;
-	protected $_evaingform;
-	protected $_evamedform;
-	protected $_evaecoform;
+	protected $_evaform;
 	protected $_edificio;
 	protected $_piano;
 	protected $_staff;
 	protected $_sede;
-	protected $_image;
-	protected $_utente;
 	
     public function init()
     {
@@ -28,9 +24,8 @@ class StaffController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
 		$this->view->hForm=$this->getHomeForm();
 		$this->view->epForm=$this->geteliminaprofiloForm();
-		$this->view->evaingForm=$this->getEvaingForm();
-		$this->view->evamedForm=$this->getEvamedForm();
-		$this->view->evaecoForm=$this->getEvaecoForm();
+		$this->view->evaForm=$this->getEvaForm();
+		
     }
 	
     public function indexAction()
@@ -45,14 +40,22 @@ class StaffController extends Zend_Controller_Action
 	public function profiloAction () //profilo action
     {}
 	
-	public function evaingAction () //evaquazione ingegneria action
-    {}
+	public function evaAction () //evaquazione ingegneria action
+    {
+    	$this->_sede=new Application_Model_Staff();
+		$this->_authService = Zend_Auth::getInstance();
+		$un=$this->_authService->getIdentity()->username;
+		
+		$idPos=$this->_sede->getIdPosizioneByUName($un);
+		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
+		$plan=$this->_sede->getMappaById($idPlan['idPlanimetria']);
+        $comp =$this->_sede->getZonacompetenzaByUName($un);
+		$this->view->assign(array('comp'=>$comp));
+    }
     
-    public function evamedAction () //evaquazione medicina action
-    {}
-    
-    public function evaecoAction () //evaquazione economia action
-    {}
+	public function segnalazioniAction()
+	{}
+	
 	public function modprofiloAction () 
     {
         $un=$this->_authService->getIdentity()->username;
@@ -97,9 +100,12 @@ class StaffController extends Zend_Controller_Action
 		$idPos=$this->_sede->getIdPosizioneByUName($un);
 		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
 		$plan=$this->_sede->getMappaById($idPlan['idPlanimetria']);
-              		  
+        $comp =$this->_sede->getZonacompetenzaByUName($un);
+				$this->view->assign(array('comp'=>$comp));
+		   		
 		$base64 = base64_encode($plan['mappa']);
-				$this->_image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="400 height=400" />';   
+				$image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="200 height=200" />';   
+				$this->view->assign(array('image'=>$image));
 	}
 	
 	public function salvamodcredenzialiAction () 
@@ -218,40 +224,16 @@ class StaffController extends Zend_Controller_Action
         return $this->_mpform;
     }
 	
-	 protected function getEvaingForm()
+	 protected function getEvaForm()
     {
         $urlHelper = $this->_helper->getHelper('url');
-        $this->_evaingform = new Application_Form_Staff_Evaing();
-        $this->_evaingform->setAction($urlHelper->url(array(
+        $this->_evaform = new Application_Form_Staff_Eva();
+        $this->_evaform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'evaing'),
+            'action' => 'eva'),
             'default'
         ));
-        return $this->_evaingform;
-    }
-	
-    protected function getEvamedForm()
-    {
-        $urlHelper = $this->_helper->getHelper('url');
-        $this->_evamedform = new Application_Form_Staff_Evamed();
-        $this->_evamedform->setAction($urlHelper->url(array(
-            'controller' => 'staff',
-            'action' => 'evamed'),
-            'default'
-        ));
-        return $this->_evamedform;
-    }
-	
-	    protected function getEvaecoForm()
-    {
-        $urlHelper = $this->_helper->getHelper('url');
-        $this->_evaecoform = new Application_Form_Staff_Evaeco();
-        $this->_evaecoform->setAction($urlHelper->url(array(
-            'controller' => 'staff',
-            'action' => 'evaeco'),
-            'default'
-        ));
-        return $this->_evaecoform;
+        return $this->_evaform;
     }
     
     protected function getPosizioneForm()
@@ -264,5 +246,8 @@ class StaffController extends Zend_Controller_Action
             'default'
         ));
         return $this->_pform;
-    }
+	}	
+	
+	public function getSegnalazioniForm()
+	{}
 }
