@@ -20,6 +20,14 @@ class UserController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
+		$UName = $this->_authService->getIdentity()->username;
+		$idPos = $this->_utente->getIdPosizioneByUName($UName);
+		$this->view->idPos = $idPos['idPosizione'];
+		if(($idPos['idPosizione']) != null){
+			$this->view->data = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
+		}
+		$this->_edificio = '';
+		$this->_piano = '';
     }
     
     public function indexAction()
@@ -99,16 +107,11 @@ class UserController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender();
 		
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $_piano = $this->_getParam('pia');
-			$_edificio = $this->_getParam('edif');
-            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($_edificio, $_piano);
+            $this->_piano = $this->_getParam('pia');
+			$this->_edificio = $this->_getParam('edif');
+            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($this->_edificio, $this->_piano);
 			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);
 			
-			$idPos = $this->_utente->getIdPosizioneByEdPi($_edificio, $_piano);
-			
-			$uName=$this->_authService->getIdentity()->username;
-			//Non va
-			$this->_utente->setIdPosByUName($idPos['idPosizione'], $uName);
 			//Zend_Debug::dump($mappa, $label = 'Mappa', $echo = true);
             //$dojoData = new Zend_Dojo_Data('mappa',$mappa);
             //alert('aaaaa');
@@ -145,9 +148,16 @@ class UserController extends Zend_Controller_Action
 	public function aulaAction () 
     {
     	$aula = $this->getParam('au');
-    	$user=$this->_authService->getIdentity()->username;
+    	$user = $this->_authService->getIdentity()->username;
     	$idPos = $this->_utente->getIdPosizioneByUName($user);
-		$this->_utente->setAulaByIdPos($idPos['idPosizione'], $aula);
+		$idPos = $this->_utente->getIdPosizioneByEdPiAl($this->_edificio, $this->_piano, $aula);		
+			
+		$uName=$this->_authService->getIdentity()->username;
+		
+		//Non va
+		$this->_utente->setIdPosByUName($idPos, $uName);
+		
+		
 		$this->_helper->redirector('index');
     }
 	
