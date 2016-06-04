@@ -10,9 +10,8 @@ class Application_Resource_Planimetrie extends Zend_Db_Table_Abstract
     {
     }
     
-	public function getMappaById($idplan)
+	public function getPlanimetriaById($idplan)
     {
-
         return $this->getAdapter()->fetchRow($this->select()->where('idPlanimetria= ?', $idplan));
     }
 

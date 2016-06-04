@@ -37,4 +37,24 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
 		return $this->getAdapter()->fetchRow($this->select('idPosizione')->where('username = ?', $user));  									  				
 	}
 	
+	public function setIdPosByUName($idPos, $uName)
+	{
+		//$data = array(
+		//'idPosizione'=>$idPos );
+		//$dove = 'username = ?'.$uName;
+		//$this->update($_name, $data, $dove);
+		$db = new Zend_Db_Adapter_Pdo_Mysql(array(
+												    'host'     => 'localhost',
+												    'username' => 'root',
+												    'password' => 'root',
+												    'dbname'   => 'grp_04_db'
+												));
+		$data      = array('idPosizione' => $idPos); 
+		$where[] = $db->quoteInto('username = ?', $uName); 
+		$db->update($this->_name, $data, $where); 
+		//$where = $this->getAdapter()->quoteInto('username = ?', $this->uName);
+		//$data = array('idPosizione'=>$idPos );
+		//$this->update($data, $where);
+	}
+	
 }
