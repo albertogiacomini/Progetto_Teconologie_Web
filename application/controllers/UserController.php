@@ -66,7 +66,6 @@ class UserController extends Zend_Controller_Action
     }
     
     public function modcredenzialiAction () 
-
     {
         $un=$this->_authService->getIdentity()->username;
         $this->_mcform->populate($this->_utente->getUserByUName($un)->toArray());
@@ -88,10 +87,12 @@ class UserController extends Zend_Controller_Action
         $this->_authService->getAuth()->clearIdentity();
         $this->_authService->authenticate($values);
     }
-    
+
+	
     public function edificioAction () 
     {}
-	
+
+
     public function posizioneAction () 
     {
     	$this->_helper->layout()->disableLayout();
@@ -101,12 +102,56 @@ class UserController extends Zend_Controller_Action
             $_piano = $this->_getParam('pia');
 			$_edificio = $this->_getParam('edif');
             $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($_edificio, $_piano);
-			$mappa = $this->_utente->getPlanimetriaById('1');
-            $dojoData= new Zend_Dojo_Data('mappa',$mappa);
-            echo $dojoData->toJson();
+			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);
+			
+			$idPos = $this->_utente->getIdPosizioneByEdPi($_edificio, $_piano);
+			
+			$uName=$this->_authService->getIdentity()->username;
+			//Non va
+			$this->_utente->setIdPosByUName($idPos['idPosizione'], $uName);
+			//Zend_Debug::dump($mappa, $label = 'Mappa', $echo = true);
+            //$dojoData = new Zend_Dojo_Data('mappa',$mappa);
+            //alert('aaaaa');
+            //echo $dojoData->toJson();
+            //$base64 = base64_encode($this->authInfo('imgprofilo'));
+            //$image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-circle" width="60" />';
+            
+            $base64 = base64_encode($mappa['mappa']);
+			$image = 'data:image/png;base64,'.$base64;
+			$map = $mappa['map'];
+			//$dojoData = new Zend_Dojo_Data('mappa','aaaaa');
+			//alert('gggg');
+            //echo $dojoData->toJson();
+            
+            //$a = array("0" => $image,
+			//		   "1" => $map);
+			//$data = new Zend_Dojo_Data();
+			//$data->setIdentifier('mappa')
+			//     ->addItem($image)
+			//	 ->addItem($map);
+            //echo $a;
+			//$dojoData = new Zend_Dojo_Data('mappa',$a->toArray());
+			//alert('aaaaa');
+			$a = array("mappa"=>$image,
+					   "map"=>$map);
+						require_once 'Zend/Json.php';
+            $a = Zend_Json::encode($a);
+			//$a = '{identifier":"mappa","m":[{"mappa":"'.$image.'","map":"'.$map.'"}]}';
+			echo $a;
+            //echo $a;
         } 
     }
     
+	public function aulaAction () 
+    {
+    	$aula = $this->getParam('au');
+    	$user=$this->_authService->getIdentity()->username;
+    	$idPos = $this->_utente->getIdPosizioneByUName($user);
+		$this->_utente->setAulaByIdPos($idPos['idPosizione'], $aula);
+		$this->_helper->redirector('index');
+    }
+	
+	
     public function pianoAction () 
     {
         $this->_helper->layout()->disableLayout();
@@ -114,9 +159,14 @@ class UserController extends Zend_Controller_Action
 		
         if ($this->getRequest()->isXmlHttpRequest()) {
             $_edificio = $this->_getParam('edif');
-            $edif = $this->_utente->getPianoByEdificio($_edificio);
-            $dojoData= new Zend_Dojo_Data('edificio',$edif);
-            echo $dojoData->toJson();
+            $edif = $this->_utente->getPianoByEdificio($_edificio);			
+            
+            require_once 'Zend/Json.php';
+            $a = Zend_Json::encode($edif);
+            
+            //$dojoData= new Zend_Dojo_Data('edificio',$edif);
+            //echo $dojoData->toJson();
+            echo $a;
         } 
     }
     
@@ -154,7 +204,7 @@ class UserController extends Zend_Controller_Action
         ));
         return $this->_mcform;
     }
-    
+
     protected function getModProfiloForm()
     {
         $urlHelper = $this->_helper->getHelper('url');

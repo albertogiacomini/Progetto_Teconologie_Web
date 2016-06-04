@@ -1,11 +1,11 @@
 <?php
 
-class Application_Form_Staff_Evaeco extends App_Form_Abstract
+class Application_Form_Staff_Eva extends App_Form_Abstract
 {
     public function init()
     {
         $this->setMethod('post');
-        $this->setName('getGestione');
+        $this->setName('getEva');
         $this->setAction('');
         
 		

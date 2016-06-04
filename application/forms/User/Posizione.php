@@ -25,13 +25,8 @@ class Application_Form_User_Posizione extends App_Form_Abstract
             'label'      => 'Piano',
             'MultiOptions' => array('0' => '-- Seleziona Piano --'),
             'onChange' => 'FillMap()',
-
             ));
 			
-		$this->addElement('image', 'mappa', array(
-            'required'   => true,
-            'label'      => 'Mappa',
-            ));
 			
         $this->setDecorators(array(
             'FormElements',

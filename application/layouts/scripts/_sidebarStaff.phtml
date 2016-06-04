@@ -10,7 +10,7 @@
                   $base64 = base64_encode($this->authInfo('imgprofilo'));
                   $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-circle" width="60" />';
                   ?>
-                  <p class="centered"><?php echo $image ?></a></p>
+                  <p class="centered"><?php echo $image ?></p>
                   <h5 class="centered"><?php echo $this->authInfo('nome') . ' ' . $this->authInfo('cognome') ?></h5>
                  
                   <li class="mt">
@@ -54,39 +54,19 @@
                                                     'default',true );?>">Percorsi</a></li>
                           <li><a  href="<?= $this->url(array(
                                                     'controller' => 'staff',
-                                                    'action'     => 'modprofilo', ), 
+                                                    'action'     => 'segnalazioni', ), 
                                                     'default',true );?>">Segnalazioni</a></li>
                     	</ul>
                   </li>
                   
                   <li class="mt">
-                      <a  href="javascript:;" >
-                          <i class="fa fa-desktop"></i>
-                          <span>Evaquazione Area</span>
-                      </a>
-                      <ul class="sub">
-                      	  <li><a href="<?= $this->url(array(
-                                                    'controller' => 'staff',
-                                                    'action'     => 'evaing',), 
-                                                    'default',true );?>">
-                         	  <span>Ingegneria</span></a>
-                          </li>
-                          
-                          <li><a href="<?= $this->url(array(
-                                                    'controller' => 'staff',
-                                                    'action'     => 'evamed',), 
-                                                    'default',true );?>">
-                         	  <span>Medicina</span></a>
-                          </li>
-                          
-                          <li><a href="<?= $this->url(array(
-                                                    'controller' => 'staff',
-                                                    'action'     => 'evaeco',), 
-                                                    'default',true );?>">
-                         	  <span>Economia</span></a>
-                          </li>
-                          
-                      </ul>
+                  		 <a  href="<?= $this->url(array(
+                                            'controller' => 'staff',
+                                            'action'     => 'eva',), 
+                                            'default',true );?>">
+                 		 	<i class="fa fa-dashboard"></i>	 
+                  		 	<span>Evaquazione Area</span>
+                  	 	 </a>  
                   </li>
               </ul>
               <!-- sidebar menu end-->
