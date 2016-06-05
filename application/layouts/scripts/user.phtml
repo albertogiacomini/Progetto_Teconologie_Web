@@ -66,10 +66,11 @@
 								   	
 								   	var area = map.getElementsByTagName("area"); 
 									for (var i = 0; i < area.length; i++) { 
-										$a = i+1;
-										var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aula','au'=>$this->a))?>";
+										var a = i+1;
+										var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aula'))?>";
+						
 										//var method = area[i].setAttribute("method", "post");
-									    var status = area[i].setAttribute("href", url);	
+									    var status = area[i].setAttribute("href", url+"/au/"+a);	
 									}						   		   	
 							   }
 	        });
