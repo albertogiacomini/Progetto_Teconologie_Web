@@ -1,14 +1,17 @@
 <h2>HOME</h2>
 <div class="showback">
     <h4><i class="fa fa-angle-right"></i>Notifiche segnalazioni <b><?php echo $this->comp ?></b></h4>		
-   	<div class="showback"><p class="left">   		
+   	<div class="showback"><p>   		
    		<?php foreach($this->Plan as $plan) :?>
-   			
+   			<div display='inline'>
+   			<h4>EDIFICIO:</h4>		
    			<?php $base64 = base64_encode($plan['mappa']);?>
-			<?php $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="200 height=200" />';?>
+			<?php $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="150em height=150em" />';?>
             <?php echo $image; ?>
-        <?php endforeach; ?>
-    		
+   		    <p>NUMERO DI SEGNALAZIONI:</p>
+   		    </div>
+        	<?php endforeach; ?>
+    
     </p>
-    </div> <?=$this->hForm; ?>
+    </div>
 </div>
