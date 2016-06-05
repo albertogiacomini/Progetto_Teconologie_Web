@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_Staff_Eva extends App_Form_Abstract
+class Application_Form_Staff_Segnalazioni extends App_Form_Abstract
 {
     public function init()
     {
@@ -8,8 +8,13 @@ class Application_Form_Staff_Eva extends App_Form_Abstract
         $this->setName('getEva');
         $this->setAction('');
 
-        $this->addElement('submit', 'aggiorna', array(
-            'label'    => 'Aggiorna',
+		$this->addElement('submit', 'elimina', array(
+            'label'    => 'Eliminati',
+            'decorators' => $this->buttonDecorators,
+        ));
+		
+        $this->addElement('submit', 'aggiungi', array(
+            'label'    => 'Aggiungi',
             'decorators' => $this->buttonDecorators,
         ));
 
