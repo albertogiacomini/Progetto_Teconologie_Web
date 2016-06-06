@@ -8,8 +8,9 @@ class UserController extends Zend_Controller_Action
     protected $_mpform;
     protected $_epform;
     protected $_seform;
-	public $_edificio;
-	public $_piano;
+	protected $_edificio;
+	protected $_piano;
+	protected $_idavviso;
     protected $imageBlob;
     
     public function init()
@@ -131,11 +132,51 @@ class UserController extends Zend_Controller_Action
         } 
     }
     
+	public function mappasegnalazioneAction () 
+    {
+    	$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+        	$us=$this->_authService->getIdentity()->username;
+			$utente	 = $this->_utente->getUserByUName($us);
+        	//if(){}
+        	//Prendo i due parametri passati con l'ajax
+            $_avviso = $this->_getParam('av');
+			
+			$IdAvviso = $this->_utente->getIdElAvvisoByTipo($_avviso);
+			$a = $IdAvviso['idElencoAvviso'];
+			//Istanzio la session e salvo il parametro idAvviso		
+			$session = new Zend_Session_Namespace('session');
+            $session->_idavviso = $a;
+			
+			
+			$idPos = $this->_utente->getIdPosizioneByUName($us);
+			
+			$dat = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
+			
+			//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
+            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($dat['edificio'], $dat['piano']);
+			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);	
+			//Codifico l'immagine e assieme metto il map           
+            $base64 = base64_encode($mappa['mappa']);
+			$image = 'data:image/png;base64,'.$base64;
+			$map = $mappa['map'];
+			$a = array("mappa"=>$image,
+					   "map"=>$map);
+						require_once 'Zend/Json.php';
+			//Codifico i dati in formato Json e li rimando indietro
+			require_once 'Zend/Json.php';
+            $a = Zend_Json::encode($a);
+			echo $a;
+        } 
+    }
+	
 	public function aulaAction () 
     {
     	//Prendo l'aula passata attraverso la selezione dall'immagine
     	$aula = $this->getParam('au');
-		//Creo un'istanza della sezzione per poter prendere i parametri precedentemente salvati
+		//Creo un'istanza della sessione per poter prendere i parametri precedentemente salvati
     	$session = new Zend_Session_Namespace('session');
 		//Prelevo l'id posizione relativo all'edificio, il piano e l'aula
 		$idPos = $this->_utente->getIdPosizioneByEdPiAl($session->_edificio, $session->_piano, $aula);
@@ -145,22 +186,29 @@ class UserController extends Zend_Controller_Action
 		$this->_helper->redirector('index');
     }
 	
-	public function aulasegnalazione ()
-	{
+	public function aulasegnalazioneAction ()
+	{		
 		//Prendo l'aula passata attraverso la selezione dall'immagine
     	$aula = $this->getParam('aus');
-		//Prelevo i dati dalla posizione inserita dall'utente
+		$us=$this->_authService->getIdentity()->username;
+		$utente	 = $this->_utente->getUserByUName($us);	
+			
+		$dat = $this->_utente->getDataByIdPosizione($utente['idPosizione']);	
 		
-		//Ho la posizione della segnalazione
+		$idPos = $this->_utente->getIdPosizioneByEdPiAl($dat['edificio'], $dat['piano'], $aula);
 		
+		$date = new Zend_Date(); 
+		$createdDate= $date->get('YYYY-MM-dd HH:mm:ss');
+		 
+		//Creo un'istanza della sessione per poter prendere i parametri precedentemente salvati
     	$session = new Zend_Session_Namespace('session');
-		//Prelevo l'id posizione relativo all'edificio, il piano e l'aula
-		$idPos = $this->_utente->getIdPosizioneByEdPiAl($session->_edificio, $session->_piano, $aula);
-		//Prendo l'username e attraverso quello imposto l'id posizione corretto e faccio il redirect all'index
-		$uName=$this->_authService->getIdentity()->username;
-		$this->_utente->setIdPosByUName($idPos['idPosizione'], $uName);
 		
-		
+		$avviso = (array('idPosizione'=>$idPos['idPosizione'],
+					  'idUtente'=> $utente['idUtente'],
+					  'data'=>$createdDate,
+					  'idElencoAvviso'=>$session->_idavviso,
+		));
+		$this->_utente->inserisciSegnalazione($avviso);
 		
 		$this->_helper->redirector('index');
 	}
@@ -174,9 +222,9 @@ class UserController extends Zend_Controller_Action
         	//Prendo l'edificio passato con l'ajax
             $_edificio = $this->_getParam('edif');
 			//Ricerco le corrispondenti aule e le rimando indietro in formato Json
-            $edif = $this->_utente->getPianoByEdificio($_edificio);		
+            $piano = $this->_utente->getPianoByEdificio($_edificio);		
             require_once 'Zend/Json.php';
-            $a = Zend_Json::encode($edif);
+            $a = Zend_Json::encode($piano);
             echo $a;
         } 
     }

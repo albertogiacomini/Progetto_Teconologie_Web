@@ -77,4 +77,14 @@ class Application_Model_User extends App_Model_Abstract
 	{
 		return $this->getResource('ElencoAvvisi')->getElAvvisi();
 	}
+	
+	public function inserisciSegnalazione($seInfo)
+	{
+		return $this->getResource('Avvisi')->inserisciSegnalazione($seInfo);		
+	}
+	
+	public function getIdElAvvisoByTipo($TAvviso)
+	{
+		return $this->getResource('ElencoAvvisi')->getIdElAvvisoByTipo($TAvviso);
+	}
 }
