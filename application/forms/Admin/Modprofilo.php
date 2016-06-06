@@ -1,0 +1,112 @@
+<?php
+
+class Application_Form_Admin_Modprofilo extends App_Form_Abstract
+{
+    protected $_userModel;
+    
+    public function init()
+    {
+        $this->_userModel = new Application_Model_User();              
+        $this->setMethod('post');
+        $this->setName('modProfilo');
+        $this->setAction('');
+        
+        $this->addElement('hidden', 'idUtente', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(1, 25))
+            ),
+            'required'   => true,
+            ));
+        
+        $this->addElement('text', 'nome', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Nome',
+            'decorators' => $this->elementDecorators,
+            ));
+            
+        $this->addElement('text', 'cognome', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Cognome',
+            'decorators' => $this->elementDecorators,
+            ));
+        
+        $this->addElement('text', 'username', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Username',
+            'decorators' => $this->elementDecorators,
+            ));
+            
+        $this->addElement('radio', 'genere', array(
+            'label'      => 'Genere',
+            'MultiOptions'=>array(
+                'male' => 'M',
+                'female' => 'F',),
+            'decorators' => $this->elementDecorators, 
+        ));
+            
+        $this->addElement('text', 'email', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 35))
+            ),
+            'required'   => true,
+            'label'      => 'E-mail',
+            'decorators' => $this->elementDecorators,
+        )); 
+            
+        $this->addElement('text', 'eta', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Nascita',
+            'decorators' => $this->elementDecorators,
+        )); 
+
+        $this->addElement('text', 'telefono', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('Int'),
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Telefono',
+            'decorators' => $this->elementDecorators,
+        ));
+        
+        $this->addElement('select', 'livello', array(
+            'label'      => 'Livello',
+            'MultiOptions'=>array(
+                'admin' => 'admin',
+                'staff' => 'staff',
+                'utente' => 'utente',),
+            'decorators' => $this->elementDecorators, 
+        ));
+            
+        $this->addElement('submit', 'aggiorna', array(
+            'label'    => 'Aggiorna',
+            'decorators' => $this->buttonDecorators,
+        ));
+
+        $this->setDecorators(array(
+            'FormElements',
+            array('HtmlTag', array('tag' => 'table', 'class' => 'zend_form')),
+            array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
+            'Form'
+        ));
+    }
+}

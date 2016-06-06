@@ -26,6 +26,11 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
     {
         $this->insert($seInfo);
 	}
+	public function getAvvisiByidPosizione($pos)
+    {
+        return $this->getAdapter()->fetchAll($this->select()->where('idPosizione= ?', $pos));
+    }
+	
 }
 
         
