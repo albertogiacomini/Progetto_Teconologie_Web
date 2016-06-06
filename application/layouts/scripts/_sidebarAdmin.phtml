@@ -13,8 +13,11 @@
                   <p class="centered"><?php echo $image ?></a></p>
                   <h5 class="centered"><?php echo $this->authInfo('nome') . ' ' . $this->authInfo('cognome') ?></h5>
                   <li class="mt">
-                      <a class="sub-menu" href="index.html">
-                          <i class="fa fa-desktop"></i>
+                     <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'index',), 
+                                                    'default',true );?>"> 
+                          <i class="fa fa-user"></i>
                           <span>Home</span>
                       </a>
                   </li>

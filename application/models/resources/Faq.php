@@ -16,4 +16,16 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract
        $select = $this->select()->order('idFaq');
        return $this->fetchAll($select);
     }
+    
+    public function deleteFaq($idFaq)
+    {
+        $dove="idFaq='". $idFaq. "'";
+        $this->delete($dove);
+    }
+    
+        public function updateFaqById($faqInfo,$idFaq)
+    {
+        $dove="idFaq='". $idFaq. "'";
+        $this->update($faqInfo,$dove);
+    }
 }

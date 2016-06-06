@@ -33,6 +33,12 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
         $this->update($usrInfo,$dove);
     }
     
+    public function updateUserById($usrInfo,$idUtente)
+    {
+        $dove="idUtente='". $idUtente. "'";
+        $this->update($usrInfo,$dove);
+    }
+    
     public function deleteUser($username)
     {
         $dove="username='". $username. "'";
