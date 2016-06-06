@@ -7,8 +7,8 @@ class UserController extends Zend_Controller_Action
     protected $_utente;
     protected $_mpform;
     protected $_epform;
-	protected $_edificio;
-	protected $_piano;
+	public $_edificio;
+	public $_piano;
     protected $imageBlob;
     
     public function init()
@@ -20,9 +20,18 @@ class UserController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
+
         //passaggio informazioni alle notifiche
         $Not=$this->_utente->getAvvisi();
         Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
+
+		$un = $this->_authService->getIdentity()->username;
+		$idPos = $this->_utente->getIdPosizioneByUName($un);
+		$this->view->idPos = $idPos['idPosizione'];
+		if(($idPos['idPosizione']) != null){
+			$this->view->data = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
+		}
+
     }
     
     public function indexAction()
@@ -51,9 +60,11 @@ class UserController extends Zend_Controller_Action
             return $this->render('modprofilo');
         }
         $values=$form->getValues();
-        //conversione del file della form in base64
+        
+        //conversione del file della form in blob
         $image=APPLICATION_PATH . '/../public/images/temp/'.$values['imgprofilo'];
         $data=file_get_contents($image);
+        //immissione del file blob nella variabile imgprofilo
         $values['imgprofilo']=$data;
         
         $un=$this->_authService->getIdentity()->username;
@@ -99,55 +110,41 @@ class UserController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender();
 		
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $_piano = $this->_getParam('pia');
-			$_edificio = $this->_getParam('edif');
-            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($_edificio, $_piano);
-			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);
-			
-			$idPos = $this->_utente->getIdPosizioneByEdPi($_edificio, $_piano);
-			
-			$uName=$this->_authService->getIdentity()->username;
-			//Non va
-			$this->_utente->setIdPosByUName($idPos['idPosizione'], $uName);
-			//Zend_Debug::dump($mappa, $label = 'Mappa', $echo = true);
-            //$dojoData = new Zend_Dojo_Data('mappa',$mappa);
-            //alert('aaaaa');
-            //echo $dojoData->toJson();
-            //$base64 = base64_encode($this->authInfo('imgprofilo'));
-            //$image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-circle" width="60" />';
-            
+        	//Prendo i due parametri passati con l'ajax
+            $this->_piano = $this->_getParam('pia');
+			$this->_edificio = $this->_getParam('edif');
+			//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
+            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($this->_edificio, $this->_piano);
+			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);	
+			//Istanzio la session e salvo i parametri piano ed edificio		
+			$session = new Zend_Session_Namespace('session');
+            $session->_piano = $this->_getParam('pia');;
+			$session->_edificio = $this->_getParam('edif'); 
+			//Codifico l'immagine e assieme metto il map           
             $base64 = base64_encode($mappa['mappa']);
 			$image = 'data:image/png;base64,'.$base64;
 			$map = $mappa['map'];
-			//$dojoData = new Zend_Dojo_Data('mappa','aaaaa');
-			//alert('gggg');
-            //echo $dojoData->toJson();
-            
-            //$a = array("0" => $image,
-			//		   "1" => $map);
-			//$data = new Zend_Dojo_Data();
-			//$data->setIdentifier('mappa')
-			//     ->addItem($image)
-			//	 ->addItem($map);
-            //echo $a;
-			//$dojoData = new Zend_Dojo_Data('mappa',$a->toArray());
-			//alert('aaaaa');
 			$a = array("mappa"=>$image,
 					   "map"=>$map);
 						require_once 'Zend/Json.php';
+			//Codifico i dati in formato Json e li rimando indietro
+			require_once 'Zend/Json.php';
             $a = Zend_Json::encode($a);
-			//$a = '{identifier":"mappa","m":[{"mappa":"'.$image.'","map":"'.$map.'"}]}';
 			echo $a;
-            //echo $a;
         } 
     }
     
 	public function aulaAction () 
     {
+    	//Prendo l'aula passata attraverso la selezione dall'immagine
     	$aula = $this->getParam('au');
-    	$user=$this->_authService->getIdentity()->username;
-    	$idPos = $this->_utente->getIdPosizioneByUName($user);
-		$this->_utente->setAulaByIdPos($idPos['idPosizione'], $aula);
+		//Creo un'istanza della sezzione per poter prendere i parametri precedentemente salvati
+    	$session = new Zend_Session_Namespace('session');
+		//Prelevo l'id posizione relativo all'edificio, il piano e l'aula
+		$idPos = $this->_utente->getIdPosizioneByEdPiAl($session->_edificio, $session->_piano, $aula);
+		//Prendo l'username e attraverso quello imposto l'id posizione corretto e faccio il redirect all'index
+		$uName=$this->_authService->getIdentity()->username;
+		$this->_utente->setIdPosByUName($idPos['idPosizione'], $uName);
 		$this->_helper->redirector('index');
     }
 	
@@ -158,17 +155,27 @@ class UserController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender();
 		
         if ($this->getRequest()->isXmlHttpRequest()) {
+        	//Prendo l'edificio passato con l'ajax
             $_edificio = $this->_getParam('edif');
-            $edif = $this->_utente->getPianoByEdificio($_edificio);			
-            
+			//Ricerco le corrispondenti aule e le rimando indietro in formato Json
+            $edif = $this->_utente->getPianoByEdificio($_edificio);		
             require_once 'Zend/Json.php';
             $a = Zend_Json::encode($edif);
-            
-            //$dojoData= new Zend_Dojo_Data('edificio',$edif);
-            //echo $dojoData->toJson();
             echo $a;
         } 
     }
+	
+	public function modificaposizioneAction () 
+    {
+    	//Prendo l'user e modifico a NULL il suo id posizione nel DB
+    	$user = $this->_authService->getIdentity()->username;
+    	$this->_utente->setIdPosByUName(null, $user);
+    	$this->_helper->redirector('index');
+    }
+    
+	public function segnalazioneActio(){
+		
+	}
     
     public function eliminaprofiloAction () 
     {}

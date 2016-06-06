@@ -12,6 +12,8 @@ class StaffController extends Zend_Controller_Action
 	protected $_piano;
 	protected $_staff;
 	protected $_sede;
+	protected $_segnform;
+	protected $_iform;
 	
     public function init()
     {
@@ -22,9 +24,10 @@ class StaffController extends Zend_Controller_Action
 		$this->view->mcForm=$this->getModcredenzialiForm();
 		$this->view->mpForm=$this->getModprofiloForm();
         $this->view->pForm=$this->getPosizioneForm();
-		$this->view->hForm=$this->getHomeForm();
-		$this->view->epForm=$this->geteliminaprofiloForm();
+		$this->view->iForm=$this->getIndexForm();
+		$this->view->epForm=$this->getEliminaprofiloForm();
 		$this->view->evaForm=$this->getEvaForm();
+		$this->view->segnForm=$this->getSegnalazioniForm();
 		
     }
 	
@@ -32,6 +35,17 @@ class StaffController extends Zend_Controller_Action
     {
     	 $Not=$this->_staff->getAvvisi();
          Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
+		
+		$this->_sede=new Application_Model_Staff();
+		$this->_authService = Zend_Auth::getInstance();
+		$un=$this->_authService->getIdentity()->username;
+		
+		$idPos=$this->_sede->getIdPosizioneByUName($un);
+		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
+		$planimetria=$this->_sede->getPlanimetrieOrderById($idPlan['idPlanimetria']);
+        $comp =$this->_sede->getZonacompetenzaByUName($un);
+			   $this->view->assign(array('comp'=>$comp));
+			   $this->view->assign(array('Plan'=>$planimetria));	
 	} 
 	
     public function viewstaticAction () 
@@ -48,13 +62,15 @@ class StaffController extends Zend_Controller_Action
 		
 		$idPos=$this->_sede->getIdPosizioneByUName($un);
 		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
-		$plan=$this->_sede->getMappaById($idPlan['idPlanimetria']);
+		$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
         $comp =$this->_sede->getZonacompetenzaByUName($un);
 		$this->view->assign(array('comp'=>$comp));
     }
     
 	public function segnalazioniAction()
-	{}
+	{
+		
+	}
 	
 	public function modprofiloAction () 
     {
@@ -93,19 +109,7 @@ class StaffController extends Zend_Controller_Action
 	
 	public function homeAction () //home action
     {
-    	$this->_sede=new Application_Model_Staff();
-		$this->_authService = Zend_Auth::getInstance();
-		$un=$this->_authService->getIdentity()->username;
-		
-		$idPos=$this->_sede->getIdPosizioneByUName($un);
-		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
-		$plan=$this->_sede->getMappaById($idPlan['idPlanimetria']);
-        $comp =$this->_sede->getZonacompetenzaByUName($un);
-				$this->view->assign(array('comp'=>$comp));
-		   		
-		$base64 = base64_encode($plan['mappa']);
-				$image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="200 height=200" />';   
-				$this->view->assign(array('image'=>$image));
+	   
 	}
 	
 	public function salvamodcredenzialiAction () 
@@ -153,16 +157,16 @@ class StaffController extends Zend_Controller_Action
         } 
     }
 	
-	protected function gethomeForm()
+	protected function getIndexForm()
 	{
 		$urlHelper = $this->_helper->getHelper('url');
-        $this->_hform = new Application_Form_Staff_Home();
-        $this->_hform->setAction($urlHelper->url(array(
+        $this->_iform = new Application_Form_Staff_Index();
+        $this->_iform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'home'),
+            'action' => 'index'),
             'default'
         ));
-        return $this->_hform;
+        return $this->_iform;
 	}
 	  
 	protected function getGestioneForm()
@@ -188,7 +192,7 @@ class StaffController extends Zend_Controller_Action
         }$this->view->assign('description','Eliminazione non riuscita.');
     }
 		
-	protected function getEliminaProfiloForm()
+	protected function getEliminaprofiloForm()
     {
         $urlHelper = $this->_helper->getHelper('url');
         $this->_epform = new Application_Form_Staff_Eliminaprofilo();
@@ -242,12 +246,21 @@ class StaffController extends Zend_Controller_Action
         $this->_pform = new Application_Form_Staff_Posizione();
         $this->_pform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'index'),
+            'action' => 'posizione'),
             'default'
         ));
         return $this->_pform;
 	}	
 	
-	public function getSegnalazioniForm()
-	{}
+	protected function getSegnalazioniForm()
+	{
+		$urlHelper = $this->_helper->getHelper('url');
+        $this->_segnform = new Application_Form_Staff_Segnalazioni();
+        $this->_segnform->setAction($urlHelper->url(array(
+            'controller' => 'staff',
+            'action' => 'segnalazioni'),
+            'default'
+        ));
+        return $this->_segnform;
+	}
 }

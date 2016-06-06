@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_Staff_Home extends App_Form_Abstract
+class Application_Form_Staff_Index extends App_Form_Abstract
 {
 	protected $_sede;
 	
