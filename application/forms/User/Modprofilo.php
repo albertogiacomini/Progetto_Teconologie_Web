@@ -97,8 +97,8 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
         
         $this->setDecorators(array(
             'FormElements',
-            array('HtmlTag', array('tag' => 'table', 'class' => 'zend_form')),
-            array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
+            array('HtmlTag', array('tag' => 'table')),
+            array('Description', array('placement' => 'prepend')),
             'Form'
         ));
     }

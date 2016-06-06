@@ -11,6 +11,12 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract
         
     }
     
+    public function getFaqById($idfaq)
+    {
+        $select = $this->select()->where('idFaq = ?', $idfaq); 
+        return $this->fetchRow($select);
+    }
+    
     public function getFaqOrderById()
     {
        $select = $this->select()->order('idFaq');

@@ -49,7 +49,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Username',
             'decorators' => $this->elementDecorators,
-           'class' => 'form-control round-form',
+           'class' => 'form-control',
             ));
             
         $this->addElement('radio', 'genere', array(

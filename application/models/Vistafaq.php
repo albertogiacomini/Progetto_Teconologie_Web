@@ -7,6 +7,11 @@ class Application_Model_Vistafaq extends App_Model_Abstract
              
     } 
 
+    public function  getFaqById($id)
+    {
+        return $this->getResource('Faq')-> getFaqById($id);
+    }
+
     public function getFaqOrderById()
     {
         return $this->getResource('Faq')->getFaqOrderById();
