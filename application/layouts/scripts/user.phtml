@@ -70,27 +70,27 @@
         }
 	}
 	
-	function InviaSegnalazione()
+	function MappaSegnalazione()
 	{
     	//Metodo per prelevare l'elemento selezionato nel select
     	var a = document.getElementById('avvisi');
 		var avviso = a.options[a.selectedIndex].text;
 		if(avviso != '-- Seleziona Avviso --'){
 	        new Ajax.Request(
-	        "<?=$this->url(array('controller' => 'user','action' => 'posizione'))?>",
+	        "<?=$this->url(array('controller' => 'user','action' => 'mappasegnalazione'))?>",
 	            {
 	                method:'get',
 	                parameters: {av : avviso},
-	                onSuccess: function FillMap(mappaSeRsp)
+	                onSuccess: function FillMapSe(mappaSeRsp)
 							   {
-								   	var mappaSeRsp = eval('(' + mappaSeRsp.responseText + ')');
-								   	var mappa = document.getElementById('mappaSegnalazione');
-								   	mappa.src = mappaEmap.mappa;
-								   	var map = document.getElementById('mapSegnalazione');
-								   	map.innerHTML = mappaEmap.map;	
-								   	mappa.setAttribute("usemap", "#mapSegnalazione");
+								   	var mappaSeg = eval('(' + mappaSeRsp.responseText + ')');
+								   	var mappaSe = document.getElementById('mappaSegnalazione');
+								   	mappaSe.src = mappaSeg.mappa;
+								   	var mapSe = document.getElementById('mapSegnalazione');
+								   	mapSe.innerHTML = mappaSeg.map;	
+								   	mappaSe.setAttribute("usemap", "#mapSegnalazione");
 								   	
-								   	var area = map.getElementsByTagName("area"); 
+								   	var area = mapSe.getElementsByTagName("area"); 
 									for (var i = 0; i < area.length; i++) { 
 										var a = i+1;
 										var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aulasegnalazione'))?>";
