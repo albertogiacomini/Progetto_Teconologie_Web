@@ -47,6 +47,13 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
 	public function getIdPlanimetriaByPosizionestaff($Pos)
 	{
 		return $this->getAdapter()->fetchAll($this->select('idPlanimetria')->where('edificio = ?', $Pos));
+		
+		 /*$select = $this->select('idPlanimetria')	
+								->from(array('p' => 'posizione'),
+                            	       array('p.edificio'))->distinct()				   
+        			  		    ->where('edificio= ?', $Pos)->distinct();
+		
+        return $this->getAdapter()->fetchAll($select);*/
 	}
 	
 	public function getIdPlanimetriaByIdPosizione($idPos)

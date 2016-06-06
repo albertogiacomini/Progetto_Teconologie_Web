@@ -39,28 +39,27 @@ class StaffController extends Zend_Controller_Action
 		$this->_sede=new Application_Model_Staff();
 		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
-		$comp =$this->_sede->getPosizionestaffByUName($un);
-		$user=$this->_sede->getUtenteByUName($un);
-		foreach($user['PosizioneStaff'] as $u)
-		{$Plan=$this->_sede->getIdPlanimetriaByPosizionestaff($u);}
-		foreach($Plan['idPlanimetria'] as $i)
-		{$mappa=$this->_sede->getPlanimetriaById($i);
-		echo $mappa;}
-		foreach($Plan['idPlanimetria'] as $w)	
-		{$idpos=$this->_sede->getIdPosizioneByIdPlanimetria($w);
-			echo $idpos['idPosizione'];}
 		
+		$comp =$this->_sede->getPosizionestaffByUName($un); //edificio di competenza 
+		$user=$this->_sede->getUtenteByUName($un); //prendo Utente 
+		$Plan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['PosizioneStaff']); // prendo idPlanimetrie riferite ad un edificio 
+		foreach($Plan as $i){echo $i['idPlanimetria'];}
+		for($s=0;$s<6;$s++){$mappa=$this->_sede->getPlanimetriaById($i['idPlanimetria[$s]']);}//2 mappe per ogni edificio
+		//echo $mappa;}
+		//foreach($idpos=$this->_sede->getIdPosizioneByIdPlanimetria($w) as $w)	
+		//{echo $idpos['idPosizione'];}
+			
 			$this->view->assign(array('comp'=>$comp));
 		    $this->view->assign(array('Plan'=>$mappa));	
 		
 		//$idPos=$this->_sede->getIdPosizioneByPosizionestaff($comp);	   
-		$avvisi=$this->_sede->getAvvisiByidPosizione($idpos['idPosizione']);
-			   $this->view->assign(array('avvisi'=>$avvisi));
-		foreach($avvisi as $a)
+	
+		foreach($idpos['idPosizione'] as $a)
 		{
-			echo $a['idPosizione'];
+			$avvisi=$this->_sede->getAvvisiByidPosizione($a);
+			echo $avvisi;
 		}
-		
+		$this->view->assign(array('avvisi'=>$avvisi));
 			
 	} 
 	
