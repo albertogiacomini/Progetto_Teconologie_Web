@@ -12,10 +12,9 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
     public function getEdifici()
     {
         $select = $this->select()
-                       ->from(array('p' => 'posizione'),
-                              array('p.edificio'))->distinct();
-                              
-        return $this->fetchAll($select);
+                       ->from($this->_name,
+                              array('value'=>'edificio'))->distinct();
+        return $this->getAdapter()->fetchAll($select);
     }
     
     public function getPianoByEdificio($edificio)

@@ -152,7 +152,7 @@ class UserController extends Zend_Controller_Action
         if ($this->getRequest()->isXmlHttpRequest()) {
         	//Prendo l'edificio passato con l'ajax
             $_edificio = $this->_getParam('edif');
-			//Ricerco le corrispondenti aule e le rimando indietri in formato Json
+			//Ricerco le corrispondenti aule e le rimando indietro in formato Json
             $edif = $this->_utente->getPianoByEdificio($_edificio);		
             require_once 'Zend/Json.php';
             $a = Zend_Json::encode($edif);
@@ -168,6 +168,9 @@ class UserController extends Zend_Controller_Action
     	$this->_helper->redirector('index');
     }
     
+	public function segnalazioneActio(){
+		
+	}
     
     public function eliminaprofiloAction () 
     {}
