@@ -46,7 +46,7 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
 	
 	public function getIdPlanimetriaByPosizionestaff($Pos)
 	{
-		return $this->getAdapter()->fetchRow($this->select('idPlanimetria')->where('edificio = ?', $Pos));
+		return $this->getAdapter()->fetchAll($this->select('idPlanimetria')->where('edificio = ?', $Pos));
 	}
 	
 	public function getIdPlanimetriaByIdPosizione($idPos)
@@ -56,7 +56,7 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
 	
 	public function getIdPosizioneByIdPlanimetria($idPlan)
 	{
-		return $this->getAdapter()->fetchRow($this->select('idPosizione')->where('idPlanimetria = ?', $idPlan));
+		return $this->getAdapter()->fetchAll($this->select('idPosizione')->where('idPlanimetria = ?', $idPlan));
 	}
 	
 	public function getIdPosizioneByEdPiAl($ed, $pi, $al)
