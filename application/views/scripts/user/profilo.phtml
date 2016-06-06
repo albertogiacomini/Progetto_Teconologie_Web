@@ -1,25 +1,53 @@
+<?php
+$base64 = base64_encode($this->authInfo('imgprofilo'));
+$image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-circle" width="60" align="center"/>';
+?>
 <div class="showback">
                         <h4><i class="fa fa-angle-right"></i>IL TUO PROFILO</h4>
+                       
+             <table class="table"> 
+                 <tbody>
+                        <tr>
+                            <td>IMMAGINE PROFILO:</td>
+                            <td><?php echo $image ?></td>
+                        </tr>
                         
-                        <div>
-                          <h3>NOME:</h3><h5><?php echo $this->authInfo('nome')?></h5>
-                        </div>
-                        <div>
-                          <h3>COGNOME:</h3><h5><?php echo $this->authInfo('cognome')?></h5>
-                        </div>
-                        <div>
-                          <h3>ETA':</h3><h5><?php echo $this->authInfo('eta')?></h5>
-                        </div>
-                        <div>
-                          <h3>TELEFONO:</h3><h5><?php echo $this->authInfo('telefono')?></h5>
-                        </div>
-                        <div>
-                          <h3>INDIRIZZO:</h3><h5><?php echo $this->authInfo('indirizzo')?></h5>
-                        </div>
-                        <div>
-                          <h3>MAIL:</h3><h5><?php echo $this->authInfo('email')?></h5>
-                        </div>
-                        <div>
-                          <h3>SESSO:</h3><h5><?php echo $this->authInfo('genere')?></h5>
-                        </div>
+                        <tr>
+                            <td>NOME:</td>
+                            <td><?php echo $this->authInfo('nome')?></td>
+                        </tr>
+                        
+                        <tr>
+                          <td>COGNOME:</td>
+                          <td><?php echo $this->authInfo('cognome')?></td>
+                        </tr>
+                        
+                        <tr>
+                          <td>ETA':</td>
+                          <td><?php echo $this->authInfo('eta')?></td>
+                        </tr>
+                        
+                        <tr>
+                          <td>TELEFONO:</td>
+                          <td><?php echo $this->authInfo('telefono')?></td>
+                        </tr>
+                        
+                        <tr>
+                          <td>INDIRIZZO:</td>
+                          <td><?php echo $this->authInfo('indirizzo')?></td>
+                        </tr>
+                        
+                        <tr>
+                          <td>MAIL:</td>
+                            <td><?php echo $this->authInfo('email')?></td>
+                        </tr>
+                        
+                        <tr>
+                          <td>SESSO:</td>
+                          <td><?php echo $this->authInfo('genere')?></td>
+                        </tr>
+                        
+                        
+                </tbody>
+       </table> 
 </div>

@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_User_Modprofilo extends App_Form_Abstract
+class Application_Form_Staff_Modprofilo extends App_Form_Abstract
 {
     protected $_userModel;
     
@@ -10,15 +10,6 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
         $this->setMethod('post');
         $this->setName('modProfilo');
         $this->setAction('');
-        
-        $this->addElement('file', 'imgprofilo', array(
-            'label' => 'Img profilo',
-            'validators' => array( 
-                    array('Count', false, 1),
-                    array('Size', false, 102400),
-                    array('Extension', false, array('jpg', 'gif', 'png'))),
-            'decorators' => $this->fileDecorators,
-                    )); 
         
         $this->addElement('text', 'nome', array(
             'filters'    => array('StringTrim', 'StringToLower'),
@@ -42,7 +33,6 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
             
         $this->addElement('radio', 'genere', array(
             'label'      => 'Genere',
-            'required'   => true,
             'MultiOptions'=>array(
                 'male' => 'M',
                 'female' => 'F',),
@@ -79,22 +69,12 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
             'label'      => 'Telefono',
             'decorators' => $this->elementDecorators,
         ));
-        
-        $this->addElement('text', 'indirizzo', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
-            'validators' => array(
-                array('StringLength', true, array(3, 25))
-            ),
-            'required'   => true,
-            'label'      => 'Indirizzo',
-            'decorators' => $this->elementDecorators,
-            ));
             
         $this->addElement('submit', 'aggiorna   ', array(
             'label'    => 'Aggiorna',
             'decorators' => $this->buttonDecorators,
         ));
-        
+
         $this->setDecorators(array(
             'FormElements',
             array('HtmlTag', array('tag' => 'table', 'class' => 'zend_form')),

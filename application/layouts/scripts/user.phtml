@@ -6,6 +6,7 @@
     <?= $this->headLink(); ?>
     <?= $this->headTitle(); ?>
     <?= $this->render('js.phtml') ?> 
+    
     <script>
     function FillPiani()
     {
@@ -22,19 +23,17 @@
                 onSuccess: function FillSelPiani(rsp)
 						   {
 						   		var piani = eval('(' + rsp.responseText + ')');
-						   		var dim = piani.items.length;
-								
+						   		var dim = piani.length;
 								//Creazione dinamica del selettore
      							var select = document.getElementById('piano');
      							for (var i = 0; i<dim; i++){
 								    var elemento = document.createElement('option');
-								    elemento.innerHTML = piani.items[i].piano;
+								    elemento.innerHTML = piani[i].piano;
 								    select.appendChild(elemento);
 								}
 						   }
         });
 	}
-	
 	
 	function FillMap()
     {
@@ -43,22 +42,65 @@
     	//Metodo per prelevare l'elemento selezionato nel select
     	var p = document.getElementById('piano');
 		var piano = p.options[p.selectedIndex].text;
-        new Ajax.Request(
-        "<?=$this->url(array('controller' => 'user','action' => 'posizione'))?>",
-            {
-                method:'get',
-                parameters: {pia : piano,
-                			 edif : edificio},
-                onSuccess: function FillMap(mappa)
-						   {
-						   	alert(mappa);
-						   	console.log(mappa);
-						   		var piani = eval('(' + mappa.responseText + ')');
-						   		alert(piani);
-						   }
-        });
+		if(piano != '-- Seleziona Piano --'){
+	        new Ajax.Request(
+	        "<?=$this->url(array('controller' => 'user','action' => 'posizione'))?>",
+	            {
+	                method:'get',
+	                parameters: {pia : piano,
+	                			 edif : edificio},
+	                onSuccess: function FillMap(mappaRsp)
+							   {
+								   	var mappaEmap = eval('(' + mappaRsp.responseText + ')');
+								   	var mappa = document.getElementById('mappaPosizione');
+								   	mappa.src = mappaEmap.mappa;
+								   	var map = document.getElementById('mapPosizione');
+								   	map.innerHTML = mappaEmap.map;	
+								   	mappa.setAttribute("usemap", "#mapPosizione");
+								   	
+								   	var area = map.getElementsByTagName("area"); 
+									for (var i = 0; i < area.length; i++) { 
+										var a = i+1;
+										var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aula'))?>";
+						
+									    var status = area[i].setAttribute("href", url+"/au/"+a);	
+									}						   		   	
+							   }
+	        });
+        }
 	}
 	
+	function InviaSegnalazione()
+	{
+    	//Metodo per prelevare l'elemento selezionato nel select
+    	var a = document.getElementById('avvisi');
+		var avviso = a.options[a.selectedIndex].text;
+		if(avviso != '-- Seleziona Avviso --'){
+	        new Ajax.Request(
+	        "<?=$this->url(array('controller' => 'user','action' => 'posizione'))?>",
+	            {
+	                method:'get',
+	                parameters: {av : avviso},
+	                onSuccess: function FillMap(mappaSeRsp)
+							   {
+								   	var mappaSeRsp = eval('(' + mappaSeRsp.responseText + ')');
+								   	var mappa = document.getElementById('mappaSegnalazione');
+								   	mappa.src = mappaEmap.mappa;
+								   	var map = document.getElementById('mapSegnalazione');
+								   	map.innerHTML = mappaEmap.map;	
+								   	mappa.setAttribute("usemap", "#mapSegnalazione");
+								   	
+								   	var area = map.getElementsByTagName("area"); 
+									for (var i = 0; i < area.length; i++) { 
+										var a = i+1;
+										var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aulasegnalazione'))?>";
+						
+									    var status = area[i].setAttribute("href", url+"/aus/"+a);	
+									}						   		   	
+							   }
+	        });
+        }
+	}
 	
 	</script>
     

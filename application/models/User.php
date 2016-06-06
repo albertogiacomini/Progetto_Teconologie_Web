@@ -2,9 +2,10 @@
 
 class Application_Model_User extends App_Model_Abstract
 {
+        
     public function __construct()
     {
-        
+       
     }
 	
 	public function insertUser($usrInfo)
@@ -62,4 +63,28 @@ class Application_Model_User extends App_Model_Abstract
         return $this->getResource('Utente')->getUserOrderById();
     }
 	
+	public function getIdPosizioneByUName($user)
+	{
+		return $this->getResource('Utente')->getIdPosizioneByUName($user);
+	}
+	
+	public function setIdPosByUName($idPos, $uName)
+	{
+		return $this->getResource('Utente')->setIdPosByUName($idPos, $uName);
+	}
+	
+	public function getIdPosizioneByEdPiAl($ed, $pi, $al)
+	{
+		return $this->getResource('Posizione')->getIdPosizioneByEdPiAl($ed, $pi, $al);
+	}
+	
+	public function getDataByIdPosizione($idPos)
+	{
+		return $this->getResource('Posizione')->getDataByIdPosizione($idPos);
+	}
+	
+	public function getElAvvisi()
+	{
+		return $this->getResource('ElencoAvvisi')->getElAvvisi();
+	}
 }
