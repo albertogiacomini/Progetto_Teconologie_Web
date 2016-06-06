@@ -5,7 +5,32 @@
     <?= $this->headLink(); ?>
     <?= $this->headTitle(); ?>
     <script>
-    	
+    function FillPiani()
+    {
+    	//Metodo per prelevare l'elemento selezionato nel select
+    	var e = document.getElementById('edificio');
+		var edificio = e.options[e.selectedIndex].text;
+		//Metodo per rimuovere tutti gli elementi e reinserire solo "-- Seleziona Piano --"
+		$('#piano').find('option').remove().end().append('<option value="pian">-- Seleziona Piano --</option>').val('pian');
+        new Ajax.Request(
+        "<?=$this->url(array('controller' => 'user','action' => 'piano'))?>",
+            {
+                method:'get',
+                parameters: {edif: edificio},
+                onSuccess: function FillSelPiani(rsp)
+						   {
+						   		var piani = eval('(' + rsp.responseText + ')');
+						   		var dim = piani.length;
+								//Creazione dinamica del selettore
+     							var select = document.getElementById('piano');
+     							for (var i = 0; i<dim; i++){
+								    var elemento = document.createElement('option');
+								    elemento.innerHTML = piani[i].piano;
+								    select.appendChild(elemento);
+								}
+						   }
+        });
+	}
     </script>
 </head>
 <body>

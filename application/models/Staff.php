@@ -20,6 +20,11 @@ class Application_Model_Staff extends App_Model_Abstract
         return $this->getResource('Utente')-> getUserByUName($uname);
     }	
 	
+	public function  getPianoByComp($uname)
+    {
+        return $this->getResource('Posizione')-> getPianoByComp($uname);
+    }	
+	
 	public function getEdifici()
     {
         return $this->getResource('Posizione')->getEdifici();
