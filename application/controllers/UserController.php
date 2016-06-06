@@ -7,6 +7,7 @@ class UserController extends Zend_Controller_Action
     protected $_utente;
     protected $_mpform;
     protected $_epform;
+    protected $_seform;
 	public $_edificio;
 	public $_piano;
     protected $imageBlob;
@@ -20,6 +21,7 @@ class UserController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
+		$this->view->seForm=$this->getSegnalazioneForm();
 		$UName = $this->_authService->getIdentity()->username;
 		$idPos = $this->_utente->getIdPosizioneByUName($UName);
 		$this->view->idPos = $idPos['idPosizione'];
@@ -143,6 +145,25 @@ class UserController extends Zend_Controller_Action
 		$this->_helper->redirector('index');
     }
 	
+	public function aulasegnalazione ()
+	{
+		//Prendo l'aula passata attraverso la selezione dall'immagine
+    	$aula = $this->getParam('aus');
+		//Prelevo i dati dalla posizione inserita dall'utente
+		
+		//Ho la posizione della segnalazione
+		
+    	$session = new Zend_Session_Namespace('session');
+		//Prelevo l'id posizione relativo all'edificio, il piano e l'aula
+		$idPos = $this->_utente->getIdPosizioneByEdPiAl($session->_edificio, $session->_piano, $aula);
+		//Prendo l'username e attraverso quello imposto l'id posizione corretto e faccio il redirect all'index
+		$uName=$this->_authService->getIdentity()->username;
+		$this->_utente->setIdPosByUName($idPos['idPosizione'], $uName);
+		
+		
+		
+		$this->_helper->redirector('index');
+	}
 	
     public function pianoAction () 
     {
@@ -229,5 +250,17 @@ class UserController extends Zend_Controller_Action
             'default'
         ));
         return $this->_pform;
+    }
+	
+	protected function getSegnalazioneForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_seform = new Application_Form_User_Segnalazione();
+        $this->_seform->setAction($urlHelper->url(array(
+            'controller' => 'user',
+            'action' => 'index'),
+            'default'
+        ));
+        return $this->_seform;
     }
 }
