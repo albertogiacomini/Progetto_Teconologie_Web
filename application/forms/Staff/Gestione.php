@@ -2,36 +2,26 @@
 
 class Application_Form_Staff_Gestione extends App_Form_Abstract
 {
+	protected $_stf;
+	
     public function init()
     {
+    	$this->_stf=new Application_Model_Staff();
+        $piano=$this->_stf->getPianoByComp($this->comp)->toArray();
+		
         $this->setMethod('post');
         $this->setName('getGestione');
         $this->setAction('');
-        
 		
-		
-        $this->addElement('text', 'username', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
-            'validators' => array(
-                array('StringLength', true, array(3, 25))
-            ),
+		$this->addElement('select', 'piano', array(
             'required'   => true,
-            'label'      => 'Username',
-            'decorators' => $this->elementDecorators,
-            ));
-        
-        $this->addElement('password', 'password', array(
-            'filters'    => array('StringTrim'),
-            'validators' => array(
-                array('StringLength', true, array(3, 25))
-            ),
-            'required'   => true,
-            'label'      => 'Password',
-            'decorators' => $this->elementDecorators,
-            ));
+            'label'      => 'Piano',
+            'MultiOptions' => $piano,
+            'onChange' => '',
+        ));
 
-        $this->addElement('submit', 'aggiorna', array(
-            'label'    => 'Aggiorna',
+        $this->addElement('submit', 'aggiungi', array(
+            'label'    => 'Aggiungi',
             'decorators' => $this->buttonDecorators,
         ));
 

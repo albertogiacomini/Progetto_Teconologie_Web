@@ -85,7 +85,15 @@ class StaffController extends Zend_Controller_Action
     }
 	
     public function gestioneAction()
-	{}
+	{
+		$this->_sede=new Application_Model_Staff();
+		$this->_authService = Zend_Auth::getInstance();
+		$un=$this->_authService->getIdentity()->username;
+		
+		$comp =$this->_sede->getZonacompetenzaByUName($un);
+		$this->view->assign(array('comp'=>$comp));
+		
+	}
 	
 	public function salvamodprofiloAction () 
     {
@@ -108,9 +116,7 @@ class StaffController extends Zend_Controller_Action
     }
 	
 	public function homeAction () //home action
-    {
-	   
-	}
+    {}
 	
 	public function salvamodcredenzialiAction () 
     {
