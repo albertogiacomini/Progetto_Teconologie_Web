@@ -2218,7 +2218,7 @@ label {
 .f-stile {
     background: #800000;
     color: #fff;
-    padding: 10px 0;
+    padding: 1% 0;
 }
 
 .go-top {
@@ -2237,6 +2237,15 @@ label {
 
 .site-min-height {
     min-height: 900px;
+}
+
+.nameee{
+	  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #68dff0;
+  border-color: #48bcb4;
 }
 
 input#aggiorna

@@ -27,6 +27,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Nome',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control',
             ));
             
         $this->addElement('text', 'cognome', array(
@@ -37,6 +38,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Cognome',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control',
             ));
         
         $this->addElement('text', 'username', array(
@@ -47,6 +49,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Username',
             'decorators' => $this->elementDecorators,
+           'class' => 'form-control round-form',
             ));
             
         $this->addElement('radio', 'genere', array(
@@ -54,7 +57,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'MultiOptions'=>array(
                 'male' => 'M',
                 'female' => 'F',),
-            'decorators' => $this->elementDecorators, 
+            'decorators' => $this->radioDecorators, 
         ));
             
         $this->addElement('text', 'email', array(
@@ -65,6 +68,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'E-mail',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control',
         )); 
             
         $this->addElement('text', 'eta', array(
@@ -75,17 +79,16 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Nascita',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control',
         )); 
 
         $this->addElement('text', 'telefono', array(
             'filters'    => array('StringTrim', 'StringToLower'),
-            'validators' => array(
-                array('Int'),
-                array('StringLength', true, array(3, 25))
-            ),
+            'validators' => array('Int'),
             'required'   => true,
             'label'      => 'Telefono',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control',
         ));
         
         $this->addElement('select', 'livello', array(
@@ -95,6 +98,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
                 'staff' => 'staff',
                 'utente' => 'utente',),
             'decorators' => $this->elementDecorators, 
+             'class' => 'form-control',
         ));
             
         $this->addElement('submit', 'aggiorna', array(
@@ -104,7 +108,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
 
         $this->setDecorators(array(
             'FormElements',
-            array('HtmlTag', array('tag' => 'table', 'class' => 'zend_form')),
+            array('HtmlTag', array('tag' => 'table')),
             array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
             'Form'
         ));
