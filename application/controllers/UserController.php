@@ -20,13 +20,13 @@ class UserController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
+        //passaggio informazioni alle notifiche
+        $Not=$this->_utente->getAvvisi();
+        Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
     }
     
     public function indexAction()
-    {
-         $Not=$this->_utente->getAvvisi();
-         Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
-    } 
+    {} 
     
     public function viewstaticAction () 
     {}
@@ -51,10 +51,10 @@ class UserController extends Zend_Controller_Action
             return $this->render('modprofilo');
         }
         $values=$form->getValues();
-        
-        $im = file_get_contents($values['imgprofilo']);
-        $imdata = base64_encode($im);
-        $values['imgprofilo']=$imdata;
+        //conversione del file della form in base64
+        $image=APPLICATION_PATH . '/../public/images/temp/'.$values['imgprofilo'];
+        $data=file_get_contents($image);
+        $values['imgprofilo']=$data;
         
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
