@@ -7,7 +7,7 @@ class Application_Form_User_Posizione extends App_Form_Abstract
     public function init()
     {
         $this->_usr=new Application_Model_User();
-        $edifici=$this->_usr->getEdifici()->toArray();
+        $edifici=$this->_usr->getEdifici(); 
         
         $this->setMethod('post');
         $this->setName('setPosizione');
