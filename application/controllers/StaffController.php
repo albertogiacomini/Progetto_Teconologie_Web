@@ -40,12 +40,23 @@ class StaffController extends Zend_Controller_Action
 		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
 		
-		$idPos=$this->_sede->getIdPosizioneByUName($un);
-		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
-		$planimetria=$this->_sede->getPlanimetrieOrderById($idPlan['idPlanimetria']);
-        $comp =$this->_sede->getZonacompetenzaByUName($un);
+		$user=$this->_sede->getUtenteByUName($un);
+		$Plan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['PosizioneStaff']);
+		$mappa=$this->_sede->getPlanimetriaById($Plan['idPlanimetria']);
+        $comp =$this->_sede->getPosizionestaffByUName($un);
 			   $this->view->assign(array('comp'=>$comp));
-			   $this->view->assign(array('Plan'=>$planimetria));	
+			   $this->view->assign(array('Plan'=>$mappa));	
+		$idpos=$this->_sede->getIdPosizioneByIdPlanimetria($Plan['idPlanimetria']);
+		echo $idpos['idPosizione'];
+		//$idPos=$this->_sede->getIdPosizioneByPosizionestaff($comp);	   
+		$avvisi=$this->_sede->getAvvisiByidPosizione($idpos['idPosizione']);
+			   $this->view->assign(array('avvisi'=>$avvisi));
+		foreach($avvisi as $a)
+		{
+			echo $a['idPosizione'];
+		}
+		
+			
 	} 
 	
     public function viewstaticAction () 
@@ -60,11 +71,12 @@ class StaffController extends Zend_Controller_Action
 		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
 		
-		$idPos=$this->_sede->getIdPosizioneByUName($un);
-		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
+		$user=$this->_sede->getUtenteByUName($un);
+		$idPlan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['PosizioneStaff']);
 		$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
-        $comp =$this->_sede->getZonacompetenzaByUName($un);
-		$this->view->assign(array('comp'=>$comp));
+        $comp =$this->_sede->getPosizionestaffByUName($un);
+				$this->view->assign(array('comp'=>$comp));
+		
     }
     
 	public function segnalazioniAction()
@@ -92,7 +104,6 @@ class StaffController extends Zend_Controller_Action
 		
 		$comp =$this->_sede->getZonacompetenzaByUName($un);
 		$this->view->assign(array('comp'=>$comp));
-		
 	}
 	
 	public function salvamodprofiloAction () 

@@ -3,11 +3,13 @@
 class Application_Form_Staff_Gestione extends App_Form_Abstract
 {
 	protected $_stf;
+	protected $piano;
 	
     public function init()
     {
     	$this->_stf=new Application_Model_Staff();
-        $piano=$this->_stf->getPianoByComp($this->comp)->toArray();
+        $piano=$this->_stf->getEdifici();
+		
 		
         $this->setMethod('post');
         $this->setName('getGestione');
@@ -15,7 +17,7 @@ class Application_Form_Staff_Gestione extends App_Form_Abstract
 		
 		$this->addElement('select', 'piano', array(
             'required'   => true,
-            'label'      => 'Piano',
+            'label'      => "$this->comp",
             'MultiOptions' => $piano,
             'onChange' => '',
         ));
