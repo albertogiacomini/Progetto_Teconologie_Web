@@ -1,0 +1,39 @@
+<div class="content-panel">
+<table class="table">
+    <thead>
+        <tr>
+           <th  width="15%">Nome</th>
+           <th  width="15%">Cognome</th>
+           <th  width="15%">Username</th>
+           <th  width="40%">email</th>
+           <th  width="15%">livello</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <?php foreach ($this->user as $f) :?>  
+            <tr>
+                
+                <td width="15%"> <?php echo $f->nome ?> </td>
+                <td width="15%"> <?php echo $f->cognome ?> </td>
+                <td width="15%"> <?php echo $f->username ?> </td>
+                <td width="30%"> <?php echo $f->email ?> </td>
+                <td width="15%"> <?php echo $f->livello ?> </td>
+                <td width="10%"> 
+                    <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'modprofilo',),
+                                                    'default',true );?>/?username=<?php echo $f->username ?>">
+                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button> 
+                    </a></td>                  
+                <td width="10%"> <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'deleteuser',),
+                                                    'default',true );?>/?username=<?php echo $f->username ?>">
+                                   <button class="btn btn-danger btn-xs">
+                                   <i class="fa fa-trash-o "></i></button> </a></td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+</div>

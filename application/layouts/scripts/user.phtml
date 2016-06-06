@@ -51,25 +51,18 @@
 	                			 edif : edificio},
 	                onSuccess: function FillMap(mappaRsp)
 							   {
-								   	console.log(mappaRsp);
-								   	//alert(mappaRsp);
-								   	//alert(mappaRsp.responseText);
 								   	var mappaEmap = eval('(' + mappaRsp.responseText + ')');
-								   	//alert(mappaEmap);
-								   	//"{"identifier":"edificio","items":[{"edificio":"Medicina","piano":"150","aula":"2","idPosizione":"2","idPlanimetria":"2"}]}"
-								   	//alert(mappaEmap.responseText.items[0].mappa);
-								   	var mappa = document.getElementById('mappa');
+								   	var mappa = document.getElementById('mappaPosizione');
 								   	mappa.src = mappaEmap.mappa;
-								   	var map = document.getElementById('map');
+								   	var map = document.getElementById('mapPosizione');
 								   	map.innerHTML = mappaEmap.map;	
-								   	mappa.setAttribute("usemap", "#map");
+								   	mappa.setAttribute("usemap", "#mapPosizione");
 								   	
 								   	var area = map.getElementsByTagName("area"); 
 									for (var i = 0; i < area.length; i++) { 
 										var a = i+1;
 										var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aula'))?>";
 						
-										//var method = area[i].setAttribute("method", "post");
 									    var status = area[i].setAttribute("href", url+"/au/"+a);	
 									}						   		   	
 							   }
@@ -77,6 +70,37 @@
         }
 	}
 	
+	function InviaSegnalazione()
+	{
+    	//Metodo per prelevare l'elemento selezionato nel select
+    	var a = document.getElementById('avvisi');
+		var avviso = a.options[a.selectedIndex].text;
+		if(avviso != '-- Seleziona Avviso --'){
+	        new Ajax.Request(
+	        "<?=$this->url(array('controller' => 'user','action' => 'posizione'))?>",
+	            {
+	                method:'get',
+	                parameters: {av : avviso},
+	                onSuccess: function FillMap(mappaSeRsp)
+							   {
+								   	var mappaSeRsp = eval('(' + mappaSeRsp.responseText + ')');
+								   	var mappa = document.getElementById('mappaSegnalazione');
+								   	mappa.src = mappaEmap.mappa;
+								   	var map = document.getElementById('mapSegnalazione');
+								   	map.innerHTML = mappaEmap.map;	
+								   	mappa.setAttribute("usemap", "#mapSegnalazione");
+								   	
+								   	var area = map.getElementsByTagName("area"); 
+									for (var i = 0; i < area.length; i++) { 
+										var a = i+1;
+										var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aulasegnalazione'))?>";
+						
+									    var status = area[i].setAttribute("href", url+"/aus/"+a);	
+									}						   		   	
+							   }
+	        });
+        }
+	}
 	
 	</script>
     

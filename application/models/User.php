@@ -23,6 +23,11 @@ class Application_Model_User extends App_Model_Abstract
         return $this->getResource('Utente')->updateUser($usrI,$un);
     }
     
+    public function updateUserById($usrI,$ID)
+    {
+        return $this->getResource('Utente')->updateUserByID($usrI,$ID);
+    }
+    
     public function  getUserByUName($uname)
     {
         return $this->getResource('Utente')-> getUserByUName($uname);
@@ -52,6 +57,11 @@ class Application_Model_User extends App_Model_Abstract
 	{
 		return $this->getResource('Planimetrie')->getPlanimetriaById($idPlanimetria);
 	}
+    
+    public function  getUserOrderById()
+    {
+        return $this->getResource('Utente')->getUserOrderById();
+    }
 	
 	public function getIdPosizioneByUName($user)
 	{
@@ -71,5 +81,10 @@ class Application_Model_User extends App_Model_Abstract
 	public function getDataByIdPosizione($idPos)
 	{
 		return $this->getResource('Posizione')->getDataByIdPosizione($idPos);
+	}
+	
+	public function getElAvvisi()
+	{
+		return $this->getResource('ElencoAvvisi')->getElAvvisi();
 	}
 }

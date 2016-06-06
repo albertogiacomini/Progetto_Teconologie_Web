@@ -13,22 +13,37 @@
                   <p class="centered"><?php echo $image ?></a></p>
                   <h5 class="centered"><?php echo $this->authInfo('nome') . ' ' . $this->authInfo('cognome') ?></h5>
                   <li class="mt">
-                      <a class="active" href="index.html">
-                          <i class="fa fa-dashboard"></i>
+                     <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'index',), 
+                                                    'default',true );?>"> 
+                          <i class="fa fa-user"></i>
                           <span>Home</span>
                       </a>
                   </li>
 
                   <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-desktop"></i>
-                          <span>Segnalazioni</span>
+                      <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'user',), 
+                                                    'default',true );?>"> 
+                          <i class="fa fa-user"></i>
+                          <span>Gestione utenti</span>
                       </a>
-                      <ul class="sub">
-                          <li><a  href="Ingegneria_Segn.html">Ingegneria</a></li>
-                          <li><a  href="Medicina_Segn.html">Medicina</a></li>
-                          <li><a  href="Economia_Segn.html">Economia</a></li>
-                      </ul>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-building-o"></i>
+                          <span>Gestione immobili</span>
+                      </a>
+                  </li>
+                  <li  class="sub-menu"><a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'faq',), 
+                                                    'default',true );?>">                        
+                      <i class="fa fa-question-circle"></i>
+                      <span>Gestione FAQ</span>
+                      </a>
                   </li>
               </ul>
               <!-- sidebar menu end-->

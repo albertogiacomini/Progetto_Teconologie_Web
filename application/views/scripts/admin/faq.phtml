@@ -1,0 +1,31 @@
+<div class="content-panel">
+<table class="table">
+    <thead>
+        <tr>
+           <th  width="30%">Domanda</th>
+           <th  width="70%">Risposta</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <?php foreach ($this->faq as $f) :?>  
+            <tr>
+                <td width="20%"><?php echo $f->domanda ?> </td>
+                <td width="60%"> <?php echo $f->risposta ?> </td>
+                <td width="10%">  <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'modfaq',),
+                                                    'default',true );?>/?idfaq=<?php echo $f->idFaq ?>">
+                       <button class="btn btn-primary btn-xs">
+                       <i class="fa fa-pencil"></i></button> </a></td>
+                <td width="10%"> <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'deletefaq',),
+                                                    'default',true );?>/?idfaq=<?php echo $f->idFaq ?>">
+                        <button class="btn btn-danger btn-xs">
+                        <i class="fa fa-trash-o "></i></button> </a></td>
+                </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+</div>
