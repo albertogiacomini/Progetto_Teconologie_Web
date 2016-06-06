@@ -7,7 +7,7 @@ class Application_Form_Staff_Posizione extends App_Form_Abstract
     public function init()
     {
         $this->_usr=new Application_Model_User();
-        $edificio=$this->_usr->getEdifici()->toArray();
+        $edificio=$this->_usr->getEdifici();
         $this->setMethod('post');
         $this->setName('setPosizione');
         $this->setAction('');

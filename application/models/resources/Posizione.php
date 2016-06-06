@@ -24,16 +24,14 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
                             	       array('p.edificio'))->distinct()				   
         			  		    ->where('edificio = ?', $edificio)->distinct();
 		
-        return $this->getAdapter()->fetchRow($select);
+        return $this->getAdapter()->fetchAll($select);
     }
 	
 	public function getPianoByComp($edificio)
     {
  
-  	    return $this->getAdapter()->fetchRow($this->select()->distinct()->where('edificio = ?', $edificio));
+  	    return $this->getAdapter()->fetchRow($this->select()->where('edificio = ?', $edificio));
     }
-        									  				
-    
     
 	public function getIdPlanimetriaByEdificioPiano($edificio, $piano)
     {
@@ -41,9 +39,24 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
         									  				->where('piano = ?', $piano));
     }
 	
+	public function getIdPosizioneByPosizionestaff($Pos)
+	{
+		return $this->getAdapter()->fetchRow($this->select('idPosizione')->where('edificio = ?', $Pos));
+	}
+	
+	public function getIdPlanimetriaByPosizionestaff($Pos)
+	{
+		return $this->getAdapter()->fetchRow($this->select('idPlanimetria')->where('edificio = ?', $Pos));
+	}
+	
 	public function getIdPlanimetriaByIdPosizione($idPos)
 	{
 		return $this->getAdapter()->fetchRow($this->select('idPlanimetria')->where('idPosizione = ?', $idPos));
+	}
+	
+	public function getIdPosizioneByIdPlanimetria($idPlan)
+	{
+		return $this->getAdapter()->fetchRow($this->select('idPosizione')->where('idPlanimetria = ?', $idPlan));
 	}
 	
 	public function getIdPosizioneByEdPiAl($ed, $pi, $al)
