@@ -17,7 +17,7 @@ class Application_Resource_Planimetrie extends Zend_Db_Table_Abstract
                             	       array('p.idPlanimetria'))->distinct()				   
         			  		    ->where('idPlanimetria= ?', $idplan)->distinct();
 		
-        return $this->getAdapter()->fetchAll($select);
+        return $this->getAdapter()->fetchRow($select);
     }
     
 	public function getPlanimetrieById($idplan)
