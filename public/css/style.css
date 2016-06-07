@@ -175,28 +175,28 @@ hr {
 	text-align: right;
 }
 
-.mt5 {
-	margin-top: 5px;
+.mt1 {
+	margin-top: 1%;
 }
 
 .mt10 {
-	margin-top: 10px;
+	margin-top: 10%;
 }
 
 .mt20 {
-	margin-top: 20px;
+	margin-top: 20%;
 }
 
 .mt {
-	margin-top: 25px;
+	margin-top: 25%;
 }
 
 .mb {
-	margin-bottom: 25px;
+	margin-bottom: 25%;
 }
 
-.ml350 {
-	margin-left: 350%;
+.ml330 {
+	margin-left: 330%;
 	}
 	
 .ml730 {
@@ -213,15 +213,15 @@ hr {
 	}
 
 .ml25 {
-	margin-left: 25px;
+	margin-left: 25%;
 	}
 
 .ml3 {
-	margin-left: 3px;
+	margin-left: 3%;
 	}
 
 .ml {
-	margin-left: 5px;
+	margin-left: 5%;
 	}
 
 .no-padding {

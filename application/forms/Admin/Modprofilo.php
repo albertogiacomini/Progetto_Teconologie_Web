@@ -38,7 +38,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Cognome',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control mt5',
+            'class' => 'form-control mt1',
             ));
         
         $this->addElement('text', 'username', array(
@@ -49,7 +49,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Username',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control mt5',
+            'class' => 'form-control mt1',
             ));
             
         $this->addElement('radio', 'genere', array(
@@ -69,7 +69,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'E-mail',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control mt5',
+            'class' => 'form-control mt1',
         )); 
             
         $this->addElement('text', 'eta', array(
@@ -80,7 +80,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Nascita',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control mt5',
+            'class' => 'form-control mt1',
         )); 
 
         $this->addElement('text', 'telefono', array(
@@ -89,7 +89,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Telefono',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control mt5',
+            'class' => 'form-control mt1',
         ));
         
         $this->addElement('select', 'livello', array(
@@ -99,7 +99,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
                 'staff' => 'staff',
                 'user' => 'user',),
                 'decorators' => $this->elementDecorators, 
-                'class' => 'form-control mt5',
+                'class' => 'form-control mt1',
         ));
             
         $this->addElement('submit', 'aggiorna', array(

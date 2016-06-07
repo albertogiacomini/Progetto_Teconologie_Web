@@ -18,7 +18,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
                     array('Size', false, 102400),
                     array('Extension', false, array('jpg', 'gif', 'png'))),
             'decorators' => $this->fileDecorators,
-            'class' =>  'ml3'
+           
                     )); 
         
         $this->addElement('text', 'nome', array(
@@ -29,7 +29,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Nome',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control2 mt5 ml3',
+            'class' => 'form-control2 mt5 ',
             ));
             
         $this->addElement('text', 'cognome', array(
@@ -40,7 +40,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Cognome',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control2 mt5 ml3',
+            'class' => 'form-control2 mt5',
             ));
             
         $this->addElement('text', 'username', array(
@@ -51,7 +51,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Username',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control2 mt5 ml3',
+            'class' => 'form-control2 mt5',
             ));
         
         $this->addElement('password', 'password', array(
@@ -62,7 +62,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Password',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control2 mt5 ml3',
+            'class' => 'form-control2 mt5',
             ));
             
 		$this->addElement('radio', 'genere', array(
@@ -81,7 +81,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'E-mail',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control2 mt5 ml3',
+            'class' => 'form-control2 mt5',
 		));	
 			
 		$this->addElement('text', 'eta', array(
@@ -92,7 +92,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Data di nascita',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control2 mt5 ml3',
+            'class' => 'form-control2 mt5',
 		));	
 
 		$this->addElement('text', 'telefono', array(
@@ -104,7 +104,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Telefono',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control2 mt5 ml3',
+            'class' => 'form-control2 mt5',
 		));
         
         $this->addElement('text', 'indirizzo', array(
@@ -115,7 +115,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Indirizzo',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control2 mt5 ml3',
+            'class' => 'form-control2 mt5',
             ));
 			
         $this->addElement('submit', 'login', array(
