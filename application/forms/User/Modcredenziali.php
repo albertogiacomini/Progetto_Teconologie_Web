@@ -9,7 +9,7 @@ class Application_Form_User_Modcredenziali extends App_Form_Abstract
         $this->setAction('');
         
         $this->addElement('text', 'username', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
+            'filters'    => array('StringTrim'),
             'validators' => array(
                 array('StringLength', true, array(3, 25))
             ),
