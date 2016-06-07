@@ -23,8 +23,10 @@ class UserController extends Zend_Controller_Action
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
 		$this->view->seForm=$this->getSegnalazioneForm();
+		
 		$un = $this->_authService->getIdentity()->username;
 		$idPos = $this->_utente->getUserByUName($un);
+		
 		$this->view->idPos = $idPos['idPosizione'];
 		if(($idPos['idPosizione']) != null){
 			$this->view->data = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
