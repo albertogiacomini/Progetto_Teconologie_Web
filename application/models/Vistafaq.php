@@ -26,4 +26,9 @@ class Application_Model_Vistafaq extends App_Model_Abstract
     {
         return $this->getResource('Faq')->updateFaqByID($FaqI,$ID);
     }
+    
+    public function createFaq($FaqI)
+    {
+        return $this->getResource('Faq')->createFaq($FaqI);
+    }
 }
