@@ -1,9 +1,21 @@
 <h2>SEGNALAZIONI</h2>
 <div class="showback">
     <h2><i class="fa fa-angle-right"></i></h2>
-	 <?php foreach($this->avvisi as $s)?> 
-		<li>
-		 <?php echo $s->idPosizione.$s->data.$this->segnalazioni->idElencoAvviso; ?>
-		</li>
-   <?=$this->segnForm; ?><?php ?> 
+	 
+	 <?php echo '<h2>Segnalazioni per area: ' .$this->authInfo('posizioneStaff').'</h2>' ?>
+	 
+	 <?php foreach ($this->avvStaff as $af) :?>
+	 <?php foreach ($this->elAvvStaff as $eaf) :?>
+	 <?php if($af->idElencoAvviso==$eaf->idElencoAvviso) :?>
+	 <?php foreach ($this->posStaff as $pf) :?>
+	 <?php if($af->idPosizione==$pf->idPosizione) :?>
+	 <?php if($pf->edificio==$this->authInfo('posizioneStaff')) :?>	
+	 <?php echo '<p>' . $af->data . '<br/>'. $pf->edificio. ',' . $pf->piano . ',' . $pf->aula . '<br/>' .$eaf->tipoAvviso .  '</p><br/>'?>
+	 <?php endif ?>
+	 <?php endif ?>  
+	 <?php endforeach ?>
+	 <?php endif ?>
+	 <?php endforeach ?>
+	 <?php endforeach ?>
+	 
 </div>

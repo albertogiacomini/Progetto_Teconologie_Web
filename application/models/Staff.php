@@ -8,6 +8,11 @@ class Application_Model_Staff extends App_Model_Abstract
         
     }
 	
+	public function getPosizione()
+	{
+		return $this->getResource('Posizione')->getPosizione();
+	}
+	
     public function  getUserByUName($uname)
     {
         return $this->getResource('Utente')-> getUserByUName($uname);
@@ -83,7 +88,12 @@ class Application_Model_Staff extends App_Model_Abstract
 	
 	public function getAvvisi()
     {
-        return $this->getResource('Avvisi')->getSegnalazioni();
+        return $this->getResource('Avvisi')->getAvvisi();
+    }
+	
+	public function getAllElAvvisi()
+    {
+        return $this->getResource('ElencoAvvisi')->getAllElAvvisi();
     }
 	
 	public function getIdPlanimetriaByEdificioPiano($edificio, $piano)
