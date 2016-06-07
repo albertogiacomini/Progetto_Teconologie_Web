@@ -1,6 +1,6 @@
 <h2>HOME</h2>
 <div class="showback">
-    <h4><i class="fa fa-angle-right"></i>Notifiche segnalazioni <b><?php echo $this->comp ?></b></h4>		
+    <h4><i class="fa fa-angle-right"></i>Notifiche segnalazioni <b><?php echo $this->comp->posizioneStaff ?></b></h4>		
    	<div class="showback">  	
    		<?php $ind=0; ?> 	
    		<?php foreach($this->Plan as $plan) :?>
@@ -9,10 +9,7 @@
    			<?php $base64 = base64_encode($plan->mappa);?>
 			<?php $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="150em height=150em" />';?>
             <?php echo $image; ?>
-   		    <p>NUMERO DI SEGNALAZIONI:
-   		    	<?php foreach($this->avvisi as $a) :?>  
-   		    		<?php echo $a->ind; $ind++; ?></p>
-   		    		<?php endforeach; ?>
+   		    <p>NUMERO DI SEGNALAZIONI:<?php echo $this->avvisi; ?></p>   		
    		    </div> 
         	<?php endforeach; ?>
     </div>
