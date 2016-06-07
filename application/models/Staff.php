@@ -105,9 +105,15 @@ class Application_Model_Staff extends App_Model_Abstract
     {
         return $this->getResource('Utente')->updateUser($usrI,$un);
     }
-	
+	//metodi per segnalazioni sui piani
 	public function getAvvisiByidPosizione($pos)
 	{
-		return $this->getResource('Avvisi')->getAvvisiByIdPosizione($pos);
+		return $this->getResource('Avvisi')->getAvvisiByidPosizione($pos);
 	}
+
+	public function getIdPosizioneByPiano($piano)
+	{
+		return $this->getResource('Posizione')->getIdPosizioneByPiano($piano);
+	}
+
 }
