@@ -79,6 +79,11 @@ class Application_Model_User extends App_Model_Abstract
 	}
 	
 	//POSIZIONE
+	public function getPosizione()
+    {
+        return $this->getResource('Posizione')->getPosizione();
+    }
+	
 	public function getEdifici()
     {
         return $this->getResource('Posizione')->getEdifici();

@@ -9,6 +9,12 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
     public function init()
     {}
     
+    public function getPosizione()
+    {
+        $select = $this->select(); 
+        return $this->fetchAll($select); 
+    }
+    
     public function getEdifici()
     {
         $select = $this->select()
