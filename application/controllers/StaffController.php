@@ -40,12 +40,27 @@ class StaffController extends Zend_Controller_Action
 		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
 		
-		$idPos=$this->_sede->getIdPosizioneByUName($un);
-		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
-		$planimetria=$this->_sede->getPlanimetrieOrderById($idPlan['idPlanimetria']);
-        $comp =$this->_sede->getZonacompetenzaByUName($un);
-			   $this->view->assign(array('comp'=>$comp));
-			   $this->view->assign(array('Plan'=>$planimetria));	
+		$comp =$this->_sede->getPosizionestaffByUName($un); //edificio di competenza 
+		$user=$this->_sede->getUserByUName($un); //prendo Utente 
+		$Plan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['PosizioneStaff']); // prendo idPlanimetrie riferite ad un edificio 
+		foreach($Plan as $i){echo $i['idPlanimetria'];
+		$mappa=$this->_sede->getPlanimetriaById($i['idPlanimetria']);}//2 mappe per ogni edificio
+		//echo $mappa;}
+		//foreach($idpos=$this->_sede->getIdPosizioneByIdPlanimetria($w) as $w)	
+		//{echo $idpos['idPosizione'];}
+			
+			$this->view->assign(array('comp'=>$comp));
+		    $this->view->assign(array('Plan'=>$mappa));	
+		
+		//$idPos=$this->_sede->getIdPosizioneByPosizionestaff($comp);	   
+	
+		foreach($idpos as $a)
+		{
+			$avvisi=$this->_sede->getAvvisiByidPosizione($a['idPosizione']);
+			echo $avvisi;
+		}
+		$this->view->assign(array('avvisi'=>$avvisi));
+			
 	} 
 	
     public function viewstaticAction () 
@@ -60,11 +75,12 @@ class StaffController extends Zend_Controller_Action
 		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
 		
-		$idPos=$this->_sede->getIdPosizioneByUName($un);
-		$idPlan=$this->_sede->getIdPlanimetriaByIdPosizione($idPos['idPosizione']);
+		$user=$this->_sede->getUserByUName($un);
+		$idPlan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['PosizioneStaff']);
 		$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
-        $comp =$this->_sede->getZonacompetenzaByUName($un);
-		$this->view->assign(array('comp'=>$comp));
+        $comp =$this->_sede->getPosizionestaffByUName($un);
+				$this->view->assign(array('comp'=>$comp));
+		
     }
     
 	public function segnalazioniAction()
@@ -85,7 +101,14 @@ class StaffController extends Zend_Controller_Action
     }
 	
     public function gestioneAction()
-	{}
+	{
+		$this->_sede=new Application_Model_Staff();
+		$this->_authService = Zend_Auth::getInstance();
+		$un=$this->_authService->getIdentity()->username;
+		
+		$comp =$this->_sede->getPosizionestaffByUName($un);
+		$this->view->assign(array('comp'=>$comp));
+	}
 	
 	public function salvamodprofiloAction () 
     {
@@ -108,9 +131,7 @@ class StaffController extends Zend_Controller_Action
     }
 	
 	public function homeAction () //home action
-    {
-	   
-	}
+    {}
 	
 	public function salvamodcredenzialiAction () 
     {

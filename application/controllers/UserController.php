@@ -7,8 +7,10 @@ class UserController extends Zend_Controller_Action
     protected $_utente;
     protected $_mpform;
     protected $_epform;
-	public $_edificio;
-	public $_piano;
+    protected $_seform;
+	protected $_edificio;
+	protected $_piano;
+	protected $_idavviso;
     protected $imageBlob;
     
     public function init()
@@ -21,10 +23,9 @@ class UserController extends Zend_Controller_Action
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
 
+
         //passaggio informazioni alle notifiche
-        
         $Dat=$this->_utente->getAvvisi();
-        //$Tip[count($Dat)];
         foreach ($Dat as $key => $d) {
             $Tip[$d['idElencoAvviso']]=$this->_utente->getAvvisoById($d['idElencoAvviso']);
         }
@@ -33,6 +34,11 @@ class UserController extends Zend_Controller_Action
               
         $un = $this->_authService->getIdentity()->username;
 		$idPos = $this->_utente->getIdPosizioneByUName($un);
+
+		$this->view->seForm=$this->getSegnalazioneForm();
+		$UName = $this->_authService->getIdentity()->username;
+		$idPos = $this->_utente->getIdPosizioneByUName($UName);
+
 		$this->view->idPos = $idPos['idPosizione'];
 		if(($idPos['idPosizione']) != null){
 			$this->view->data = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
@@ -119,6 +125,7 @@ class UserController extends Zend_Controller_Action
         	//Prendo i due parametri passati con l'ajax
             $this->_piano = $this->_getParam('pia');
 			$this->_edificio = $this->_getParam('edif');
+			
 			//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
             $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($this->_edificio, $this->_piano);
 			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);	
@@ -140,11 +147,61 @@ class UserController extends Zend_Controller_Action
         } 
     }
     
+	public function mappasegnalazioneAction () 
+    {
+    	$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+        	$us=$this->_authService->getIdentity()->username;
+			$utente	 = $this->_utente->getUserByUName($us);
+			
+			$date = new Zend_Date(); 
+			$dd= $date->get('dd');
+			$mm = $date->get('MM');
+			$yyyy =$date->get('YYYY');
+			
+			$da = $dd.''.$mm.''.$yyyy;
+			
+			//if(){}
+        	
+        	
+        	//Prendo i due parametri passati con l'ajax
+            $_avviso = $this->_getParam('av');
+			
+			$IdAvviso = $this->_utente->getIdElAvvisoByTipo($_avviso);
+			$a = $IdAvviso['idElencoAvviso'];
+			//Istanzio la session e salvo il parametro idAvviso		
+			$session = new Zend_Session_Namespace('session');
+            $session->_idavviso = $a;
+			
+			
+			$idPos = $this->_utente->getIdPosizioneByUName($us);
+			
+			$dat = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
+			
+			//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
+            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($dat['edificio'], $dat['piano']);
+			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);	
+			//Codifico l'immagine e assieme metto il map           
+            $base64 = base64_encode($mappa['mappa']);
+			$image = 'data:image/png;base64,'.$base64;
+			$map = $mappa['map'];
+			$a = array("mappa"=>$image,
+					   "map"=>$map);
+						require_once 'Zend/Json.php';
+			//Codifico i dati in formato Json e li rimando indietro
+			require_once 'Zend/Json.php';
+            $a = Zend_Json::encode($a);
+			echo $a;
+        } 
+    }
+	
 	public function aulaAction () 
     {
     	//Prendo l'aula passata attraverso la selezione dall'immagine
     	$aula = $this->getParam('au');
-		//Creo un'istanza della sezzione per poter prendere i parametri precedentemente salvati
+		//Creo un'istanza della sessione per poter prendere i parametri precedentemente salvati
     	$session = new Zend_Session_Namespace('session');
 		//Prelevo l'id posizione relativo all'edificio, il piano e l'aula
 		$idPos = $this->_utente->getIdPosizioneByEdPiAl($session->_edificio, $session->_piano, $aula);
@@ -154,6 +211,32 @@ class UserController extends Zend_Controller_Action
 		$this->_helper->redirector('index');
     }
 	
+	public function aulasegnalazioneAction ()
+	{		
+		//Prendo l'aula passata attraverso la selezione dall'immagine
+    	$aula = $this->getParam('aus');
+		$us=$this->_authService->getIdentity()->username;
+		$utente	 = $this->_utente->getUserByUName($us);	
+			
+		$dat = $this->_utente->getDataByIdPosizione($utente['idPosizione']);	
+		
+		$idPos = $this->_utente->getIdPosizioneByEdPiAl($dat['edificio'], $dat['piano'], $aula);
+		
+		$date = new Zend_Date(); 
+		$createdDate= $date->get('YYYY-MM-dd HH:mm:ss');
+		 
+		//Creo un'istanza della sessione per poter prendere i parametri precedentemente salvati
+    	$session = new Zend_Session_Namespace('session');
+		
+		$avviso = (array('idPosizione'=>$idPos['idPosizione'],
+					  'idUtente'=> $utente['idUtente'],
+					  'data'=>$createdDate,
+					  'idElencoAvviso'=>$session->_idavviso,
+		));
+		$this->_utente->inserisciSegnalazione($avviso);
+		
+		$this->_helper->redirector('index');
+	}
 	
     public function pianoAction () 
     {
@@ -164,9 +247,9 @@ class UserController extends Zend_Controller_Action
         	//Prendo l'edificio passato con l'ajax
             $_edificio = $this->_getParam('edif');
 			//Ricerco le corrispondenti aule e le rimando indietro in formato Json
-            $edif = $this->_utente->getPianoByEdificio($_edificio);		
+            $piano = $this->_utente->getPianoByEdificio($_edificio);		
             require_once 'Zend/Json.php';
-            $a = Zend_Json::encode($edif);
+            $a = Zend_Json::encode($piano);
             echo $a;
         } 
     }
@@ -240,5 +323,17 @@ class UserController extends Zend_Controller_Action
             'default'
         ));
         return $this->_pform;
+    }
+	
+	protected function getSegnalazioneForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_seform = new Application_Form_User_Segnalazione();
+        $this->_seform->setAction($urlHelper->url(array(
+            'controller' => 'user',
+            'action' => 'index'),
+            'default'
+        ));
+        return $this->_seform;
     }
 }

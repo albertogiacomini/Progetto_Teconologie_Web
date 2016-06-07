@@ -8,16 +8,14 @@ class Application_Model_Staff extends App_Model_Abstract
         
     }
 	
-	/*public function getIdMappabyUName($username)
-	{
-		$pos=$this->getResource('Utente')->getIdPosizioneByUName($username);
-		$plan=$this->getResource('Posizione')->getIdPlanimetriaByIdPosizione($pos);
-		return 	$this->getResource('Planimetrie')->getMappaById($plan);
-	}*/
-	
     public function  getUserByUName($uname)
     {
         return $this->getResource('Utente')-> getUserByUName($uname);
+    }	
+	
+	public function  getPianoByComp($uname)
+    {
+        return $this->getResource('Posizione')-> getPianoByComp($uname);
     }	
 	
 	public function getEdifici()
@@ -25,6 +23,10 @@ class Application_Model_Staff extends App_Model_Abstract
         return $this->getResource('Posizione')->getEdifici();
     }
 	
+	public function getIdPlanimetriaByPosizionestaff($Pos)
+	{
+		return $this->getResource('Posizione')->getIdPlanimetriaByPosizionestaff($Pos);
+	}
 	
     //Metodi Staff per prendere mappa associate ad esso
  	public function getMappaById($idPlanimetria)
@@ -37,30 +39,30 @@ class Application_Model_Staff extends App_Model_Abstract
         return $this->getResource('Posizione')->getIdPlanimetriaByIdPosizione($idposizione);
     }
 	
-	public function getIdPosizioneByUName($username)
+	public function getIdPosizioneByPosizionestaff($idposizione)
     {
-        return $this->getResource('Utente')->getIdPosizioneByUName($username);
+        return $this->getResource('Posizione')->getIdPosizioneByPosizionestaff($idposizione);
     }
 	
-	public function getZonacompetenzaByUName($username)
+	public function getAvvisiByPosizionestaff($pos)
+	{
+		return $this->getResource('Avvisi')->getAvvisiByPosizionestaff($pos);
+	}
+	
+	public function getIdPosizioneByIdPlanimetria($idPlan)
+	{
+		return $this->getResource('Posizione')->getIdPosizioneByIdPlanimetria($idPlan);
+	}
+	
+	public function getUtenteByUName($username)
+    {
+        return $this->getResource('Utente')->getUtenteByUName($username);
+    }
+	
+	public function getPosizionestaffByUName($username)
 	{	
-		$idPos = $this->getResource('Utente')->getIdPosizioneByUName($username);
-		switch($idPos['idPosizione'])
-		{
-			case 1: 
-				$zona = 'Ingegneria';
-				break;
-			case 2:
-				$zona = 'Medicina';
-				break;
-			case 3:
-				$zona = 'Economia';
-				break;
-			default:
-				$zona = 'Il tuo amministratore non ha scelto una zona per te';
-				break;		
-		}
-			return $zona;
+		$utente = $this->getResource('Utente')->getPosizionestaffByUName($username);
+		return $utente['PosizioneStaff'];
 	}
 	
 	//Staff
@@ -103,4 +105,9 @@ class Application_Model_Staff extends App_Model_Abstract
     {
         return $this->getResource('Utente')->updateUser($usrI,$un);
     }
+	
+	public function getAvvisiByidPosizione($pos)
+	{
+		return $this->getResource('Avvisi')->getAvvisiByIdPosizione($pos);
+	}
 }

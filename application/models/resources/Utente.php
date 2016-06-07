@@ -9,8 +9,8 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
     public function init()
     {
     }
-
-    public function getUserByUName($name)
+	
+	public function getIdPosizioneByUName($name)
     {
         $select = $this->select()->where('username = ?', $name); 
         return $this->fetchRow($select);
@@ -20,10 +20,22 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
     {
         $this->insert($usrInfo);
     }
-    
+   
+    public function getUserOrderById()
+    {
+       $select = $this->select()->order('idUtente');
+       return $this->fetchAll($select);
+    }
+
     public function updateUser($usrInfo,$username)
     {
         $dove="username='". $username. "'";
+        $this->update($usrInfo,$dove);
+    }
+    
+    public function updateUserById($usrInfo,$idUtente)
+    {
+        $dove="idUtente='". $idUtente. "'";
         $this->update($usrInfo,$dove);
     }
     
@@ -32,9 +44,14 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
         $dove="username='". $username. "'";
         $this->delete($dove);
     }
-	public function getIdPosizioneByUName($user)
+	public function getUserByUName($user)
 	{
-		return $this->getAdapter()->fetchRow($this->select('idPosizione')->where('username = ?', $user));  									  				
+		return $this->fetchRow($this->select()->where('username = ?', $user));  									  				
+	}
+	
+	public function getPosizionestaffByUName($username)
+	{
+		return $this->fetchRow($this->select('PosizioneStaff')->where('username = ?', $username));  
 	}
 	
 	public function setIdPosByUName($idPos, $uName)

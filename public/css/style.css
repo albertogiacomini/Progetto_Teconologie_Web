@@ -99,8 +99,8 @@ a, a:hover, a:focus {
 
 .btn-theme02 {
   color: #fff;
-  background-color: #ac92ec;
-  border-color: #967adc;
+  background-color: #778899;
+  border-color: #778899;
 }
 .btn-theme02:hover,
 .btn-theme02:focus,
@@ -108,8 +108,8 @@ a, a:hover, a:focus {
 .btn-theme02.active,
 .open .dropdown-toggle.btn-theme02 {
   color: #fff;
-  background-color: #967adc;
-  border-color: #967adc;
+  background-color: #87CEFA;
+  border-color: #87CEFA;
 }
 
 .btn-theme03 {
@@ -971,7 +971,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     width: 40px;
 }
 
-
+.home-riga {
+	display: inline;
+}
 /*Donut Chart Main Page Conf*/
 .donut-main {
 	display: block;
@@ -2239,4 +2241,27 @@ label {
     min-height: 900px;
 }
 
+input#aggiorna
+{
+	display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #68dff0;
+  border-color: #48bcb4;
+}
 
