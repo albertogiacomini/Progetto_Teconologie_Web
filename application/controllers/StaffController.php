@@ -45,25 +45,32 @@ class StaffController extends Zend_Controller_Action
 		$Plan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['PosizioneStaff']); // prendo idPlanimetrie riferite ad un edificio 
 		foreach($Plan as $i)
 		{
-				echo $i['idPlanimetria'];
-				$mappa[]=$this->_sede->getPlanimetriaById($i['idPlanimetria']);
-		}//2 mappe per ogni edificio
-		//echo $mappa;}
-		//foreach($idpos=$this->_sede->getIdPosizioneByIdPlanimetria($w) as $w)	
-		//{echo $idpos['idPosizione'];}
+			$mappa[]=$this->_sede->getPlanimetriaById($i['idPlanimetria']); //2 mappe per ogni edificio
+		}
+		
+		$piani = $this->_sede->getPianoByEdificio($user['PosizioneStaff']);
+		
+		
+		foreach($piani as $piano)
+		{
+			$idPos = $this->_sede->getIdPosizioneByPiano($piano['piano']);
+		}
+		$numPiani = count($piani);
+		echo 'NumIdPos:'.count($idPos[2]);
+		$numAvvisi[$numPiani]=null;
+		for($index= 0;$index<$numPiani;$index=$index+1)
+		{			
+			foreach($idPos as $ip)
+			{
+				$avvisi=$this->_sede->getAvvisiByidPosizione($ip['idPosizione'][$index]);
+				//echo $avvisi[0]['idAvviso'];
+				//$numAvvisi[]= count($avvisi);
+			}
 			
+		}	
 			$this->view->assign(array('comp'=>$comp));
 		    $this->view->assign(array('Plan'=>$mappa));	
-		
-		//$idPos=$this->_sede->getIdPosizioneByPosizionestaff($comp);	   
-	
-		foreach($idpos as $a)
-		{
-			$avvisi=$this->_sede->getAvvisiByidPosizione($a['idPosizione']);
-			echo $avvisi;
-		}
-		$this->view->assign(array('avvisi'=>$avvisi));
-			
+			$this->view->assign(array('avvisi'=>$numAvvisi));	
 	} 
 	
     public function viewstaticAction () 
@@ -73,16 +80,18 @@ class StaffController extends Zend_Controller_Action
     {}
 	
 	public function evaAction () //evaquazione ingegneria action
-    {
+    {	//lato staff
     	$this->_sede=new Application_Model_Staff();
 		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
 		
 		$user=$this->_sede->getUserByUName($un);
 		$idPlan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['PosizioneStaff']);
-		$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
-        $comp =$this->_sede->getPosizionestaffByUName($un);
+		//$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
+       
+	    $comp =$this->_sede->getPosizionestaffByUName($un);
 				$this->view->assign(array('comp'=>$comp));
+		//lato utente
 		
     }
     

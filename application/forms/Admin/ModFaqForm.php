@@ -28,6 +28,7 @@ class Application_Form_Admin_ModFaqForm extends App_Form_Abstract
             'label'      => 'Domanda',
             'decorators' => $this->elementDecorators,
             'class' => 'form-control',
+            'class' => 'form-control mt5',
          ));
             
         $this->addElement('textarea', 'risposta', array(
@@ -39,11 +40,13 @@ class Application_Form_Admin_ModFaqForm extends App_Form_Abstract
             'label'      => 'Risposta',
             'decorators' => $this->elementDecorators,
             'class' => 'form-control',
+            'class' => 'form-control mt5',
         ));
         
         $this->addElement('submit', 'aggiorna', array(
             'label'    => 'Aggiorna',
             'decorators' => $this->buttonDecorators,
+            'class' => 'btn-theme form-control mt20'
         ));
 
         $this->setDecorators(array(

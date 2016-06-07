@@ -8,8 +8,8 @@ class Application_Form_Staff_Eva extends App_Form_Abstract
         $this->setName('getEva');
         $this->setAction('');
 
-        $this->addElement('submit', 'aggiorna', array(
-            'label'    => 'Aggiorna',
+        $this->addElement('submit', 'evaquazione', array(
+            'label'    => 'Evaquazione',
             'decorators' => $this->buttonDecorators,
         ));
 

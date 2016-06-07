@@ -23,7 +23,6 @@ class UserController extends Zend_Controller_Action
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
 
-
         //passaggio informazioni alle notifiche
         $avvisi=$this->_utente->getAvvisiByDate();     
         $elavvisi=$this->_utente->getAllElAvvisi();
