@@ -1,112 +1,12 @@
-<?php echo $this->doctype() ?>
+<?php echo $this->doctype(); ?>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
+	<?= $this->render('js_user.phtml');?>
     <?= $this->headMeta(); ?>
     <?= $this->headLink(); ?>
     <?= $this->headTitle(); ?>
-    <?= $this->render('js.phtml') ?> 
     
-    <script>
-    function FillPiani()
-    {
-    	//Metodo per prelevare l'elemento selezionato nel select
-    	var e = document.getElementById('edificio');
-		var edificio = e.options[e.selectedIndex].text;
-		//Metodo per rimuovere tutti gli elementi e reinserire solo "-- Seleziona Piano --"
-		$('#piano').find('option').remove().end().append('<option value="pian">-- Seleziona Piano --</option>').val('pian');
-        new Ajax.Request(
-        "<?=$this->url(array('controller' => 'user','action' => 'piano'))?>",
-            {
-                method:'get',
-                parameters: {edif: edificio},
-                onSuccess: function FillSelPiani(rsp)
-						   {
-						   		var piani = eval('(' + rsp.responseText + ')');
-						   		var dim = piani.length;
-								//Creazione dinamica del selettore
-     							var select = document.getElementById('piano');
-     							for (var i = 0; i<dim; i++){
-								    var elemento = document.createElement('option');
-								    elemento.innerHTML = piani[i].piano;
-								    select.appendChild(elemento);
-								}
-						   }
-        });
-	}
-	
-	function FillMap()
-    {
-    	var e = document.getElementById('edificio');
-		var edificio = e.options[e.selectedIndex].text;
-    	//Metodo per prelevare l'elemento selezionato nel select
-    	var p = document.getElementById('piano');
-		var piano = p.options[p.selectedIndex].text;
-		if(piano != '-- Seleziona Piano --'){
-	        new Ajax.Request(
-	        "<?=$this->url(array('controller' => 'user','action' => 'posizione'))?>",
-	            {
-	                method:'get',
-	                parameters: {pia : piano,
-	                			 edif : edificio},
-	                onSuccess: function FillMap(mappaRsp)
-							   {
-								   	var mappaEmap = eval('(' + mappaRsp.responseText + ')');
-								   	var mappa = document.getElementById('mappaPosizione');
-								   	mappa.src = mappaEmap.mappa;
-								   	var map = document.getElementById('mapPosizione');
-								   	map.innerHTML = mappaEmap.map;	
-								   	mappa.setAttribute("usemap", "#mapPosizione");
-								   	
-								   	var area = map.getElementsByTagName("area"); 
-									for (var i = 0; i < area.length; i++) { 
-										var a = i+1;
-										var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aula'))?>";
-						
-									    var status = area[i].setAttribute("href", url+"/au/"+a);	
-									}						   		   	
-							   }
-	        });
-        }
-	}
-	
-	function MappaSegnalazione()
-	{
-    	//Metodo per prelevare l'elemento selezionato nel select
-    	var a = document.getElementById('avvisi');
-		var avviso = a.options[a.selectedIndex].text;
-		if(avviso != '-- Seleziona Avviso --'){
-	        new Ajax.Request(
-	        "<?=$this->url(array('controller' => 'user','action' => 'mappasegnalazione'))?>",
-	            {
-	                method:'get',
-	                parameters: {av : avviso},
-	                onSuccess: function FillMapSe(mappaSeRsp)
-							   {
-							   		var mappaSeg = eval('(' + mappaSeRsp.responseText + ')');
-							   		if(mappaSeg == 1){
-							   			alert("Puoi inviare una sola segnalazione ogni 4 ore");
-							   		}else{								   	
-									   	var mappaSe = document.getElementById('mappaSegnalazione');
-									   	mappaSe.src = mappaSeg.mappa;
-									   	var mapSe = document.getElementById('mapSegnalazione');
-									   	mapSe.innerHTML = mappaSeg.map;	
-									   	mappaSe.setAttribute("usemap", "#mapSegnalazione");
-									   	
-									   	var area = mapSe.getElementsByTagName("area"); 
-										for (var i = 0; i < area.length; i++) { 
-											var a = i+1;
-											var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aulasegnalazione'))?>";
-							
-										    var status = area[i].setAttribute("href", url+"/aus/"+a);	
-										}
-									}						   		   	
-							   }
-	        });
-        }
-	}
-	
-	</script>
+    
     
 </head>
 <body>
@@ -116,7 +16,7 @@
       *********************************************************************************************************************************************************** -->
       <!--header start-->
       <header class="header black-bg">
-              <?= $this->render('_toputente.phtml') ?>
+              <?= $this->render('_toputente.phtml'); ?>
       </header>
       <!--header end-->
       
@@ -124,7 +24,7 @@
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
       <!--sidebar start-->
-      <?= $this->render('_sidebarUser.phtml') ?>
+      <?= $this->render('_sidebarUser.phtml'); ?>
       <!--sidebar end-->
       
       <!-- **********************************************************************************************************************************************************
@@ -143,14 +43,14 @@
       <!-- **********************************************************************************************************************************************************
       RIGHT SIDEBAR CONTENT
       *********************************************************************************************************************************************************** -->  
-      <?= $this->render('notification.phtml') ?>
+      <?= $this->render('notification.phtml'); ?>
               </div>
           </section>
       </section>
       <!--footer start-->
-      <?= $this->render('footer.phtml') ?>
+      <?= $this->render('footer.phtml'); ?>
       <!--footer end-->
  </section>
-<?= $this->render('js.phtml') ?>
+	<?= $this->render('js.phtml'); ?>
 </body>
 </html>
