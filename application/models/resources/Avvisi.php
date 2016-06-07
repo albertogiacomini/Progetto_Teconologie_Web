@@ -15,6 +15,12 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
         $select = $this->select(); 
         return $this->fetchAll($select); 
     }
+    
+    public function getAvvisiByDate()
+    {
+        $select = $this->select()->order('data DESC'); 
+        return $this->fetchAll($select); 
+    }
 	
     public function getSegnalazioni()
     {
