@@ -22,6 +22,16 @@ class UserController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
+
+
+        //passaggio informazioni alle notifiche
+        $Dat=$this->_utente->getAvvisi();
+        foreach ($Dat as $key => $d) {
+            $Tip[$d['idElencoAvviso']]=$this->_utente->getAvvisoById($d['idElencoAvviso']);
+        }
+        Zend_Layout::getMvcInstance()->assign(array('dat'=>$Dat));
+        Zend_Layout::getMvcInstance()->assign(array('tip'=>$Tip));
+        
 		$this->view->seForm=$this->getSegnalazioneForm();
 		
 		$un = $this->_authService->getIdentity()->username;
@@ -31,13 +41,11 @@ class UserController extends Zend_Controller_Action
 		if(($idPos['idPosizione']) != null){
 			$this->view->data = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
 		}
+
     }
     
     public function indexAction()
-    {
-         $Not=$this->_utente->getAvvisi();
-         Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
-    } 
+    {} 
     
     public function viewstaticAction () 
     {}
@@ -63,9 +71,11 @@ class UserController extends Zend_Controller_Action
         }
         $values=$form->getValues();
         
-        $im = file_get_contents($values['imgprofilo']);
-        $imdata = base64_encode($im);
-        $values['imgprofilo']=$imdata;
+        //conversione del file della form in blob
+        $image=APPLICATION_PATH . '/../public/images/temp/'.$values['imgprofilo'];
+        $data=file_get_contents($image);
+        //immissione del file blob nella variabile imgprofilo
+        $values['imgprofilo']=$data;
         
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);

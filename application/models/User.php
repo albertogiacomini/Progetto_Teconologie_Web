@@ -11,9 +11,14 @@ class Application_Model_User extends App_Model_Abstract
 	//AVVISI
 	public function getAvvisi()
     {
-        return $this->getResource('Avvisi')->getAvvisi();
-    }	
-	
+         return $this->getResource('Avvisi')->getAvvisi();
+    }
+    
+    public function getAvvisoById($id)
+    {
+        return $this->getResource('ElencoAvvisi')->getElAvvisoById($id);
+    }
+
 	public function inserisciSegnalazione($seInfo)
 	{
 		return $this->getResource('Avvisi')->inserisciSegnalazione($seInfo);		

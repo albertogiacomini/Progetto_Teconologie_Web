@@ -10,7 +10,7 @@ class Application_Resource_ElencoAvvisi extends Zend_Db_Table_Abstract
     {
     }
     
-	public function getElAvvisi()
+    public function getElAvvisi()
     {
     	$select = $this->select()
                        ->from($this->_name,
@@ -18,9 +18,11 @@ class Application_Resource_ElencoAvvisi extends Zend_Db_Table_Abstract
         return $this->getAdapter()->fetchAll($select);
     }
 	
-    public function getElAvvisoById($Avviso)
+    public function getElAvvisoById($id)
+
     {
-        return $this->fetchRow($this->select()->where('idAvviso = ?', $Avviso));
+        return $this->fetchRow($this->select()
+                                    ->where('idElencoAvviso = ?', $id));
     }
 	
 	public function getIdElAvvisoByTipo($TAvviso)

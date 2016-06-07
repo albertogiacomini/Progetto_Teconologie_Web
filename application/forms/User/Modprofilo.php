@@ -13,6 +13,7 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
         
         $this->addElement('file', 'imgprofilo', array(
             'label' => 'Img profilo',
+            'destination' => APPLICATION_PATH . '/../public/images/temp',
             'validators' => array( 
                     array('Count', false, 1),
                     array('Size', false, 102400),

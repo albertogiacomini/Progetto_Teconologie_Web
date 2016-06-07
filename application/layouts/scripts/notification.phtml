@@ -2,15 +2,19 @@
                       <!--COMPLETED ACTIONS DONUTS CHART-->
                         <h3>NOTIFICHE</h3>
                        
-                                         
-                      <?php foreach ($this->layout()->arg as $n) :?>
+                                       
+                      <?php foreach ($this->layout()->dat as $d) :?>
+                      
                       <!-- notifica -->
                       <div class="desc">
                         <div class="thumb">
                             <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
                         </div>
                         <div class="details">
+
+                            <?php echo '<p><muted> '. $d->data .' </muted><br/>'. $this->layout()->Tip['1'] .'<br/></p>' ?>
                             <?php echo '<p><muted> '. $n->data .' </muted><br/>'.$n->idAvviso.'<br/></p>' ?>
+
                         </div>
                       </div>
                       <?php endforeach ?>
