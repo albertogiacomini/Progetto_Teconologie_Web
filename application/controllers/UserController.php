@@ -23,6 +23,7 @@ class UserController extends Zend_Controller_Action
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
 		$this->view->seForm=$this->getSegnalazioneForm();
+        
 		$un = $this->_authService->getIdentity()->username;
 		$idPos = $this->_utente->getUserByUName($un);
 		$this->view->idPos = $idPos['idPosizione'];
@@ -105,10 +106,16 @@ class UserController extends Zend_Controller_Action
             return $this->render('modcredenziali');
         }
         $values=$form->getValues();
-        $un=$this->_authService->getIdentity()->username;
-        $this->_utente->updateUser($values,$un);
-        $this->_authService->getAuth()->clearIdentity();
-        $this->_authService->authenticate($values);
+        if($values['password']==$values['passwordtest']){
+            unset($values['passwordtest']);
+            $un=$this->_authService->getIdentity()->username;
+            $this->_utente->updateUser($values,$un);
+            $this->_authService->getAuth()->clearIdentity();
+            $this->_authService->authenticate($values);
+        }else{
+            $form->setDescription('Attenzione: le password non corrispondono.');
+            return $this->render('modcredenziali');
+        }
     }
 
 	
@@ -262,9 +269,8 @@ class UserController extends Zend_Controller_Action
     	$this->_helper->redirector('index');
     }
     
-	public function segnalazioneActio(){
-		
-	}
+	public function segnalazioneAction()
+	{}
     
     public function eliminaprofiloAction () 
     {}
@@ -272,9 +278,8 @@ class UserController extends Zend_Controller_Action
     public function confermaeliminazioneprofiloAction()
     {
         $un=$this->_authService->getIdentity()->username;
-        if($this->_utente->deleteUser($un)){
-            $this->view->assign('description','Eliminazione eseguita con successo.');
-        }$this->view->assign('description','Eliminazione non riuscita.');
+        $this->_utente->deleteUser($un);
+        $this->_helper->redirector('index','public');
     }
     
     protected function getEliminaProfiloForm()

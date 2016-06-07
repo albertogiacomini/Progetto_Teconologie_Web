@@ -66,6 +66,17 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'class' => 'form-control2 mt5 ml3',
             ));
             
+        $this->addElement('password', 'passwordtest', array(
+            'filters'    => array('StringTrim'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Ripeti password',
+            'decorators' => $this->elementDecorators,
+            'class' => 'form-control2 mt5 ml3',
+            ));
+            
 		$this->addElement('radio', 'genere', array(
 			'label'      => 'Genere',
 			'MultiOptions'=>array(
