@@ -96,7 +96,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'MultiOptions'=>array(
                 'admin' => 'admin',
                 'staff' => 'staff',
-                'utente' => 'utente',),
+                'user' => 'user',),
             'decorators' => $this->elementDecorators, 
              'class' => 'form-control',
         ));
