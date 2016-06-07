@@ -19,6 +19,7 @@ class Application_Form_User_Posizione extends App_Form_Abstract
             
             'MultiOptions' => array('0' => '-- Seleziona Edificio --'),
             'onChange' => 'FillPiani()',
+            'class'    => 'form-control'
             ));
 		
 		$i = 1;
@@ -33,6 +34,7 @@ class Application_Form_User_Posizione extends App_Form_Abstract
             'label'      => 'Piano',
             'MultiOptions' => array('0' => '-- Seleziona Piano --'),
             'onChange' => 'FillMap()',
+            'class'    => 'form-control'
             ));
 			
 			

@@ -19,6 +19,7 @@ class Application_Form_User_Segnalazione extends App_Form_Abstract
             
             'MultiOptions' => array('0' => '-- Seleziona Avviso --'),
             'onChange' => 'MappaSegnalazione()',
+            'class'    => 'form-control'
             ));
 		
 		$i = 1;
