@@ -111,6 +111,7 @@ class UserController extends Zend_Controller_Action
         	//Prendo i due parametri passati con l'ajax
             $this->_piano = $this->_getParam('pia');
 			$this->_edificio = $this->_getParam('edif');
+			
 			//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
             $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($this->_edificio, $this->_piano);
 			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);	
@@ -140,7 +141,16 @@ class UserController extends Zend_Controller_Action
         if ($this->getRequest()->isXmlHttpRequest()) {
         	$us=$this->_authService->getIdentity()->username;
 			$utente	 = $this->_utente->getUserByUName($us);
-        	//if(){}
+			
+			$date = new Zend_Date(); 
+			$dd= $date->get('dd');
+			$mm = $date->get('MM');
+			$yyyy =$date->get('YYYY');
+			
+			$da = $dd.''.$mm.''.$yyyy;
+			//if(){}
+        	
+        	
         	//Prendo i due parametri passati con l'ajax
             $_avviso = $this->_getParam('av');
 			

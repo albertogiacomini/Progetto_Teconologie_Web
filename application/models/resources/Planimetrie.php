@@ -12,18 +12,12 @@ class Application_Resource_Planimetrie extends Zend_Db_Table_Abstract
     
 	public function getPlanimetriaById($idplan)
     {
-    	return $this->getAdapter()->fetchAll($this->select('mappa')->where('idPlanimetria= ?', $idplan));
-    	       /* $select = $this->select('mappa')	
-								->from(array('p' => 'planimetrie'),
-                            	       array('p.idPlanimetria'))->distinct()				   
-        			  		    ->where('idPlanimetria= ?', $idplan)->distinct();
+
+    	        $select = $this->select()				   
+        			  		    ->where('idPlanimetria= ?', $idplan);
+
 		
-        return $this->fetchAll($select);*/
-    }
-    
-	public function getPlanimetrieById($idplan)
-    {
-        return $this->getAdapter()->fetchRow($this->select('mappa')->where('idPlanimetria= ?', $idplan));
+        return $this->fetchAll($select);
     }
 
     public function getPlanimetrieOrderById()
