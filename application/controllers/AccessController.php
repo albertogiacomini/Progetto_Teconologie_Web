@@ -40,8 +40,11 @@ class AccessController extends Zend_Controller_Action
         }
         $values = $form->getValues();
         $values['livello']='user';
+        $image=APPLICATION_PATH . '/../public/images/temp/'.$values['imgprofilo'];
+        $data=file_get_contents($image);
+        $values['imgprofilo']=$data;
        	$this->_userModel->insertUser($values);
-		$this->authenticateAction();  
+        $this->authenticateAction();
     } 
 	
 

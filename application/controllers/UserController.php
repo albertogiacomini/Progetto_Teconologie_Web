@@ -22,24 +22,9 @@ class UserController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
-		
-		
-		
-        //passaggio informazioni alle notifiche
-        $p='Ingegneria';
-        $avvisi=$this->_utente->getAvvisiByDate();     
-        $elavvisi=$this->_utente->getAllElAvvisi();
-        $posiz=$this->_utente->getPosizione();
-        $this->view->assign(array('dataNotifica'=>$avvisi));
-        $this->view->assign(array('tipoNotifica'=>$elavvisi));
-        $this->view->assign(array('doveNotifica'=>$posiz));
-        $this->view->assign('posizione',$p);
-        
-        $this->view->seForm=$this->getSegnalazioneForm();
-        
-        $un = $this->_authService->getIdentity()->username;
+		$this->view->seForm=$this->getSegnalazioneForm();
+		$un = $this->_authService->getIdentity()->username;
 		$idPos = $this->_utente->getUserByUName($un);
-		
 		$this->view->idPos = $idPos['idPosizione'];
 		if(($idPos['idPosizione']) != null){
 			$datiPosizione = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
@@ -49,21 +34,14 @@ class UserController extends Zend_Controller_Action
 			$this->view->planimetriaCorretta = 'data:image/png;base64,'.$base64;
             $this->view->assign('posizione',$datiPosizione['edificio']);
 		}
-        
         //passaggio informazioni alle notifiche
-        $p=
+        
         $avvisi=$this->_utente->getAvvisiByDate();     
         $elavvisi=$this->_utente->getAllElAvvisi();
         $posiz=$this->_utente->getPosizione();
         $this->view->assign(array('dataNotifica'=>$avvisi));
         $this->view->assign(array('tipoNotifica'=>$elavvisi));
         $this->view->assign(array('doveNotifica'=>$posiz));
-        
-        
-		
-		
-		
-		
 
     }
     
