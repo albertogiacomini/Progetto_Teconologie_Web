@@ -44,9 +44,9 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
         $dove="username='". $username. "'";
         $this->delete($dove);
     }
-	public function getUtenteByUName($user)
+	public function getUserByUName($user)
 	{
-		return $this->getAdapter()->fetchRow($this->select()->where('username = ?', $user));  									  				
+		return $this->fetchRow($this->select()->where('username = ?', $user));  									  				
 	}
 	
 	public function getPosizionestaffByUName($username)
