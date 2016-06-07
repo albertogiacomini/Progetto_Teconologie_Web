@@ -148,6 +148,7 @@ class UserController extends Zend_Controller_Action
 			$yyyy =$date->get('YYYY');
 			
 			$da = $dd.''.$mm.''.$yyyy;
+			
 			//if(){}
         	
         	
