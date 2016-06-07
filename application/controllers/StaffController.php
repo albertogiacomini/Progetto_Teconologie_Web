@@ -47,6 +47,7 @@ class StaffController extends Zend_Controller_Action
 		{
 			$mappa[]=$this->_sede->getPlanimetriaById($i['idPlanimetria']); //2 mappe per ogni edificio
 		}
+
 		$piani = $this->_sede->getPianoByEdificio($user['posizioneStaff']);
 		
 		

@@ -29,7 +29,7 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
                             	       array('p.piano'))->distinct()				   
         			  		    ->where('edificio = ?', $edificio);
 		
-        return $this->getAdapter()->fetchRow($select);
+        return $this->getAdapter()->fetchAll($select);
     }
 	
 	/*public function getPianoByComp($edificio)
