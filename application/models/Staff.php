@@ -111,9 +111,19 @@ class Application_Model_Staff extends App_Model_Abstract
 		return $this->getResource('Avvisi')->getAvvisiByidPosizione($pos);
 	}
 
+	public function getAvvisiByDateEidPosizione($pos)
+	{
+		return $this->getResource('Avvisi')->getAvvisiByDateEidPosizione($pos);
+	}
+
 	public function getIdPosizioneByPiano($piano)
 	{
 		return $this->getResource('Posizione')->getIdPosizioneByPiano($piano);
 	}
+
+	public function getElAvvisoById($id)
+	 {
+	 		return $this->getResource('ElencoAvvisi')->getElAvvisoById($id);
+	 }
 
 }
