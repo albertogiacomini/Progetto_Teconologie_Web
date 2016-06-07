@@ -39,8 +39,9 @@ class AccessController extends Zend_Controller_Action
             return $this->render('registrazione');
         }
         $values = $form->getValues();
+        $values['livello']='user';
        	$this->_userModel->insertUser($values);
-		$this->_helper->redirector('login'); 
+		$this->authenticateAction();  
     } 
 	
 
