@@ -22,10 +22,16 @@ class UserController extends Zend_Controller_Action
         $this->view->epForm=$this->getEliminaProfiloForm();
 
         //passaggio informazioni alle notifiche
-        $Not=$this->_utente->getAvvisi();
-        Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
-
-		$un = $this->_authService->getIdentity()->username;
+        
+        $Dat=$this->_utente->getAvvisi();
+        //$Tip[count($Dat)];
+        foreach ($Dat as $key => $d) {
+            $Tip[$d['idElencoAvviso']]=$this->_utente->getAvvisoById($d['idElencoAvviso']);
+        }
+        Zend_Layout::getMvcInstance()->assign(array('dat'=>$Dat));
+        Zend_Layout::getMvcInstance()->assign(array('tip'=>$Tip));
+              
+        $un = $this->_authService->getIdentity()->username;
 		$idPos = $this->_utente->getIdPosizioneByUName($un);
 		$this->view->idPos = $idPos['idPosizione'];
 		if(($idPos['idPosizione']) != null){

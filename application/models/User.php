@@ -40,7 +40,12 @@ class Application_Model_User extends App_Model_Abstract
     
 	public function getAvvisi()
     {
-        return $this->getResource('Avvisi')->getAvvisi();
+         return $this->getResource('Avvisi')->getAvvisi();
+    }
+    
+    public function getAvvisoById($id)
+    {
+        return $this->getResource('ElencoAvvisi')->getAvvisoById($id);
     }
 	
 	public function getIdPlanimetriaByEdificioPiano($edificio, $piano)
