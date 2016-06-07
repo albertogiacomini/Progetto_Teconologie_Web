@@ -67,13 +67,11 @@ class UserController extends Zend_Controller_Action
             return $this->render('modprofilo');
         }
         $values=$form->getValues();
-        
         //conversione del file della form in blob
         $image=APPLICATION_PATH . '/../public/images/temp/'.$values['imgprofilo'];
         $data=file_get_contents($image);
         //immissione del file blob nella variabile imgprofilo
         $values['imgprofilo']=$data;
-        
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
         $us=$this->_authService->getIdentity()->username;
@@ -81,7 +79,7 @@ class UserController extends Zend_Controller_Action
         $a=array("username"=>$us,"password"=>$pa);
         $this->_authService->getAuth()->clearIdentity();
         $this->_authService->authenticate($a);
-        
+        //eliminazione de file temporaneo immagine
         unlink($image);
         
     }
