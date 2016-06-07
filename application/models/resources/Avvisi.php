@@ -35,7 +35,7 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
 	
 	public function getAvvisiByidPosizione($pos)
     {
-        return $this->getAdapter()->fetchRow($this->select()->where('idPosizione= ?', $pos));
+        return $this->fetchRow($this->select()->where('idPosizione= ?', $pos));
     }
 	
 	public function getAvvisoByIdUtente($IdUtente, $MM, $yyyy, $dd)

@@ -8,6 +8,11 @@ class Application_Model_Staff extends App_Model_Abstract
         
     }
 	
+	public function getPianiByEdificio($edificio)
+    {
+      return $this->getResource('Posizione')->getPianiByEdificio($edificio);
+	}
+	
 	public function getPosizione()
 	{
 		return $this->getResource('Posizione')->getPosizione();
