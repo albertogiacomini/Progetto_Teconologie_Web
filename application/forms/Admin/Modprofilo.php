@@ -105,7 +105,7 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
         $this->addElement('submit', 'aggiorna', array(
             'label'    => 'Aggiorna',
             'decorators' => $this->buttonDecorators,
-            'class' => 'btn-theme form-control mt20 ml200'
+            'class' => 'btn-theme form-control mt20'
         ));
 
         $this->setDecorators(array(
