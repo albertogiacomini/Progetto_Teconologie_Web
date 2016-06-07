@@ -62,7 +62,7 @@ class StaffController extends Zend_Controller_Action
 		{			
 			foreach($idPos as $ip)
 			{
-				$avvisi=$this->_sede->getAvvisiByIdPosizione($ip['idPosizione'][$index]);
+				$avvisi=$this->_sede->getAvvisiByidPosizione($ip['idPosizione'][$index]);
 				//echo $avvisi[0]['idAvviso'];
 				//$numAvvisi[]= count($avvisi);
 			}

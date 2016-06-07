@@ -1,9 +1,10 @@
 <div class="showback">
-    <h2><i class="fa fa-angle-right"></i>FAQ</h2>
+    <h2><i class="fa fa-angle-right">FAQ</i></h2>
+    <hr>
         <?php foreach ($this->faq as $f) :?>
         <div class="Domanda">
-            <?php echo '<h3>Domanda: ' . $f->domanda . '</h3>' ?>
+            <?php echo '<h4>' . $f->domanda . '</h4>' ?>
         </div>
-            <?php echo'<h4">Risposta: ' . $f->risposta . '</h4>' ?>
+            <?php echo'<h4">' . $f->risposta . '</h4>' ?>
         <?php endforeach ?>
 </div>

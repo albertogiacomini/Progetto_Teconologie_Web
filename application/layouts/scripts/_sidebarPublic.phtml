@@ -4,29 +4,29 @@
               <ul class="sidebar-menu" id="nav-accordion">
                   <h5 class="centered">Accedi o registrati per utilizzare i servizi</h5>
                   
-                  <li class="mt">
-                      <a class="active" href="<?= $this->url(array(
+                  <li >
+                      <a class="sub-menu" href="<?= $this->url(array(
                                                     'controller' => 'public',
                                                     'action'     => 'index', ), 
                                                     'default',true );?>">
-                          <i class="fa fa-dashboard"></i>
+                          <i class="fa fa-desktop"></i>
                           <span>HOME</span>
                       </a>
                   </li>
                   
-                  <li class="mt">
+                  <li >
                       <a class="sub-menu" href="<?= $this->url(array(
                                                     'controller' => 'access',
                                                     'action'     => 'registrazione', ), 
                                                     'default',true );?>">
-                          <i class="fa fa-dashboard"></i>
+                          <i class="fa fa-user"></i>
                           <span>REGISTRATI</span>
                       </a>
                   </li>
                  
-                   <li class="mt">
+                   <li >
                        <a href="javascript:;" >
-                          <i class="fa fa-dashboard"></i>  
+                          <i class="fa fa-question"></i>  
                           <span>INFORMAZIONI</span>  
                        </a>
                       	  <ul class="sub">

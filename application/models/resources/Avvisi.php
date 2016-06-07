@@ -15,6 +15,12 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
         $select = $this->select(); 
         return $this->fetchAll($select); 
     }
+    
+    public function getAvvisiByDate()
+    {
+        $select = $this->select()->order('data DESC'); 
+        return $this->fetchAll($select); 
+    }
 	
     public function getSegnalazioni()
     {
@@ -26,10 +32,20 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
     {
         $this->insert($seInfo);
 	}
-	public function getAvvisiByIdPosizione($pos)
+	
+	public function getAvvisiByidPosizione($pos)
+
     {
         return $this->getAdapter()->fetchAll($this->select()->where('idPosizione= ?', $pos));
     }
+	
+	public function getAvvisoByIdUtente($IdUtente, $MM, $yyyy, $dd)
+	{
+		$data = ($yyyy.'-'.$MM.'-'.$dd);
+		$select = $this->select()->where('idUtente = ?' ,$IdUtente)
+								 ->where('data LIKE ?' ,$data.'%');
+		return $this->getAdapter()->fetchAll($select);
+	}
 	
 }
 

@@ -11,12 +11,39 @@ class Application_Model_User extends App_Model_Abstract
 	//AVVISI
 	public function getAvvisi()
     {
-        return $this->getResource('Avvisi')->getAvvisi();
-    }	
-	
+         return $this->getResource('Avvisi')->getAvvisi();
+    }
+    
+    public function getAvvisiByDate()
+    {
+         return $this->getResource('Avvisi')->getAvvisiByDate();
+    }
+    
+    public function getAvvisoById($id)
+    {
+        return $this->getResource('ElencoAvvisi')->getElAvvisoById($id);
+    }
+
 	public function inserisciSegnalazione($seInfo)
 	{
 		return $this->getResource('Avvisi')->inserisciSegnalazione($seInfo);		
+	}
+	
+	public function getAvvisoByIdUtente($IdUtente, $MM, $yyyy, $dd, $HH)
+	{
+		$data = $this->getResource('Avvisi')->getAvvisoByIdUtente($IdUtente, $MM, $yyyy, $dd);
+		$c = count($data);
+		if($c != 0){
+			foreach ($data as $d){
+			$dateString = Zend_Locale_Format::getDate($d['data'],
+											array('date_format' => 'YYYY-MM-dd HH:mm:ss'));		
+				$h = $dateString['hour'];
+				if(($HH-$h)<4){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	//CATEGORIE
@@ -26,6 +53,11 @@ class Application_Model_User extends App_Model_Abstract
 	{
 		return $this->getResource('ElencoAvvisi')->getElAvvisi();
 	}	
+    
+    public function getAllElAvvisi()
+    {
+        return $this->getResource('ElencoAvvisi')->getAllElAvvisi();
+    }   
 	
 	public function getIdElAvvisoByTipo($TAvviso)
 	{

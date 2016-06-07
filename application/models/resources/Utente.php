@@ -45,7 +45,6 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
         $this->delete($dove);
     }
 
-	
 	public function getPosizionestaffByUName($username)
 	{
 		return $this->getAdapter()->fetchRow($this->select()->where('username = ?', $username));  
