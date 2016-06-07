@@ -27,9 +27,10 @@ class Application_Form_Admin_ModFaqForm extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Domanda',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control',
          ));
             
-        $this->addElement('text', 'risposta', array(
+        $this->addElement('textarea', 'risposta', array(
             'filters'    => array('StringTrim', 'StringToLower'),
             'validators' => array(
                 array('StringLength', true, array(3, 10000))
@@ -37,6 +38,7 @@ class Application_Form_Admin_ModFaqForm extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Risposta',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control',
         ));
         
         $this->addElement('submit', 'aggiorna', array(

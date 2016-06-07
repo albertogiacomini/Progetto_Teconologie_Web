@@ -87,8 +87,8 @@ class AdminController extends Zend_Controller_Action
     
       public function modfaqAction () 
     {
-        $id=$_GET["idFaq"];
-        $this->_faqform->populate($this->_vistaFaq->getFaqOrderById($id)->toArray());
+        $id=$_GET["idfaq"];
+        $this->_faqform->populate($this->_vistaFaq->getFaqById($id)->toArray());
     }
     
     public function getModFaqForm()
@@ -115,7 +115,7 @@ class AdminController extends Zend_Controller_Action
         }
         $values=$form->getValues();
         $ID=$_POST["idFaq"];
-        $this->_user->updateFaqById($values,$ID);
+        $this->_vistaFaq->updateFaqById($values,$ID);
         $this->_helper->redirector('faq');
     }
     
