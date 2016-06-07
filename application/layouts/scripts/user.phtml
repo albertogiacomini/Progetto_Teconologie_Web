@@ -83,19 +83,23 @@
 	                parameters: {av : avviso},
 	                onSuccess: function FillMapSe(mappaSeRsp)
 							   {
-								   	var mappaSeg = eval('(' + mappaSeRsp.responseText + ')');
-								   	var mappaSe = document.getElementById('mappaSegnalazione');
-								   	mappaSe.src = mappaSeg.mappa;
-								   	var mapSe = document.getElementById('mapSegnalazione');
-								   	mapSe.innerHTML = mappaSeg.map;	
-								   	mappaSe.setAttribute("usemap", "#mapSegnalazione");
-								   	
-								   	var area = mapSe.getElementsByTagName("area"); 
-									for (var i = 0; i < area.length; i++) { 
-										var a = i+1;
-										var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aulasegnalazione'))?>";
-						
-									    var status = area[i].setAttribute("href", url+"/aus/"+a);	
+							   		var mappaSeg = eval('(' + mappaSeRsp.responseText + ')');
+							   		if(mappaSeg == 1){
+							   			alert("Puoi inviare una sola segnalazione ogni 4 ore");
+							   		}else{								   	
+									   	var mappaSe = document.getElementById('mappaSegnalazione');
+									   	mappaSe.src = mappaSeg.mappa;
+									   	var mapSe = document.getElementById('mapSegnalazione');
+									   	mapSe.innerHTML = mappaSeg.map;	
+									   	mappaSe.setAttribute("usemap", "#mapSegnalazione");
+									   	
+									   	var area = mapSe.getElementsByTagName("area"); 
+										for (var i = 0; i < area.length; i++) { 
+											var a = i+1;
+											var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aulasegnalazione'))?>";
+							
+										    var status = area[i].setAttribute("href", url+"/aus/"+a);	
+										}
 									}						   		   	
 							   }
 	        });

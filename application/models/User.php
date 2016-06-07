@@ -29,6 +29,23 @@ class Application_Model_User extends App_Model_Abstract
 		return $this->getResource('Avvisi')->inserisciSegnalazione($seInfo);		
 	}
 	
+	public function getAvvisoByIdUtente($IdUtente, $MM, $yyyy, $dd, $HH)
+	{
+		$data = $this->getResource('Avvisi')->getAvvisoByIdUtente($IdUtente, $MM, $yyyy, $dd);
+		$c = count($data);
+		if($c != 0){
+			foreach ($data as $d){
+			$dateString = Zend_Locale_Format::getDate($d['data'],
+											array('date_format' => 'YYYY-MM-dd HH:mm:ss'));		
+				$h = $dateString['hour'];
+				if(($HH-$h)<4){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	//CATEGORIE
 	
 	//ELENCO AVVISI

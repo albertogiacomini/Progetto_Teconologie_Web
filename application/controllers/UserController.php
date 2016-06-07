@@ -30,8 +30,10 @@ class UserController extends Zend_Controller_Action
         $this->view->assign(array('tipo'=>$elavvisi));
         
 		$this->view->seForm=$this->getSegnalazioneForm();
+		
 		$un = $this->_authService->getIdentity()->username;
 		$idPos = $this->_utente->getUserByUName($un);
+		
 		$this->view->idPos = $idPos['idPosizione'];
 		if(($idPos['idPosizione']) != null){
 			$this->view->data = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
@@ -151,41 +153,41 @@ class UserController extends Zend_Controller_Action
 			
 			$date = new Zend_Date(); 
 			$dd= $date->get('dd');
-			$mm = $date->get('MM');
+			$MM = $date->get('MM');
 			$yyyy =$date->get('YYYY');
+			$HH = $date->get('HH');
+			//$mm = $date->get('mm');
+			//$ss = $date->get('ss');
 			
-			$da = $dd.''.$mm.''.$yyyy;
-			
-			//if(){}
-        	
-        	
-        	//Prendo i due parametri passati con l'ajax
-            $_avviso = $this->_getParam('av');
-			
-			$IdAvviso = $this->_utente->getIdElAvvisoByTipo($_avviso);
-			$a = $IdAvviso['idElencoAvviso'];
-			//Istanzio la session e salvo il parametro idAvviso		
-			$session = new Zend_Session_Namespace('session');
-            $session->_idavviso = $a;
-			
-			
-			$idPos = $this->_utente->getUserByUName($us);
-			
-			$dat = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
-			
-			//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
-            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($dat['edificio'], $dat['piano']);
-			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);	
-			//Codifico l'immagine e assieme metto il map           
-            $base64 = base64_encode($mappa['mappa']);
-			$image = 'data:image/png;base64,'.$base64;
-			$map = $mappa['map'];
-			$a = array("mappa"=>$image,
-					   "map"=>$map);
-						require_once 'Zend/Json.php';
-			//Codifico i dati in formato Json e li rimando indietro
-			require_once 'Zend/Json.php';
-            $a = Zend_Json::encode($a);
+			$a = 1;
+			if($this->_utente->getAvvisoByIdUtente($utente['idUtente'], $MM, $yyyy, $dd, $HH)){  
+	        	//Prendo i due parametri passati con l'ajax
+	            $_avviso = $this->_getParam('av');
+				
+				$IdAvviso = $this->_utente->getIdElAvvisoByTipo($_avviso);
+				$a = $IdAvviso['idElencoAvviso'];
+				//Istanzio la session e salvo il parametro idAvviso		
+				$session = new Zend_Session_Namespace('session');
+	            $session->_idavviso = $a;
+				
+				$idPos = $this->_utente->getUserByUName($us);
+				
+				$dat = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
+				
+				//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
+	            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($dat['edificio'], $dat['piano']);
+				$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);	
+				//Codifico l'immagine e assieme metto il map           
+	            $base64 = base64_encode($mappa['mappa']);
+				$image = 'data:image/png;base64,'.$base64;
+				$map = $mappa['map'];
+				$a = array("mappa"=>$image,
+						   "map"=>$map);
+							require_once 'Zend/Json.php';
+				//Codifico i dati in formato Json e li rimando indietro
+				require_once 'Zend/Json.php';
+	            $a = Zend_Json::encode($a);
+            }
 			echo $a;
         } 
     }
