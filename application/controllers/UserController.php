@@ -26,8 +26,8 @@ class UserController extends Zend_Controller_Action
         //passaggio informazioni alle notifiche
         $avvisi=$this->_utente->getAvvisiByDate();     
         $elavvisi=$this->_utente->getAllElAvvisi();
-        $this->view->assign(array('data'=>$avvisi));
-        $this->view->assign(array('tipo'=>$elavvisi));
+        $this->view->assign(array('dataNotifica'=>$avvisi));
+        $this->view->assign(array('tipoNotifica'=>$elavvisi));
         
 		$this->view->seForm=$this->getSegnalazioneForm();
 		
