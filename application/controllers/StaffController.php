@@ -43,8 +43,11 @@ class StaffController extends Zend_Controller_Action
 		$comp =$this->_sede->getPosizionestaffByUName($un); //edificio di competenza 
 		$user=$this->_sede->getUserByUName($un); //prendo Utente 
 		$Plan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['PosizioneStaff']); // prendo idPlanimetrie riferite ad un edificio 
-		foreach($Plan as $i){echo $i['idPlanimetria'];
-		$mappa=$this->_sede->getPlanimetriaById($i['idPlanimetria']);}//2 mappe per ogni edificio
+		foreach($Plan as $i)
+		{
+				echo $i['idPlanimetria'];
+				$mappa[]=$this->_sede->getPlanimetriaById($i['idPlanimetria']);
+		}//2 mappe per ogni edificio
 		//echo $mappa;}
 		//foreach($idpos=$this->_sede->getIdPosizioneByIdPlanimetria($w) as $w)	
 		//{echo $idpos['idPosizione'];}
