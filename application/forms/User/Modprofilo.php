@@ -29,6 +29,7 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Nome',
             'decorators' => $this->elementDecorators,
+            'class'      => 'form-control mt3'
             ));
             
         $this->addElement('text', 'cognome', array(
@@ -39,6 +40,7 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Cognome',
             'decorators' => $this->elementDecorators,
+            'class'      => 'form-control mt3'
             ));
             
         $this->addElement('radio', 'genere', array(
@@ -47,7 +49,7 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
             'MultiOptions'=>array(
                 'male' => 'M',
                 'female' => 'F',),
-            'decorators' => $this->elementDecorators, 
+            'decorators' => $this->radioDecorators,
         ));
             
         $this->addElement('text', 'email', array(
@@ -58,6 +60,7 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'E-mail',
             'decorators' => $this->elementDecorators,
+            'class'      => 'form-control mt3'
         )); 
             
         $this->addElement('text', 'eta', array(
@@ -68,6 +71,7 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Data di nascita',
             'decorators' => $this->elementDecorators,
+            'class'      => 'form-control mt3'
         )); 
 
         $this->addElement('text', 'telefono', array(
@@ -79,6 +83,7 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Telefono',
             'decorators' => $this->elementDecorators,
+            'class'      => 'form-control mt3'
         ));
         
         $this->addElement('text', 'indirizzo', array(
@@ -89,11 +94,13 @@ class Application_Form_User_Modprofilo extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Indirizzo',
             'decorators' => $this->elementDecorators,
+            'class'      => 'form-control mt3'
             ));
             
         $this->addElement('submit', 'aggiorna   ', array(
             'label'    => 'Aggiorna',
             'decorators' => $this->buttonDecorators,
+            'class'      => 'btn-theme form-control mt20'
         ));
         
         $this->setDecorators(array(

@@ -11,6 +11,7 @@ class Application_Form_User_Eliminaprofilo extends App_Form_Abstract
         $this->addElement('submit', 'elimina', array(
             'label'    => 'Eliminati',
             'decorators' => $this->buttonDecorators,
+            'class'      => 'btn-theme form-control mt20'
         ));
         
         $this->setDecorators(array(

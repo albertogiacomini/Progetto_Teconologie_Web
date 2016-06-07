@@ -118,7 +118,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             'class' => 'form-control2 mt5 ml3',
             ));
 			
-        $this->addElement('submit', 'login', array(
+        $this->addElement('submit', 'registrazione', array(
             'label'    => 'Registrati',
             'decorators' => $this->buttonDecorators,
             'class' => 'btn-theme form-control3 mt20'
