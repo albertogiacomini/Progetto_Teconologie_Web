@@ -28,22 +28,14 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
       //->order('data DESC')
     }
 	
-	
-    public function getSegnalazioni()
-    {
-        $select = $this->select(); 
-        return $this->fetchAll($select); 
-    }
-	
 	public function inserisciSegnalazione($seInfo)
     {
         $this->insert($seInfo);
 	}
 	
 	public function getAvvisiByidPosizione($pos)
-
     {
-        return $this->getAdapter()->fetchAll($this->select()->where('idPosizione= ?', $pos));
+        return $this->getAdapter()->fetchRow($this->select()->where('idPosizione= ?', $pos));
     }
 	
 	public function getAvvisoByIdUtente($IdUtente, $MM, $yyyy, $dd)
