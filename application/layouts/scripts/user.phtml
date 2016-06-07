@@ -1,12 +1,10 @@
 <?php echo $this->doctype(); ?>
 <html>
 <head>
-	<?= $this->render('js_user.phtml');?>
+
     <?= $this->headMeta(); ?>
     <?= $this->headLink(); ?>
     <?= $this->headTitle(); ?>
-    
-    
     
 </head>
 <body>
@@ -51,6 +49,7 @@
       <?= $this->render('footer.phtml'); ?>
       <!--footer end-->
  </section>
+    <?= $this->render('js_user.phtml');?>
 	<?= $this->render('js.phtml'); ?>
 </body>
 </html>
