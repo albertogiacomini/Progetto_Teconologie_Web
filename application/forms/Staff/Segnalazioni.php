@@ -5,15 +5,20 @@ class Application_Form_Staff_Segnalazioni extends App_Form_Abstract
     public function init()
     {
         $this->setMethod('post');
-        $this->setName('getEva');
+        $this->setName('getSegnalazioni');
         $this->setAction('');
 
-		$this->addElement('submit', 'elimina', array(
+		$this->addElement('submit', 'Elimina tutte le segnalazioni', array(
             'label'    => 'Eliminati',
             'decorators' => $this->buttonDecorators,
         ));
 		
-        $this->addElement('submit', 'aggiungi', array(
+        $this->addElement('submit', 'Aggiungi segnalazione', array(
+            'label'    => 'Aggiungi',
+            'decorators' => $this->buttonDecorators,
+        ));
+		
+		$this->addElement('submit', 'Elimina segnalazione', array(
             'label'    => 'Aggiungi',
             'decorators' => $this->buttonDecorators,
         ));
