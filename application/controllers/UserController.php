@@ -31,14 +31,10 @@ class UserController extends Zend_Controller_Action
         }
         Zend_Layout::getMvcInstance()->assign(array('dat'=>$Dat));
         Zend_Layout::getMvcInstance()->assign(array('tip'=>$Tip));
-              
-        $un = $this->_authService->getIdentity()->username;
-		$idPos = $this->_utente->getIdPosizioneByUName($un);
-
+        
 		$this->view->seForm=$this->getSegnalazioneForm();
-		$UName = $this->_authService->getIdentity()->username;
-		$idPos = $this->_utente->getIdPosizioneByUName($UName);
-
+		$un = $this->_authService->getIdentity()->username;
+		$idPos = $this->_utente->getUserByUName($un);
 		$this->view->idPos = $idPos['idPosizione'];
 		if(($idPos['idPosizione']) != null){
 			$this->view->data = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
@@ -176,7 +172,7 @@ class UserController extends Zend_Controller_Action
             $session->_idavviso = $a;
 			
 			
-			$idPos = $this->_utente->getIdPosizioneByUName($us);
+			$idPos = $this->_utente->getUserByUName($us);
 			
 			$dat = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
 			
