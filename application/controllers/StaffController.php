@@ -97,7 +97,28 @@ class StaffController extends Zend_Controller_Action
     
 	public function segnalazioniAction()
 	{
+		$this->_sede=new Application_Model_Staff();
+		$this->_authService = Zend_Auth::getInstance();
+		$un=$this->_authService->getIdentity()->username;
 		
+		$user=$this->_sede->getUserByUName($un);
+		$idPos=$this->_sede->getIdPosizioneByPosizionestaff($user['PosizioneStaff']);
+		$i = 1;
+		
+		foreach($idPos as $id)
+		{
+			$avvisi[] = $this->_sede->getAvvisiByDateEidPosizione($id['idPosizione']);
+			echo 'idPos: '.$id['idPosizione'];
+			echo 'Avv: '.$avvisi[$i-1]['idAvviso'];
+			$i++;
+		}
+		
+		foreach($avvisi as $av)
+		{
+			//$segnalazioni[]=$this->_sede->getElAvvisoById($av['idElencoAvviso']);
+		}
+		$this->view->assign(array('avvisi'=>$avvisi));
+		$this->view->assign(array('segnalazioni'=>$segnalazioni));
 	}
 	
 	public function modprofiloAction () 

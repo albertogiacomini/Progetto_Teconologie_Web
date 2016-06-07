@@ -22,7 +22,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
                     )); 
         
         $this->addElement('text', 'nome', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
+            'filters'    => array('StringTrim'),
             'validators' => array(
                 array('StringLength', true, array(3, 25))
             ),
@@ -33,7 +33,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             ));
             
         $this->addElement('text', 'cognome', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
+            'filters'    => array('StringTrim'),
             'validators' => array(
                 array('StringLength', true, array(3, 25))
             ),
@@ -44,7 +44,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             ));
             
         $this->addElement('text', 'username', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
+            'filters'    => array('StringTrim'),
             'validators' => array(
                 array('StringLength', true, array(3, 25))
             ),
@@ -85,7 +85,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
 		));	
 			
 		$this->addElement('text', 'eta', array(
-			'filters'    => array('StringTrim', 'StringToLower'),
+			'filters'    => array('StringTrim'),
             'validators' => array(
                 array('StringLength', true, array(3, 25))
             ),
@@ -96,7 +96,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
 		));	
 
 		$this->addElement('text', 'telefono', array(
-			'filters'    => array('StringTrim', 'StringToLower'),
+			'filters'    => array('StringTrim'),
             'validators' => array(
             	array('Int'),
                 array('StringLength', true, array(3, 25))
@@ -108,7 +108,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
 		));
         
         $this->addElement('text', 'indirizzo', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
+            'filters'    => array('StringTrim'),
             'validators' => array(
                 array('StringLength', true, array(3, 25))
             ),

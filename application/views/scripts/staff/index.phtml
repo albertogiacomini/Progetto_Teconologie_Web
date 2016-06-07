@@ -6,12 +6,12 @@
    		<?php foreach($this->Plan as $plan) :?>
    			<div class="home-riga">
    			<h4>Piano:</h4>		
-   			<?php $base64 = base64_encode($plan['mappa']);?>
+   			<?php $base64 = base64_encode($plan->mappa);?>
 			<?php $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="150em height=150em" />';?>
             <?php echo $image; ?>
    		    <p>NUMERO DI SEGNALAZIONI:
    		    	<?php foreach($this->avvisi as $a) :?>  
-   		    		<?php echo $a[$ind]; $ind++; ?></p>
+   		    		<?php echo $a->ind; $ind++; ?></p>
    		    		<?php endforeach; ?>
    		    </div> 
         	<?php endforeach; ?>

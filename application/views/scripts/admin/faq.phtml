@@ -5,7 +5,11 @@
            <th  width="30%">Domanda</th>
            <th  width="70%">Risposta</th>
            <th  width="5%">
-                        <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button>
+               <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'aggiungifaq',),
+                                                    'default',true );?>">
+                        <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button></a>
 
            </th>
         </tr>

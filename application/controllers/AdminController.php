@@ -7,6 +7,7 @@ class AdminController extends Zend_Controller_Action
     protected $_user;
     protected $_mpform;
     protected $_faqform;
+    protected $_aggiungifaqform;
     
     public function init()
     {
@@ -15,6 +16,7 @@ class AdminController extends Zend_Controller_Action
         $this->_user = new Application_Model_User();
         $this->view->mpForm=$this->getModProfiloForm(); 
         $this->view->faqForm=$this->getModFaqForm(); 
+        $this->view->aggiungifaqForm=$this->getAggiungiFaqForm(); 
     }
     
     public function indexAction()
@@ -119,4 +121,36 @@ class AdminController extends Zend_Controller_Action
         $this->_helper->redirector('faq');
     }
     
+      public function aggiungifaqAction () 
+    {
+        $this->_aggiungifaqform;
+    }
+    
+    public function getAggiungiFaqForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_aggiungifaqform = new Application_Form_Admin_AggiungiFaq();
+        $this->_aggiungifaqform->setAction($urlHelper->url(array(
+            'controller' => 'admin',
+            'action' => 'salvafaq'),
+            'default'
+        ));
+        return $this->_aggiungifaqform;
+    }
+    
+    public function salvafaqAction () 
+    {
+        if(!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('aggiungifaq');
+        }
+        $form=$this->_aggiungifaqform;
+        if (!$form->isValid($_POST)) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('aggiungifaq');
+        }
+        $values=$form->getValues();
+        $this->_vistaFaq->createFaq($values);
+        $this->_helper->redirector('faq');
+    }
+ 
 }
