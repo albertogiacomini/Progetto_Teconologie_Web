@@ -17,7 +17,7 @@ class Application_Form_Staff_Gestione extends App_Form_Abstract
 		
 		$this->addElement('select', 'piano', array(
             'required'   => true,
-            'label'      => "$this->comp",
+            'label'      => $this->comp,
             'MultiOptions' => $piano,
             'onChange' => '',
         ));
