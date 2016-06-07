@@ -81,6 +81,9 @@ class UserController extends Zend_Controller_Action
         $a=array("username"=>$us,"password"=>$pa);
         $this->_authService->getAuth()->clearIdentity();
         $this->_authService->authenticate($a);
+        
+        unlink($image);
+        
     }
     
     public function modcredenzialiAction () 
