@@ -22,7 +22,9 @@ class UserController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
-
+		
+		
+		
         //passaggio informazioni alle notifiche
         $p='Ingegneria';
         $avvisi=$this->_utente->getAvvisiByDate();     
@@ -40,7 +42,6 @@ class UserController extends Zend_Controller_Action
 		
 		$this->view->idPos = $idPos['idPosizione'];
 		if(($idPos['idPosizione']) != null){
-			
 			$datiPosizione = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
 			$this->view->data = $datiPosizione;
 			$imm = $this->_utente->getMappaEvaquazioneByEdifPianoSel($datiPosizione['edificio'], $datiPosizione['piano']);
