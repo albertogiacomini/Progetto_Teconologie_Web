@@ -4,8 +4,7 @@
                        
                                        
                      
-                      <?php foreach ($this->dataNotifica as $key=>$data) :?>
-                      
+                      <?php foreach ($this->dataNotifica as $data) :?>
                       <!-- notifica -->
                       <div class="desc">
                                 <div class="thumb">
@@ -16,15 +15,14 @@
                             <?php if($data->idPosizione==$dove->idPosizione) :?>
                             <?php foreach ($this->tipoNotifica as $tipo) :?>
                             <?php if($data->idElencoAvviso==$tipo->idElencoAvviso) :?>
-                            <?php echo '<p><muted> '. $data->data .' </muted><br/>'. $tipo->tipoAvviso .' </muted><br/>'. $dove->edificio .','. $dove->piano .'<br/></p>' ?>
+                            <?php if($dove->edificio==$this->posizione) :?>
+                            <?php echo '<p><muted> '. $data->data .' </muted><br/>'. $tipo->tipoAvviso .' </muted><br/>'. $dove->edificio .','. $dove->piano .','. $dove->aula .'<br/></p>' ?>
+                            <?php endif ?>
                             <?php endif ?>
                             <?php endforeach ?>
                             <?php endif ?>
                             <?php endforeach ?>
-                            
-
                             </div>
                       </div>
-                       
-                        <?php endforeach ?>
+                      <?php endforeach ?>
 </div>
