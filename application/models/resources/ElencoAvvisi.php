@@ -21,8 +21,13 @@ class Application_Resource_ElencoAvvisi extends Zend_Db_Table_Abstract
     public function getElAvvisoById($id)
 
     {
-        return $this->fetchRow($this->select()
-                                    ->where('idElencoAvviso = ?', $id));
+        return $this->getAdapter()->fetchRow($this->select()->where('idElencoAvviso = ?', $id));
+    }
+    
+    public function getAllElAvvisi()
+
+    {
+        return $this->fetchAll($this->select());
     }
 	
 	public function getIdElAvvisoByTipo($TAvviso)

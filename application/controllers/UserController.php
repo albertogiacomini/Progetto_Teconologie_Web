@@ -25,12 +25,10 @@ class UserController extends Zend_Controller_Action
 
 
         //passaggio informazioni alle notifiche
-        $Dat=$this->_utente->getAvvisi();
-        foreach ($Dat as $key => $d) {
-            $Tip[$d['idElencoAvviso']]=$this->_utente->getAvvisoById($d['idElencoAvviso']);
-        }
-        Zend_Layout::getMvcInstance()->assign(array('dat'=>$Dat));
-        Zend_Layout::getMvcInstance()->assign(array('tip'=>$Tip));
+        $avvisi=$this->_utente->getAvvisiByDate();     
+        $elavvisi=$this->_utente->getAllElAvvisi();
+        $this->view->assign(array('data'=>$avvisi));
+        $this->view->assign(array('tipo'=>$elavvisi));
         
 		$this->view->seForm=$this->getSegnalazioneForm();
 		$un = $this->_authService->getIdentity()->username;

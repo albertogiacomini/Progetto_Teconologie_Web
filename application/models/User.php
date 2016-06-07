@@ -14,6 +14,11 @@ class Application_Model_User extends App_Model_Abstract
          return $this->getResource('Avvisi')->getAvvisi();
     }
     
+    public function getAvvisiByDate()
+    {
+         return $this->getResource('Avvisi')->getAvvisiByDate();
+    }
+    
     public function getAvvisoById($id)
     {
         return $this->getResource('ElencoAvvisi')->getElAvvisoById($id);
@@ -31,6 +36,11 @@ class Application_Model_User extends App_Model_Abstract
 	{
 		return $this->getResource('ElencoAvvisi')->getElAvvisi();
 	}	
+    
+    public function getAllElAvvisi()
+    {
+        return $this->getResource('ElencoAvvisi')->getAllElAvvisi();
+    }   
 	
 	public function getIdElAvvisoByTipo($TAvviso)
 	{
