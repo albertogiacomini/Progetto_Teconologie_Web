@@ -26,8 +26,8 @@ class UserController extends Zend_Controller_Action
         //passaggio informazioni alle notifiche
         $avvisi=$this->_utente->getAvvisiByDate();     
         $elavvisi=$this->_utente->getAllElAvvisi();
-        $this->view->assign(array('data'=>$avvisi));
-        $this->view->assign(array('tipo'=>$elavvisi));
+        $this->view->assign(array('dataNotifica'=>$avvisi));
+        $this->view->assign(array('tipoNotifica'=>$elavvisi));
         
 		$this->view->seForm=$this->getSegnalazioneForm();
 		
@@ -72,13 +72,11 @@ class UserController extends Zend_Controller_Action
             return $this->render('modprofilo');
         }
         $values=$form->getValues();
-        
         //conversione del file della form in blob
         $image=APPLICATION_PATH . '/../public/images/temp/'.$values['imgprofilo'];
         $data=file_get_contents($image);
         //immissione del file blob nella variabile imgprofilo
         $values['imgprofilo']=$data;
-        
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
         $us=$this->_authService->getIdentity()->username;
@@ -86,6 +84,9 @@ class UserController extends Zend_Controller_Action
         $a=array("username"=>$us,"password"=>$pa);
         $this->_authService->getAuth()->clearIdentity();
         $this->_authService->authenticate($a);
+        //eliminazione de file temporaneo immagine
+        unlink($image);
+        
     }
     
     public function modcredenzialiAction () 
