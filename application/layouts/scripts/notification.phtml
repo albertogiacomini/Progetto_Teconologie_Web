@@ -16,7 +16,7 @@
                             <?php if($data->idPosizione==$dove->idPosizione) :?>
                             <?php foreach ($this->tipoNotifica as $tipo) :?>
                             <?php if($data->idElencoAvviso==$tipo->idElencoAvviso) :?>
-                            <?php echo '<p><muted> '. $data->data .' </muted><br/>'. $tipo->tipoAvviso .' </muted><br/>'. $dove->edificio .','. $dove->piano .'<br/></p>' ?>
+                            <?php echo '<p><muted> '. $data->data .' </muted><br/>'. $tipo->tipoAvviso .' </muted><br/>'. $dove->edificio .','. $dove->piano .','. $dove->aula .'<br/></p>' ?>
                             <?php endif ?>
                             <?php endforeach ?>
                             <?php endif ?>
