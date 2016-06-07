@@ -36,7 +36,12 @@ class UserController extends Zend_Controller_Action
 		
 		$this->view->idPos = $idPos['idPosizione'];
 		if(($idPos['idPosizione']) != null){
-			$this->view->data = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
+			
+			$datiPosizione = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
+			$this->view->data = $datiPosizione;
+			$imm = $this->_utente->getMappaEvaquazioneByEdifPianoSel($datiPosizione['edificio'], $datiPosizione['piano']);
+			$base64 = base64_encode($imm['mappaEvaquazione']);
+			$this->view->planimetriaCorretta = 'data:image/png;base64,'.$base64;
 		}
 
     }

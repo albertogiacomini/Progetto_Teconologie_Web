@@ -67,6 +67,10 @@ class Application_Model_User extends App_Model_Abstract
 	//FAQ
 	
 	//MAPPA EVAQUAZIONE
+	public function getMappaEvaquazioneByEdifPianoSel($edificio, $piano)
+	{
+		return $this->getResource('MappaEvaquazione')->getMappaEvaquazioneByEdifPianoSel($edificio, $piano);
+	}
 	
 	//PLANIMETRIE
 	public function getPlanimetriaById($idPlanimetria)

@@ -16,10 +16,21 @@
 <?php else: ?>
  <div class="showback">
  	<h3><i class="fa fa-angle-right"></i>POSIZIONE ATTUALE</h3>
-    <p>Edificio: <?=$this->data['edificio']; ?><br></p>
-    <p>Piano: <?=$this->data['piano']; ?><br></p>
-    <p>Aula: <?=$this->data['aula']; ?><br></p>
-    <br>
+ 	<div style="float:left; ">	 	
+		    <p>Edificio: <?=$this->data['edificio']; ?><br></p>
+		    <p>Piano: <?=$this->data['piano']; ?><br></p>
+		    <p>Aula: <?=$this->data['aula']; ?><br></p><br>
+		    <h3><i class="fa fa-angle-right"></i>MODIFICA POSIZIONE</h3>
+    		<a href="<?= $this->url(array(
+                          'controller' => 'user',
+                          'action'     => 'modificaposizione', ), 
+                          'default',true );?>"> 
+    		<p>Modifica posizione attuale<br></p></a>
+	</div>
+	<div style="float:left display:inline" align="center">  
+	    	<img  src = <?=$this->planimetriaCorretta; ?> width = "40%" height = "40%"/>
+	</div>
+	<div style="clear:both;"></div>	   
 </div> 
 
 <div class="showback">
@@ -31,13 +42,6 @@
     <map id="mapSegnalazione" name="mapSegnalazione"></map>
 </div>
  
-<div class="showback">
-    <h3><i class="fa fa-angle-right"></i>MODIFICA POSIZIONE</h3>
-    <a href="<?= $this->url(array(
-                          'controller' => 'user',
-                          'action'     => 'modificaposizione', ), 
-                          'default',true );?>"> 
-    <p>Modifica posizione attuale<br></p></a>
-</div> 
+
 
 <?php endif;?>
