@@ -51,7 +51,7 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
 	
 	public function getPosizionestaffByUName($username)
 	{
-		return $this->getAdapter()->fetchRow($this->select('PosizioneStaff')->where('username = ?', $username));  
+		return $this->fetchRow($this->select('PosizioneStaff')->where('username = ?', $username));  
 	}
 	
 	public function setIdPosByUName($idPos, $uName)

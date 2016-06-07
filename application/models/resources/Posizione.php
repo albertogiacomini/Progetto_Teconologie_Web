@@ -26,10 +26,10 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
         return $this->getAdapter()->fetchAll($select);
     }
 	
-	public function getPianoByComp($edificio)
+	/*public function getPianoByComp($edificio)
     {
   	    return $this->getAdapter()->fetchRow($this->select()->where('edificio = ?', $edificio));
-    }
+    }*/
     
 	public function getIdPlanimetriaByEdificioPiano($edificio, $piano)
     {
