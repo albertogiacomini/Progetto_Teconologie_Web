@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_Admin_ModFaqForm extends App_Form_Abstract
+class Application_Form_Admin_AggiungiFaq extends App_Form_Abstract
 {
     protected $_vistafaqModel;
     
@@ -8,16 +8,8 @@ class Application_Form_Admin_ModFaqForm extends App_Form_Abstract
     {
         $this->_vistafaqModel = new Application_Model_Vistafaq();              
         $this->setMethod('post');
-        $this->setName('modFaq');
+        $this->setName('aggiungiFaq');
         $this->setAction('');
-        
-        $this->addElement('hidden', 'idFaq', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
-            'validators' => array(
-                array('StringLength', true, array(1, 25))
-            ),
-            'required'   => true,
-            ));
         
         $this->addElement('text', 'domanda', array(
             'filters'    => array('StringTrim', 'StringToLower'),
@@ -43,8 +35,8 @@ class Application_Form_Admin_ModFaqForm extends App_Form_Abstract
             'class' => 'form-control mt5',
         ));
         
-        $this->addElement('submit', 'aggiorna', array(
-            'label'    => 'Aggiorna',
+        $this->addElement('submit', 'aggiungi', array(
+            'label'    => 'Aggiungi',
             'decorators' => $this->buttonDecorators,
             'class' => 'btn-theme form-control mt20'
         ));

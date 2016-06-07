@@ -284,11 +284,12 @@ ul.top-menu > li > .login {
 }
 
 ul li{
-	list-styile:none;
+	list-style:disc;
 }
 
 #sidebar ul li {
     position: relative;
+    list-style:none;
 }
 
 #sidebar .sub-menu > .sub li  {
