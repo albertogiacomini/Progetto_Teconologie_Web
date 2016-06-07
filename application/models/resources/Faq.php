@@ -34,4 +34,9 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract
         $dove="idFaq='". $idFaq. "'";
         $this->update($faqInfo,$dove);
     }
+    
+    public function createFaq($FaqI)
+    {
+        $this->insert($FaqI);
+    }
 }
