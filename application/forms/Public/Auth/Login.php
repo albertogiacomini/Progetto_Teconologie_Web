@@ -16,6 +16,7 @@ class Application_Form_Public_Auth_Login extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Username',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control mt5 ml25',
             ));
         
         $this->addElement('password', 'password', array(
@@ -26,11 +27,13 @@ class Application_Form_Public_Auth_Login extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Password',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control mt5 ml25',
             ));
 
         $this->addElement('submit', 'login', array(
             'label'    => 'Entra',
             'decorators' => $this->buttonDecorators,
+            'class' => 'btn-theme form-control mt10 ml350'
         ));
 
         $this->setDecorators(array(

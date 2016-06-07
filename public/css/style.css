@@ -12,7 +12,7 @@ body {
 }
 
 ul li {
-    list-style: none;
+    list-style: disc;
 }
 
 a, a:hover, a:focus {
@@ -175,6 +175,18 @@ hr {
 	text-align: right;
 }
 
+.mt5 {
+	margin-top: 5px;
+}
+
+.mt10 {
+	margin-top: 10px;
+}
+
+.mt20 {
+	margin-top: 20px;
+}
+
 .mt {
 	margin-top: 25px;
 }
@@ -182,6 +194,31 @@ hr {
 .mb {
 	margin-bottom: 25px;
 }
+
+.ml350 {
+	margin-left: 350%;
+	}
+	
+.ml730 {
+	margin-left: 730%;
+	}
+
+.ml230 {
+	margin-left: 230%;
+	}
+
+
+.ml200 {
+	margin-left: 200%;
+	}
+
+.ml25 {
+	margin-left: 25px;
+	}
+
+.ml3 {
+	margin-left: 3px;
+	}
 
 .ml {
 	margin-left: 5px;
@@ -2243,30 +2280,6 @@ label {
 
 .nameee{
 	  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: #68dff0;
-  border-color: #48bcb4;
-}
-
-input#aggiorna
-{
-	display: inline-block;
-  padding: 4px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
   color: #fff;
