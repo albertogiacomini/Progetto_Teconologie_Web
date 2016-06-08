@@ -52,6 +52,10 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
 		return $this->getAdapter()->fetchAll($select);
 	}
 	
+	public function getPericolo()
+    {
+        return $this->getAdapter()->fetchRow($this->select()->where('pericolo= 1'));
+    }
 }
 
         

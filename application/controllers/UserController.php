@@ -77,6 +77,7 @@ class UserController extends Zend_Controller_Action
         $data=file_get_contents($image);
         //immissione del file blob nella variabile imgprofilo
         $values['imgprofilo']=$data;
+        
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
         $us=$this->_authService->getIdentity()->username;
@@ -264,9 +265,44 @@ class UserController extends Zend_Controller_Action
 	public function modificaposizioneAction () 
     {
     	//Prendo l'user e modifico a NULL il suo id posizione nel DB
-    	$user = $this->_authService->getIdentity()->username;
-    	$this->_utente->setIdPosByUName(null, $user);
+    	$us = $this->_authService->getIdentity()->username;
+    	$this->_utente->setIdPosByUName(null, $us);
     	$this->_helper->redirector('index');
+    }
+	
+	public function pericoloAction () 
+    {
+    	$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+        	$pericolo = $this->_utente->getPericolo();
+			if($pericolo){
+				$posPericolo = $this->_utente->getDataByIdPosizione($pericolo['idPosizione']);
+				$us = $this->_authService->getIdentity()->username;
+				$utente	 = $this->_utente->getUserByUName($us);
+				$posUser = $this->_utente->getDataByIdPosizione($utente['idPosizione']);
+				if(($posPericolo['edificio']==$posUser['edificio']) && ($posPericolo['piano']==$posUser['piano'])){
+					$tipoAvv = $this->_utente->getAvvisoById($pericolo['idElencoAvviso']);
+					$pos = $this->_utente->getDataByIdPosizione($pericolo['idPosizione']);
+					
+					$immag = $this->_utente->getMappaEvaquazioneByEdifPianoSel($posPericolo['edificio'], $posPericolo['piano']);
+					$base64 = base64_encode($immag['mappaEvaquazione']);
+					$planimetriaEvacuazione = 'data:image/png;base64,'.$base64;
+							
+									
+					
+					$arrayPericolo = array('aula' => $pos['aula'],
+										   'tipoAvviso'=> $tipoAvv['tipoAvviso'],
+										   'immEvac'=>$planimetriaEvacuazione);
+										   
+		        	require_once 'Zend/Json.php';
+		            $ap = Zend_Json::encode($arrayPericolo);
+					
+		        	echo $ap;
+				}
+			}
+        }
     }
     
 	public function segnalazioneAction()

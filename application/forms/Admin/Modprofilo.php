@@ -52,6 +52,17 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
             'class' => 'form-control mt3',
             ));
             
+         $this->addElement('text', 'password', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Password',
+            'decorators' => $this->elementDecorators,
+            'class' => 'form-control mt3',
+            ));
+            
         $this->addElement('radio', 'genere', array(
             'label'      => 'Genere',
             'MultiOptions'=>array(
