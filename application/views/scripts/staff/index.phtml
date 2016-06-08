@@ -1,7 +1,19 @@
 <h2>HOME</h2>
 <div class="showback">
+<<<<<<< HEAD
     <h4><i class="fa fa-angle-right"></i>Notifiche segnalazioni di: <b><?php echo $this->authInfo('posizioneStaff') ?></b></h4>		
    	  	
    		
    
+=======
+    <h4><i class="fa fa-angle-right"></i>Notifiche segnalazioni <b><?php echo $this->authInfo('posizioneStaff') ?></b></h4>		
+   	 	
+   			
+   				
+   			<?php $base64 = base64_encode($plan->mappa);?>
+			<?php $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="150em height=150em" />';?>
+            <?php echo $image; ?>
+   		    
+    
+>>>>>>> 6df740739bdb22e0e6cbedfd43f917a2c538de59
 </div>

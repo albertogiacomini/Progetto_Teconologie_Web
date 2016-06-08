@@ -33,8 +33,20 @@ class StaffController extends Zend_Controller_Action
 	
     public function indexAction()
     {
+
         
-    } 
+ 
+
+        $Not=$this->_staff->getAvvisi();
+		$this->view->assign(array('arg'=>$Not));
+		
+		
+		$un=$this->_authService->getIdentity()->username;
+		$user=$this->_staff->getUserByUName($un); //prendo Utente 
+		$Plan=$this->_staff->getIdPlanimetriaByPosizionestaff($user['posizioneStaff']); // prendo idPlanimetrie riferite ad un edificio 
+		
+	}
+
 	
     public function viewstaticAction () 
     {}
