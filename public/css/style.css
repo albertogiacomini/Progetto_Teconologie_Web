@@ -1976,6 +1976,28 @@ label {
 	-webkit-border-radius: 5px;
 }
 
+.css-reg-log2 {
+	max-width: 330px;
+	margin: 50px auto 0;
+	margin-bottom: 50px;
+	background: #fff;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.css-reg-log2 h2.form-login-reg-heading {
+	margin: 0;
+	padding: 25px 20px;
+	text-align: center;
+	background: #68dff0;
+	border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
+	color: #fff;
+	font-size: 20px;
+	text-transform: uppercase;
+	font-weight: 300;
+}
+
 .css-reg-log h2.form-login-reg-heading {
 	margin: 0;
 	padding: 25px 20px;
