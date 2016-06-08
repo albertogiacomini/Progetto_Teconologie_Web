@@ -1,0 +1,43 @@
+<div class="content-panel">
+<table class="table">
+    <thead>
+        <tr>
+           <th  width="30%">Mappa</th>
+           <th  width="70%"></th>
+           <th  width="5%">
+               <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'aggiungiplanimetria',),
+                                                    'default',true );?>">
+                        <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button></a>
+
+           </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <?php foreach ($this->planimetria as $f) :?>  
+             <?php
+                  $base64 = base64_encode($f->mappa);
+                  $image = '<img src="data:image/jpg;base64,' . $base64 . '" width="250" />';
+                  ?>
+            <tr>
+                <td width="20%">   <?= $image  ?> </td>
+                <td width="60%">
+                <td width="10%"> <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'modificaplanimetria',),
+                                                    'default',true );?>/?idplan=<?php echo $f->idPlanimetria ?>">
+                       <button class="btn btn-primary btn-xs">
+                       <i class="fa fa-pencil"></i></button> </a></td>
+                <td width="10%"> <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'deleteplanimetria',),
+                                                    'default',true );?>/?idplan=<?php echo $f->idPlanimetria ?>">
+                        <button class="btn btn-danger btn-xs">
+                        <i class="fa fa-trash-o "></i></button> </a></td>
+                </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+</div>

@@ -86,6 +86,7 @@ class UserController extends Zend_Controller_Action
         $data=file_get_contents($image);
         //immissione del file blob nella variabile imgprofilo
         $values['imgprofilo']=$data;
+        
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
         $us=$this->_authService->getIdentity()->username;

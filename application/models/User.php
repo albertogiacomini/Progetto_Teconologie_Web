@@ -77,6 +77,26 @@ class Application_Model_User extends App_Model_Abstract
 	{
 		return $this->getResource('Planimetrie')->getPlanimetriaById($idPlanimetria);
 	}
+    
+    public function getPlanimetrieOrderById()
+    {
+        return $this->getResource('Planimetrie')->getPlanimetrieOrderById();
+    }
+    
+    public function aggiungiPlanimetria($planInfo)
+    {
+        return $this->getResource('Planimetrie')->aggiungiPlanimetria($planInfo);
+    }
+    
+     public function deletePlan($planID)
+    {
+        return $this->getResource('Planimetrie')->deletePlan($planID);
+    }
+    
+     public function modificaPlanimetria($planInfo,$ID)
+    {
+        return $this->getResource('Planimetrie')->modificaPlanimetria($planInfo,$ID);
+    }
 	
 	//POSIZIONE
 	public function getPosizione()
