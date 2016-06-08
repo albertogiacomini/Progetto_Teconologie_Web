@@ -39,9 +39,18 @@ class AccessController extends Zend_Controller_Action
             return $this->render('registrazione');
         }
         $values = $form->getValues();
-        $values['livello']='user';
-       	$this->_userModel->insertUser($values);
-		$this->authenticateAction();  
+        if($values['password']==$values['passwordtest']){
+            $values['livello']='user';
+            $image=APPLICATION_PATH . '/../public/images/temp/'.$values['imgprofilo'];
+            $data=file_get_contents($image);
+            $values['imgprofilo']=$data;
+            unset($values['passwordtest']);
+       	    $this->_userModel->insertUser($values);
+            $this->authenticateAction();
+        }else{
+            $form->setDescription('Attenzione: le password non corrispondono.');
+            return $this->render('registrazione');
+        }
     } 
 	
 

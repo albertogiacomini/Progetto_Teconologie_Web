@@ -13,6 +13,7 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
     	
         $this->addElement('file', 'imgprofilo', array(
             'label' => 'Img profilo',
+            'destination' => APPLICATION_PATH . '/../public/images/temp',
             'validators' => array( 
                     array('Count', false, 1),
                     array('Size', false, 102400),
@@ -61,6 +62,17 @@ class Application_Form_Public_Reg_Registrazione extends App_Form_Abstract
             ),
             'required'   => true,
             'label'      => 'Password',
+            'decorators' => $this->elementDecorators,
+            'class' => 'form-control2 mt5 ml3',
+            ));
+            
+        $this->addElement('password', 'passwordtest', array(
+            'filters'    => array('StringTrim'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Ripeti password',
             'decorators' => $this->elementDecorators,
             'class' => 'form-control2 mt5 ml3',
             ));

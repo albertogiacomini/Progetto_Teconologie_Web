@@ -29,6 +29,17 @@ class Application_Form_User_Modcredenziali extends App_Form_Abstract
             'decorators' => $this->elementDecorators,
             'class'      => 'form-control mt3'
             ));
+            
+        $this->addElement('password', 'passwordtest', array(
+            'filters'    => array('StringTrim'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Ripeti password',
+            'decorators' => $this->elementDecorators,
+            'class'      => 'form-control mt3'
+            ));
 
         $this->addElement('submit', 'aggiorna', array(
             'label'      => 'Aggiorna',

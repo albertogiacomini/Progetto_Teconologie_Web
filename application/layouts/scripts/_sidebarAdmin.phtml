@@ -32,9 +32,21 @@
                       </a>
                   </li>
                   <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-building-o"></i>
-                          <span>Gestione immobili</span>
+                       <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'planimetria',), 
+                                                    'default',true );?>"> 
+                          <i class="fa fa-map-marker"></i>
+                          <span>Gestione planimetrie</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'mappaevaquazione',), 
+                                                    'default',true );?>"> 
+                          <i class="fa fa-flash"></i>
+                          <span>Gestione evacuazione</span>
                       </a>
                   </li>
                   <li  class="sub-menu"><a href="<?= $this->url(array(

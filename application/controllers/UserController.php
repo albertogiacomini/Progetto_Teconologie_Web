@@ -22,24 +22,10 @@ class UserController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
         $this->view->mpForm=$this->getModProfiloForm();
         $this->view->epForm=$this->getEliminaProfiloForm();
-		
-		
-		
-        //passaggio informazioni alle notifiche
-        $p='Ingegneria';
-        $avvisi=$this->_utente->getAvvisiByDate();     
-        $elavvisi=$this->_utente->getAllElAvvisi();
-        $posiz=$this->_utente->getPosizione();
-        $this->view->assign(array('dataNotifica'=>$avvisi));
-        $this->view->assign(array('tipoNotifica'=>$elavvisi));
-        $this->view->assign(array('doveNotifica'=>$posiz));
-        $this->view->assign('posizione',$p);
+		$this->view->seForm=$this->getSegnalazioneForm();
         
-        $this->view->seForm=$this->getSegnalazioneForm();
-        
-        $un = $this->_authService->getIdentity()->username;
+		$un = $this->_authService->getIdentity()->username;
 		$idPos = $this->_utente->getUserByUName($un);
-		
 		$this->view->idPos = $idPos['idPosizione'];
 		if(($idPos['idPosizione']) != null){
 			$datiPosizione = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
@@ -49,21 +35,14 @@ class UserController extends Zend_Controller_Action
 			$this->view->planimetriaCorretta = 'data:image/png;base64,'.$base64;
             $this->view->assign('posizione',$datiPosizione['edificio']);
 		}
-        
         //passaggio informazioni alle notifiche
-        $p=
+        
         $avvisi=$this->_utente->getAvvisiByDate();     
         $elavvisi=$this->_utente->getAllElAvvisi();
         $posiz=$this->_utente->getPosizione();
         $this->view->assign(array('dataNotifica'=>$avvisi));
         $this->view->assign(array('tipoNotifica'=>$elavvisi));
         $this->view->assign(array('doveNotifica'=>$posiz));
-        
-        
-		
-		
-		
-		
 
     }
     
@@ -98,6 +77,7 @@ class UserController extends Zend_Controller_Action
         $data=file_get_contents($image);
         //immissione del file blob nella variabile imgprofilo
         $values['imgprofilo']=$data;
+        
         $un=$this->_authService->getIdentity()->username;
         $this->_utente->updateUser($values,$un);
         $us=$this->_authService->getIdentity()->username;
@@ -127,10 +107,16 @@ class UserController extends Zend_Controller_Action
             return $this->render('modcredenziali');
         }
         $values=$form->getValues();
-        $un=$this->_authService->getIdentity()->username;
-        $this->_utente->updateUser($values,$un);
-        $this->_authService->getAuth()->clearIdentity();
-        $this->_authService->authenticate($values);
+        if($values['password']==$values['passwordtest']){
+            unset($values['passwordtest']);
+            $un=$this->_authService->getIdentity()->username;
+            $this->_utente->updateUser($values,$un);
+            $this->_authService->getAuth()->clearIdentity();
+            $this->_authService->authenticate($values);
+        }else{
+            $form->setDescription('Attenzione: le password non corrispondono.');
+            return $this->render('modcredenziali');
+        }
     }
 
 	
@@ -279,14 +265,48 @@ class UserController extends Zend_Controller_Action
 	public function modificaposizioneAction () 
     {
     	//Prendo l'user e modifico a NULL il suo id posizione nel DB
-    	$user = $this->_authService->getIdentity()->username;
-    	$this->_utente->setIdPosByUName(null, $user);
+    	$us = $this->_authService->getIdentity()->username;
+    	$this->_utente->setIdPosByUName(null, $us);
     	$this->_helper->redirector('index');
     }
-    
-	public function segnalazioneActio(){
+	
+	public function pericoloAction () 
+    {
+    	$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
 		
-	}
+        if ($this->getRequest()->isXmlHttpRequest()) {
+        	$pericolo = $this->_utente->getPericolo();
+			if($pericolo){
+				$posPericolo = $this->_utente->getDataByIdPosizione($pericolo['idPosizione']);
+				$us = $this->_authService->getIdentity()->username;
+				$utente	 = $this->_utente->getUserByUName($us);
+				$posUser = $this->_utente->getDataByIdPosizione($utente['idPosizione']);
+				if(($posPericolo['edificio']==$posUser['edificio']) && ($posPericolo['piano']==$posUser['piano'])){
+					$tipoAvv = $this->_utente->getAvvisoById($pericolo['idElencoAvviso']);
+					$pos = $this->_utente->getDataByIdPosizione($pericolo['idPosizione']);
+					
+					$immag = $this->_utente->getMappaEvaquazioneByEdifPianoSel($posPericolo['edificio'], $posPericolo['piano']);
+					$base64 = base64_encode($immag['mappaEvaquazione']);
+					$planimetriaEvacuazione = 'data:image/png;base64,'.$base64;
+							
+									
+					
+					$arrayPericolo = array('aula' => $pos['aula'],
+										   'tipoAvviso'=> $tipoAvv['tipoAvviso'],
+										   'immEvac'=>$planimetriaEvacuazione);
+										   
+		        	require_once 'Zend/Json.php';
+		            $ap = Zend_Json::encode($arrayPericolo);
+					
+		        	echo $ap;
+				}
+			}
+        }
+    }
+    
+	public function segnalazioneAction()
+	{}
     
     public function eliminaprofiloAction () 
     {}
@@ -294,9 +314,8 @@ class UserController extends Zend_Controller_Action
     public function confermaeliminazioneprofiloAction()
     {
         $un=$this->_authService->getIdentity()->username;
-        if($this->_utente->deleteUser($un)){
-            $this->view->assign('description','Eliminazione eseguita con successo.');
-        }$this->view->assign('description','Eliminazione non riuscita.');
+        $this->_utente->deleteUser($un);
+        $this->_helper->redirector('index','public');
     }
     
     protected function getEliminaProfiloForm()

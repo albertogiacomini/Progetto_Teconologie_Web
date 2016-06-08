@@ -1,10 +1,11 @@
 <h2>HOME</h2>
+
 <div class="showback " >
     <h4><i class="fa fa-angle-right"></i>Notifiche segnalazioni <b><?php echo $this->authInfo('posizioneStaff') ?></b></h4>		
    	 	
    			
-   			<?php foreach ($this->piano as $pk => $p) :?>
-   	<div  style="float:left display:inline">
+   	 <?php foreach ($this->piano as $pk => $p) :?>
+   	 <div  style="float:left display:inline">
    			<?php echo '<h3>Piano: '. $p['piano'].'</h3>'?>
    			<?php foreach ($this->mappa as $mk => $m) :?>
    			<?php if($pk==$mk):?> 
@@ -25,5 +26,6 @@
             <?php endforeach ?>
    		    <?php endforeach ?>
     </div>
+
 </div>
  
