@@ -25,7 +25,7 @@ class Application_Resource_MappaEvaquazione extends Zend_Db_Table_Abstract
         return $this->fetchRow($this->select()->where('idPosizioneMap = ?', $PosMap));
     }
 	
-	public function getMappaEvaquazioneByEdifPianoSel()
+	public function getMappaEvaquazioneByEdifPianoSel($edificio, $piano)
     {
         return $this->fetchRow($this->select()->where('edificio = ?', $edificio)
 											  ->where('piano = ?', $piano)
