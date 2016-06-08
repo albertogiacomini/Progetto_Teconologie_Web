@@ -33,47 +33,70 @@ class StaffController extends Zend_Controller_Action
 	
     public function indexAction()
     {
-    	 $Not=$this->_staff->getAvvisi();
-         Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
+        $Not=$this->_staff->getAvvisi();
+		Zend_Layout::getMvcInstance()->assign(array('arg'=>$Not));
 		
-		$this->_sede=new Application_Model_Staff();
+		//$this->_sede=new Application_Model_Staff();
 		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
 		
-		$comp =$this->_sede->getUserByUName($un); //edificio di competenza 
-		$user=$this->_sede->getUserByUName($un); //prendo Utente 
-		$Plan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['posizioneStaff']); // prendo idPlanimetrie riferite ad un edificio 
+		
+		$user=$this->_staff->getUserByUName($un); //prendo Utente 
+		$Plan=$this->_staff->getIdPlanimetriaByPosizionestaff($user['posizioneStaff']); // prendo idPlanimetrie riferite ad un edificio 
+		
 		foreach($Plan as $i)
 		{
-			$mappa[]=$this->_sede->getPlanimetriaById($i['idPlanimetria']); //2 mappe per ogni edificio
+			$mappa[]=$this->_staff->getPlanimetriaById($i['idPlanimetria']); //2 mappe per ogni edificio
 		}
-
-		$piani = $this->_sede->getPianoByEdificio($user['posizioneStaff']);
+		$piani=$this->_staff->getPianiByEdificio($user['posizioneStaff']);
+		$ris[]=null;
+		$posizione=$this->_staff->getPosizione();
 		
+		/*foreach($pos['piano'] as $ris)
+		{	
+			$ris[]=array()
+		}*/
+		
+		foreach($posizione as $pos)
+		{
+			foreach($Not as $av)
+			{
+				if($pos['idPosizione']==$av['idPosizione'])
+				{
+					if($pos['edificio']==$user['posizioneStaff'])
+					{	$p=$pos['piano'];
+						$ris[$p]=$ris[$p]+1;
+						//$ris[$pos['piano']]++;
+						
+					}
+				}
+			}
+		}
+		
+		/*
 		
 		foreach($piani as $piano)
 		{
-			$idPos = $this->_sede->getIdPosizioneByPiano($piano['piano']);
-			
+			$idPos = $this->_staff->getIdPosizioneByPiano($piano['piano']);			
 		}
-		
 		
 		$numPiani = count($piani);
 		
 		foreach($idPos as $ip)
 		{			echo $ip['IdPosizione'];
 			foreach($Not as $av)
-			{
+			{	
 				if($av->idPosizione == $ip->idPosizione)
 				{
-					$avvisi[][]=$this->_sede->getAvvisiByidPosizione($ip['idPosizione']);
+					$avvisi[][]=$this->_staff->getAvvisiByidPosizione($ip['idPosizione']);
 				}
 			}
-		}	
-		$numAvvisi[]= count($avvisi);
-			$this->view->assign(array('comp'=>$comp));
+		}	*/
+		//$numAvvisi= count($avvisi);
+			$this->view->assign(array('comp'=>$user));
 		    $this->view->assign(array('Plan'=>$mappa));	
-			$this->view->assign(array('avvisi'=>$numAvvisi));	
+			$this->view->assign(array('avvisi'=>$ris));	
+			$this->view->assign(array('p'=>$p));	
 	} 
 	
     public function viewstaticAction () 
@@ -106,6 +129,12 @@ class StaffController extends Zend_Controller_Action
 		$this->view->assign(array('avvStaff'=>$avvisi));
         $this->view->assign(array('elAvvStaff'=>$elAvvisi));
         $this->view->assign(array('posStaff'=>$pos));
+	}
+	
+	public function deletesegnalazioniAction()
+	{
+		$idSegn=$_GET["segnalazioni"];
+		$this->_staff->deleteAvvisi($idSegn);
 	}
 	
 	public function modprofiloAction () 
