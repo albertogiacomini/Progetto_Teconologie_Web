@@ -33,14 +33,29 @@ class StaffController extends Zend_Controller_Action
 	
     public function indexAction()
     {
-        $Not=$this->_staff->getAvvisi();
-		$this->view->assign(array('arg'=>$Not));
-		
-		
+    	$avv=null;
+        $not=$this->_staff->getAvvisi();
 		$un=$this->_authService->getIdentity()->username;
 		$user=$this->_staff->getUserByUName($un); //prendo Utente 
-		$Plan=$this->_staff->getIdPlanimetriaByPosizionestaff($user['posizioneStaff']); // prendo idPlanimetrie riferite ad un edificio 
-		
+		$idplan=$this->_staff->getIdPlanimetriaByPosizionestaff($user['posizioneStaff']); // prendo idPlanimetrie riferite ad un edificio 
+		foreach ($idplan as $key=>$p) {
+			$mappa[$key]=$this->_staff->getPlanimetriaById($p['idPlanimetria']);
+			$piano[$key]=$this->_staff->getPianoByIdPlan($p['idPlanimetria']);
+		}
+		foreach ($piano as $pkk => $pian) {
+			$ipbp[$pkk]=$this->_staff->getidPosizioneByPiano($pian['piano']);
+			foreach ($ipbp[$pkk] as $kp => $ipbpf) {
+				foreach ($not as $nk => $n) {
+					if($ipbpf['idPosizione']==$n['idPosizione']){
+						$avv[$pkk]+= 1;
+					}
+				}
+			}
+		}
+		$this->view->assign(array('mappa'=>$mappa));
+		$this->view->assign(array('piano'=>$piano));
+		$this->view->assign(array('idpiano'=>$idplan));
+		$this->view->assign(array('avv'=>$avv));
 	}
 	
     public function viewstaticAction () 
@@ -75,10 +90,16 @@ class StaffController extends Zend_Controller_Action
         $this->view->assign(array('posStaff'=>$pos));
 	}
 	
-	public function deletesegnalazioniAction()
+	public function deletesegnalazioneAction()
 	{
-		$idSegn=$_GET["segnalazioni"];
-		$this->_staff->deleteAvvisi($idSegn);
+		$idSegn=$_GET["segnalazione"];
+		$this->_staff->deleteAvviso($idSegn);
+        $this->_helper->redirector('segnalazioni');
+	}
+	
+	public function aggiungisegnalazioneAction()
+	{
+		
 	}
 	
 	public function modprofiloAction () 

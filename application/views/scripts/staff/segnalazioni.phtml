@@ -1,7 +1,7 @@
 <h2>SEGNALAZIONI</h2>
 <div class="content-panel">
-    <h2><i class="fa fa-angle-right"></i></h2> 
-	 <?php echo '<h2>Segnalazioni per area: ' .$this->authInfo('posizioneStaff').'</h2>' ?>
+    <?php echo '<h2><i class="fa fa-angle-right"></i>Segnalazioni per area: ' .$this->authInfo('posizioneStaff').'</h2>' ?>
+    <br>
 	<table class="table">
    	 <thead>
         <tr>
@@ -9,78 +9,53 @@
            <th  width="15%">Piano</th>
            <th  width="15%">Aula</th>
            <th  width="40%">Tipo Avviso</th>
-           <th  width="15%">Data</th>
-        
-		 <?php foreach ($this->avvStaff as $af) :?>
-		 <?php foreach ($this->elAvvStaff as $eaf) :?>
-		 <?php if($af->idElencoAvviso==$eaf->idElencoAvviso) :?>
-		 <?php foreach ($this->posStaff as $pf) :?>
-		 <?php if($af->idPosizione==$pf->idPosizione) :?>
-		 <?php if($pf->edificio==$this->authInfo('posizioneStaff')) :?>	
-		 <ul><?php echo '<p>' .  $pf->edificio. ', ' . $pf->piano. ', ' . $pf->aula . ', aula:' . $eaf->tipoAvviso . ', ' . $af->data  .  '</p><br/>'?> </ul>
-		 <?php endif ?>
-		 <?php endif ?>  
-		 <?php endforeach ?>
-		 <?php endif ?>
-		 <?php endforeach ?>
-		 <?php endforeach ?>
-	   </tr>
-    </thead>
-	 <div>
-	 	    <a href="<?= $this->url(array(
+           <th  width="15%">Data</th>   	  
+        </tr>
+    </thead>   
+	       <?php foreach ($this->avvStaff as $af) :?>
+		   <?php foreach ($this->elAvvStaff as $eaf) :?>
+		   <?php if($af->idElencoAvviso==$eaf->idElencoAvviso) :?>
+		   <?php foreach ($this->posStaff as $pf) :?>
+		   <?php if($af->idPosizione==$pf->idPosizione) :?>
+		   <?php if($pf->edificio==$this->authInfo('posizioneStaff')) :?>	
+		 <tbody> 
+            <tr>    
+                <td width="15%"> <?php echo $pf->edificio ?> </td>
+                <td width="15%"> <?php echo $pf->piano ?> </td>
+                <td width="15%"> <?php echo $pf->aula ?> </td>
+                <td width="30%"> <?php echo $eaf->tipoAvviso ?> </td>
+                <td width="15%"> <?php echo $af->data ?> </td>
+                <td width="10%"> 
+                <a href="<?= $this->url(array(
                                                     'controller' => 'staff',
                                                     'action'     => 'aggiungisegnalazione',),
                                                     'default',true );?>/?segnalazione=<?php echo $af->idAvviso ?>">
                     <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button> 
-                    </a>               
-            <a href="<?= $this->url(array(
+                </a></td>                  
+                <td width="10%"> <a href="<?= $this->url(array(
                                                     'controller' => 'staff',
-                                                    'action'     => 'deletesegnalazioni',),
+                                                    'action'     => 'deletesegnalazione',),
                                                     'default',true );?>/?segnalazione=<?php echo $af->idAvviso ?>">
                                    <button class="btn btn-danger btn-xs">
-                                   <i class="fa fa-trash-o "></i></button> </a>
-	 	
-	 </div>
-	 
+                                   <i class="fa fa-trash-o "></i></button> 
+                </a></td>
+             </tr>
+ 		   <?php endif ?>
+		   <?php endif ?>  
+		   <?php endforeach ?>
+		   <?php endif ?>
+		   <?php endforeach ?>
+		   <?php endforeach ?>
+    	</tbody>
+	</table>
 </div>
+		 	
+		 	
+		 	
+		 	
+		 
 
-
-<div class="content-panel">
-<table class="table">
-    <thead>
-        <tr>
-           <th  width="15%">Nome</th>
-           <th  width="15%">Cognome</th>
-           <th  width="15%">Username</th>
-           <th  width="40%">email</th>
-           <th  width="15%">livello</th>
-        </tr>
-    </thead>
     
-    <tbody>
-        <?php foreach ($this->user as $f) :?>  
-            <tr>
-                
-                <td width="15%"> <?php echo $f->nome ?> </td>
-                <td width="15%"> <?php echo $f->cognome ?> </td>
-                <td width="15%"> <?php echo $f->username ?> </td>
-                <td width="30%"> <?php echo $f->email ?> </td>
-                <td width="15%"> <?php echo $f->livello ?> </td>
-                <td width="10%"> 
-                    <a href="<?= $this->url(array(
-                                                    'controller' => 'admin',
-                                                    'action'     => 'modprofilo',),
-                                                    'default',true );?>/?username=<?php echo $f->username ?>">
-                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button> 
-                    </a></td>                  
-                <td width="10%"> <a href="<?= $this->url(array(
-                                                    'controller' => 'admin',
-                                                    'action'     => 'deleteuser',),
-                                                    'default',true );?>/?username=<?php echo $f->username ?>">
-                                   <button class="btn btn-danger btn-xs">
-                                   <i class="fa fa-trash-o "></i></button> </a></td>
-            </tr>
-        <?php endforeach ?>
-    </tbody>
-</table>
-</div>
+    
+    
+    

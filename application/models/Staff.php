@@ -8,13 +8,18 @@ class Application_Model_Staff extends App_Model_Abstract
         
     }
 	
-	public function getPianiByEdificio($edificio)
+	public function getPianoByIdPlan($idplan)
     {
-      return $this->getResource('Posizione')->getPianiByEdificio($edificio);
+   	   return $this->getResource('Posizione')->getPianoByIdPlan($idplan);
 	}
-	public function deleteAvvisi($idAvviso)
+	
+	public function getidPosizioneByPiano($piano)
+    {
+		return $this->getResource('Posizione')->getidPosizioneByPiano($piano);
+	}
+	public function deleteAvviso($idAvviso)
 	{
-		return $this->getResource('Avvisi')->deleteAvvisi($idAvviso);
+		return $this->getResource('Avvisi')->deleteAvviso($idAvviso);
 	}
 	
 	public function getPosizione()
@@ -133,11 +138,6 @@ class Application_Model_Staff extends App_Model_Abstract
 	public function getAvvisiByDateEidPosizione($pos)
 	{
 		return $this->getResource('Avvisi')->getAvvisiByDateEidPosizione($pos);
-	}
-
-	public function getIdPosizioneByPiano($piano)
-	{
-		return $this->getResource('Posizione')->getIdPosizioneByPiano($piano);
 	}
 
 	public function getElAvvisoById($id)
