@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_Admin_Modificaplanimetria extends App_Form_Abstract
+class Application_Form_Admin_Modificamapev extends App_Form_Abstract
 {
     protected $_userModel;
     
@@ -8,10 +8,10 @@ class Application_Form_Admin_Modificaplanimetria extends App_Form_Abstract
     {
         $this->_userModel = new Application_Model_User();              
         $this->setMethod('post');
-        $this->setName('modificaplanimetria');
+        $this->setName('modificamapev');
         $this->setAction('');
         
-        $this->addElement('hidden', 'idPlanimetria', array(
+        $this->addElement('hidden', 'idMappaEvaquazione', array(
             'filters'    => array('StringTrim', 'StringToLower'),
             'validators' => array(
                 array('StringLength', true, array(1, 25))
@@ -19,8 +19,8 @@ class Application_Form_Admin_Modificaplanimetria extends App_Form_Abstract
             'required'   => true,
             ));
         
-        $this->addElement('file', 'mappa', array(
-            'label' => 'Planimetria',
+         $this->addElement('file', 'mappaEvaquazione', array(
+            'label' => 'Mappa evacuazione',
             'destination' => APPLICATION_PATH . '/../public/images/temp',
             'validators' => array( 
                     array('Count', false, 1),
@@ -29,21 +29,30 @@ class Application_Form_Admin_Modificaplanimetria extends App_Form_Abstract
             'decorators' => $this->fileDecorators,
                     )); 
             
-        $this->addElement('textarea', 'map', array(
+        $this->addElement('text', 'edificio', array(
             'filters'    => array('StringTrim', 'StringToLower'),
             'validators' => array(
-                array('StringLength', true, array(3, 5000))
+                array('StringLength', true, array(3, 45))
             ),
             'required'   => true,
-            'label'      => 'Mappatura',
+            'label'      => 'Edificio',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control',
             'class' => 'form-control mt5',
         ));
         
+        $this->addElement('text', 'piano', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 45))
+            ),
+            'required'   => true,
+            'label'      => 'Piano',
+            'decorators' => $this->elementDecorators,
+            'class' => 'form-control mt5',
+        ));
         
         $this->addElement('submit', 'modifica', array(
-            'label'    => 'modifica',
+            'label'    => 'Modifica',
             'decorators' => $this->buttonDecorators,
             'class' => 'btn-theme form-control mt20'
         ));

@@ -10,6 +10,8 @@ class AdminController extends Zend_Controller_Action
     protected $_aggiungifaqform;
     protected $_aggiungiplanimetriaform;
     protected $_modplanimetriaform;
+    protected $_aggiungimapevform;
+    protected $_modmapevform;
     
     public function init()
     {
@@ -20,7 +22,9 @@ class AdminController extends Zend_Controller_Action
         $this->view->faqForm=$this->getModFaqForm(); 
         $this->view->aggiungifaqForm=$this->getAggiungiFaqForm(); 
         $this->view->aggiungiplanimetriaForm=$this->getAggiungiPlanimetriaForm(); 
-        $this->view->modplanimetriaForm=$this->getModificaPlanimetriaForm(); 
+        $this->view->modplanimetriaForm=$this->getModificaPlanimetriaForm();
+        $this->view->aggiungimapevForm=$this->getAggiungiMapEvForm();
+        $this->view->modmapevForm=$this->getModificaMapEvForm(); 
     }
     
     public function indexAction()
@@ -36,6 +40,12 @@ class AdminController extends Zend_Controller_Action
     {
          $Planimetria=$this->_user->getPlanimetrieOrderById();
          $this->view->assign(array('planimetria'=>$Planimetria));
+    }
+    
+     public function mappaevaquazioneAction()
+    {
+         $MappaEv=$this->_user->getMappaEvaquazioneOrderById();
+         $this->view->assign(array('mappaevaquazione'=>$MappaEv));
     }
     
     public function userAction()
@@ -246,5 +256,97 @@ class AdminController extends Zend_Controller_Action
         unlink($image);
         $this->_helper->redirector('planimetria');
     }
+    
+    
+    
+    
+    
+    public function aggiungimapevAction(){
+        $this->_aggiungimapevform;
+    }
+    
+    public function getAggiungiMapEvForm(){
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_aggiungimapevform = new Application_Form_Admin_AggiungiMapEv();
+        $this->_aggiungimapevform->setAction($urlHelper->url(array(
+            'controller' => 'admin',
+            'action' => 'salvamapev'),
+            'default'
+        ));
+        return $this->_aggiungimapevform;
+    }
+    
+    public function salvamapevAction()
+    {
+        if(!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('aggiungimapev');
+        }
+        $form=$this->_aggiungimapevform;
+        if (!$form->isValid($_POST)) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('aggiungimapev');
+        }
+        $values=$form->getValues();
+        //conversione del file della form in blob
+        $image=APPLICATION_PATH . '/../public/images/temp/'.$values['mappaEvaquazione'];
+        $data=file_get_contents($image);
+        //immissione del file blob nella variabile imgprofilo
+        $values['mappaEvaquazione']=$data;
+        $this->_user->aggiungiMappaEvaquazione($values);
+        //eliminazione de file temporaneo immagine
+        unlink($image);
+        $this->_helper->redirector('mappaevaquazione');
+    }
+    
+    public function deletemapevAction()
+    {
+         $map=$_GET["idmapev"];
+         $this->_user->deleteMapEv($map);
+         $MappaEv=$this->_user->getMappaEvaquazioneOrderById();
+         $this->view->assign(array('mappaevaquazione'=>$MappaEv));
+         $this->_helper->redirector('mappaevaquazione');
+    }
+       
+    public function modificamapevAction()
+    {
+        $id=$_GET["idmapev"];
+        $this->_modmapevform->populate($this->_user->getMappaEvaquazioneById($id)->toArray());
+    }
+    
+    public function getModificaMapEvForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_modmapevform = new Application_Form_Admin_Modificamapev();
+        $this->_modmapevform->setAction($urlHelper->url(array(
+            'controller' => 'admin',
+            'action' => 'salvamodmapev'),
+            'default'
+        ));
+        return $this->_modmapevform;
+    }
+    
+    public function salvamodmapevAction()
+    {
+        if(!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('modificamapev');
+        }
+        $form=$this->_modmapevform;
+        if (!$form->isValid($_POST)) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('modificamapev');
+        }
+        $values=$form->getValues();
+        //conversione del file della form in blob
+        $image=APPLICATION_PATH . '/../public/images/temp/'.$values['mappaEvaquazione'];
+        $data=file_get_contents($image);
+        //immissione del file blob nella variabile imgprofilo
+        $values['mappaEvaquazione']=$data;
+        $id=$_POST["idMappaEvaquazione"];
+        $this->_user->modificaMapEv($values,$id);
+        //eliminazione de file temporaneo immagine
+        unlink($image);
+        $this->_helper->redirector('mappaevaquazione');
+    }
+    
  
 }
