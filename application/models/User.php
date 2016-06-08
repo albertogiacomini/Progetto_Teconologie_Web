@@ -19,10 +19,7 @@ class Application_Model_User extends App_Model_Abstract
          return $this->getResource('Avvisi')->getAvvisiByDate();
     }
     
-    public function getAvvisoById($id)
-    {
-        return $this->getResource('ElencoAvvisi')->getElAvvisoById($id);
-    }
+    
 
 	public function inserisciSegnalazione($seInfo)
 	{
@@ -46,6 +43,11 @@ class Application_Model_User extends App_Model_Abstract
 		return true;
 	}
 	
+	public function getPericolo()
+	{
+		return $this->getResource('Avvisi')->getPericolo();
+	}
+	
 	//CATEGORIE
 	
 	//ELENCO AVVISI
@@ -63,6 +65,11 @@ class Application_Model_User extends App_Model_Abstract
 	{
 		return $this->getResource('ElencoAvvisi')->getIdElAvvisoByTipo($TAvviso);
 	}
+	
+	public function getAvvisoById($id)
+    {
+        return $this->getResource('ElencoAvvisi')->getElAvvisoById($id);
+    }
 	
 	//FAQ
 	

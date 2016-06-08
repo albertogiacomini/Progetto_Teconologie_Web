@@ -1,5 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
 <script>
+	PericoloFunc();
+
     function FillPiani()
     {
     	//Metodo per prelevare l'elemento selezionato nel select
@@ -41,7 +43,7 @@
 	                method:'get',
 	                parameters: {pia : piano,
 	                			 edif : edificio},
-	                onSuccess: function FillMap(mappaRsp)
+	                onSuccess: function FillMapP(mappaRsp)
 							   {
 								   	var mappaEmap = eval('(' + mappaRsp.responseText + ')');
 								   	var mappa = document.getElementById('mappaPosizione');
@@ -98,4 +100,60 @@
 	        	});
         	}
 		}
+		
+		
+		var myVar = window.setInterval("PericoloFunc()", 60000);	
+		var timer = null;			
+		function PericoloFunc(){
+			new Ajax.Request(
+	        "<?=$this->url(array('controller' => 'user','action' => 'pericolo'))?>",
+	            {
+	                method:'POST',
+	                onSuccess: function pericolo(pericoloRsp)
+							   {
+							   	    var a = 0;
+							   		var pericolo = eval('(' + pericoloRsp.responseText + ')');
+    								var pos = document.getElementById('apos');
+    								pos.setAttribute("style","display:none");	
+    								var inviaS = document.getElementById('inviaSegn');
+    								inviaS.setAttribute("style","display:none");
+    								
+    								document.getElementById('pericoloText').innerHTML = "Pericolo: "+pericolo.tipoAvviso;
+    								document.getElementById('aulaPText').innerHTML = "Aula: "+pericolo.aula;
+    								document.getElementById('mappaPericolo').src = pericolo.immEvac;
+    								
+    								window.clearTimeout(timer);
+    								timer = window.setInterval("Sfondo()", 700);
+							   }
+	        	}); 
+        	}
+        	
+        	
+        	
+        	function Sfondo()
+			{
+			    var sfondo = document.getElementById("ppos");
+			    if (sfondo.getAttribute("style") == "background:white")
+			    {
+			    	sfondo.removeAttribute("style");
+			    	document.getElementById("scrittaPer").setAttribute("style","color:white");			        
+	  			  	sfondo.setAttribute("style","background:maroon");
+	  			  	document.getElementById("pericoloText").setAttribute("style","color:white");
+	  			  	document.getElementById("aulaPText").setAttribute("style","color:white");
+	  			  	document.getElementById("scrittaA").setAttribute("style","color:white");
+	  			  	document.getElementById("ancora").setAttribute("style","color:white");	
+			    }
+			    else
+			    {
+			    	sfondo.removeAttribute("style");
+			    	document.getElementById("scrittaPer").setAttribute("style","color:#989898");			        
+		    		sfondo.setAttribute("style","background:white");
+		    		document.getElementById("pericoloText").setAttribute("style","color:#989898");
+	  			  	document.getElementById("aulaPText").setAttribute("style","color:#989898");
+	  			  	document.getElementById("scrittaA").setAttribute("style","color:#989898");
+	  			  	document.getElementById("ancora").setAttribute("style","color:#989898");	
+			    }
+			}
+			
+		
 </script>
