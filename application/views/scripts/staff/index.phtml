@@ -1,19 +1,31 @@
 <h2>HOME</h2>
-<div class="showback">
-<<<<<<< HEAD
-    <h4><i class="fa fa-angle-right"></i>Notifiche segnalazioni di: <b><?php echo $this->authInfo('posizioneStaff') ?></b></h4>		
-   	  	
-   		
-   
-=======
+
+<div class="showback " >
     <h4><i class="fa fa-angle-right"></i>Notifiche segnalazioni <b><?php echo $this->authInfo('posizioneStaff') ?></b></h4>		
    	 	
    			
-   				
-   			<?php $base64 = base64_encode($plan->mappa);?>
-			<?php $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="150em height=150em" />';?>
-            <?php echo $image; ?>
-   		    
-    
->>>>>>> 6df740739bdb22e0e6cbedfd43f917a2c538de59
+   	 <?php foreach ($this->piano as $pk => $p) :?>
+   	 <div  style="float:left display:inline">
+   			<?php echo '<h3>Piano: '. $p['piano'].'</h3>'?>
+   			<?php foreach ($this->mappa as $mk => $m) :?>
+   			<?php if($pk==$mk):?> 
+   			<?php $base64 = base64_encode($m['mappa'])?>
+   			<?php $url= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'eva',),
+                                                    'default',true );?> 
+			<?php $image = '<a href='.$url.'/?pian='.$p['piano'].'><img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="100em height=100em" /></a>';?>
+			<?php echo $image ?>
+            <?php if(!null == $this->avv[$pk]):?>
+            <?php echo '<h4>Numero segnalazioni: '.$this->avv[$pk] .'</h4>'?>
+            <?php endif ?>
+            <?php if(null == $this->avv[$pk]):?>
+            <?php echo '<h4>Nessuna segnalazione.'.'</h4>' ?>
+            <?php endif ?>
+            <?php endif ?>
+            <?php endforeach ?>
+   		    <?php endforeach ?>
+    </div>
+
 </div>
+ 
