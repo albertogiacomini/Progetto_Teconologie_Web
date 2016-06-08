@@ -41,7 +41,7 @@ class Application_Resource_Utente extends Zend_Db_Table_Abstract
     
     public function deleteUser($username)
     {
-        $dove="username='". $username. "'";
+        $dove="username='". $username. "' AND livello!='admin'";
         $this->delete($dove);
     }
 

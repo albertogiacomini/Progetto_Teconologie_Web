@@ -76,15 +76,62 @@ class Application_Model_User extends App_Model_Abstract
 	//MAPPA EVAQUAZIONE
 	public function getMappaEvaquazioneByEdifPianoSel($edificio, $piano)
 	{
-		return $this->getResource('MappaEvaquazione')->getMappaEvaquazioneByEdifPianoSel($edificio, $piano);
+	   return $this->getResource('MappaEvaquazione')->getMappaEvaquazioneByEdifPianoSel($edificio, $piano);
 	}
 	
+    public function getMappaEvaquazioneById($idmappa)
+    {
+        return $this->getResource('MappaEvaquazione')->getMappaEvaquazioneById($idmappa);
+    }
+    
+    public function getMappaEvaquazioneOrderById()
+    {
+       return $this->getResource('MappaEvaquazione')->getMappaEvaquazioneOrderById();
+    }
+    
+    public function aggiungiMappaEvaquazione($mapInfo)
+    {
+       return $this->getResource('MappaEvaquazione')->aggiungiMappaEvaquazione($mapInfo);
+    }
+     
+     public function deleteMapEv($mapID)
+     {
+       return $this->getResource('MappaEvaquazione')->deleteMapEv($mapID);
+     }
+     
+     public function modificaMapEv($mapInfo,$ID)
+    {
+        return $this->getResource('MappaEvaquazione')->modificaMapEv($mapInfo,$ID);
+    }
+    
+    
 	//PLANIMETRIE
 	public function getPlanimetriaById($idPlanimetria)
 	{
 		return $this->getResource('Planimetrie')->getPlanimetriaById($idPlanimetria);
 	}
+    
+    public function getPlanimetrieOrderById()
+    {
+        return $this->getResource('Planimetrie')->getPlanimetrieOrderById();
+    }
+    
+    public function aggiungiPlanimetria($planInfo)
+    {
+        return $this->getResource('Planimetrie')->aggiungiPlanimetria($planInfo);
+    }
+    
+     public function deletePlan($planID)
+    {
+        return $this->getResource('Planimetrie')->deletePlan($planID);
+    }
+    
+     public function modificaPlanimetria($planInfo,$ID)
+    {
+        return $this->getResource('Planimetrie')->modificaPlanimetria($planInfo,$ID);
+    }
 	
+    
 	//POSIZIONE
 	public function getPosizione()
     {

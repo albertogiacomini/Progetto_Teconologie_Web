@@ -1,0 +1,45 @@
+<div class="content-panel">
+<table class="table">
+    <thead>
+        <tr>
+           <th  width="30%">Mappa evacuazione</th>
+           <th  width="30%">edificio</th>
+           <th  width="30%">piano</th>
+           <th  width="5%">
+               <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'aggiungimapev',),
+                                                    'default',true );?>">
+                        <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button></a>
+
+           </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <?php foreach ($this->mappaevaquazione as $f) :?>  
+             <?php
+                  $base64 = base64_encode($f->mappaEvaquazione);
+                  $image = '<img src="data:image/jpg;base64,' . $base64 . '" width="250" />';
+                  ?>
+            <tr>
+                <td width="40%">   <?= $image  ?> </td>
+                <td width="20%">   <?= $f->edificio  ?>
+                <td width="20%">   <?= $f->piano  ?>
+                <td width="10%"> <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'modificamapev',),
+                                                    'default',true );?>/?idmapev=<?php echo $f->idMappaEvaquazione ?>">
+                       <button class="btn btn-primary btn-xs">
+                       <i class="fa fa-pencil"></i></button> </a></td>
+                <td width="10%"> <a href="<?= $this->url(array(
+                                                    'controller' => 'admin',
+                                                    'action'     => 'deletemapev',),
+                                                    'default',true );?>/?idmapev=<?php echo $f->idMappaEvaquazione ?>">
+                        <button class="btn btn-danger btn-xs">
+                        <i class="fa fa-trash-o "></i></button> </a></td>
+                </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+</div>
