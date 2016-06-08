@@ -46,10 +46,10 @@ class StaffController extends Zend_Controller_Action
 		
 		foreach($Plan as $i)
 		{
-			$mappa=$this->_staff->getPlanimetriaById($i['idPlanimetria']); //2 mappe per ogni edificio
+			$mappa[]=$this->_staff->getPlanimetriaById($i['idPlanimetria']); //2 mappe per ogni edificio
 		}
+		$piani=$this->_staff->getPianiByEdificio($user['posizioneStaff']);
 		
-		$ris[]=null;
 		$posizione=$this->_staff->getPosizione();
 		foreach($posizione as $pos)
 		{
@@ -58,14 +58,16 @@ class StaffController extends Zend_Controller_Action
 				if($pos['idPosizione']==$av['idPosizione'])
 				{
 					if($pos['edificio']==$user['posizioneStaff'])
-					{
-						$ris[$pos['piano']]++;
+					{	
+						$ris[$pos['piano']];
+						//$ris[$pos['piano']]++;
+						
 					}
 				}
 			}
 		}
-		/*$piani = $this->_staff->getPianiByEdificio($user['posizioneStaff']);
 		
+		/*
 		
 		foreach($piani as $piano)
 		{
