@@ -93,7 +93,8 @@
 											var a = i+1;
 											var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aulasegnalazione'))?>";
 							
-										    var status = area[i].setAttribute("href", url+"/aus/"+a);	
+										    var status = area[i].setAttribute("href", url+"/aus/"+a);
+										    var status2 = area[i].setAttribute("onClick", "Notif()");	
 										}
 									}						   		   	
 							   }
@@ -101,6 +102,9 @@
         	}
 		}
 		
+		function Notif(){
+			alert("Segnalazione inviata");
+		}
 		
 		var myVar = window.setInterval("PericoloFunc()", 60000);	
 		var timer = null;			
