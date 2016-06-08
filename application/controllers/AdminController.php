@@ -210,7 +210,7 @@ class AdminController extends Zend_Controller_Action
     
     public function modificaplanimetriaAction(){
         $id=$_GET["idplan"];
-        $this->_modplanimetriaform->populate($this->_user->getPlanimetriaById($id));
+        $this->_modplanimetriaform->populate($this->_user->getPlanimetriaById($id)->toArray());
     }
     
     public function getModificaPlanimetriaForm(){

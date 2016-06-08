@@ -41,8 +41,8 @@ class Application_Form_Admin_Modificaplanimetria extends App_Form_Abstract
             'class' => 'form-control mt5',
         ));
         
-        $this->addElement('submit', 'aggiungi', array(
-            'label'    => 'Aggiungi',
+        $this->addElement('submit', 'modifica', array(
+            'label'    => 'modifica',
             'decorators' => $this->buttonDecorators,
             'class' => 'btn-theme form-control mt20'
         ));
