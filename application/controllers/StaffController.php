@@ -296,7 +296,7 @@ class StaffController extends Zend_Controller_Action
         $this->_segnform = new Application_Form_Staff_Segnalazioni();
         $this->_segnform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'segnalazioni'),
+            'action' => 'aggiungisegnalazione'),
             'default'
         ));
         return $this->_segnform;

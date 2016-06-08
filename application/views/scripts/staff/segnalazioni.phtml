@@ -19,23 +19,17 @@
 		   <?php foreach ($this->posStaff as $pf) :?>
 		   <?php if($af->idPosizione==$pf->idPosizione) :?>
 		   <?php if($pf->edificio==$this->authInfo('posizioneStaff')) :?>	
+		   
 		 <tbody> 
             <tr>    
                 <td width="15%"> <?php echo $pf->edificio ?> </td>
                 <td width="15%"> <?php echo $pf->piano ?> </td>
                 <td width="15%"> <?php echo $pf->aula ?> </td>
                 <td width="30%"> <?php echo $eaf->tipoAvviso ?> </td>
-                <td width="15%"> <?php echo $af->data ?> </td>
-                <td width="10%"> 
-                <a href="<?= $this->url(array(
-                                                    'controller' => 'staff',
-                                                    'action'     => 'aggiungisegnalazione',),
-                                                    'default',true );?>/?segnalazione=<?php echo $af->idAvviso ?>">
-                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button> 
-                </a></td>                  
+                <td width="15%"> <?php echo $af->data ?> </td>         
                 <td width="10%"> <a href="<?= $this->url(array(
                                                     'controller' => 'staff',
-                                                    'action'     => 'deletesegnalazione',),
+                                                    'action'     => 'deletesegnalazioni',),
                                                     'default',true );?>/?segnalazione=<?php echo $af->idAvviso ?>">
                                    <button class="btn btn-danger btn-xs">
                                    <i class="fa fa-trash-o "></i></button> 
@@ -47,8 +41,15 @@
 		   <?php endif ?>
 		   <?php endforeach ?>
 		   <?php endforeach ?>
+		   
     	</tbody>
 	</table>
+	 <a href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'getSegnalazioni',),
+                                                    'default',true );?>/?segnalazione=<?php echo $af->idAvviso ?>">
+                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button> 
+     </a>        
 </div>
 		 	
 		 	
