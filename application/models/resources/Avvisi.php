@@ -16,6 +16,12 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
         return $this->fetchAll($select); 
     }
     
+	 public function deleteAvvisi($idAvviso)
+    {
+        $dove="idAvviso='". $idAvviso. "'";
+        $this->delete($dove);
+	}
+	
     public function getAvvisiByDate()
     {
         $select = $this->select()->order('data DESC'); 

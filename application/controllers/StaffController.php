@@ -49,8 +49,14 @@ class StaffController extends Zend_Controller_Action
 			$mappa[]=$this->_staff->getPlanimetriaById($i['idPlanimetria']); //2 mappe per ogni edificio
 		}
 		$piani=$this->_staff->getPianiByEdificio($user['posizioneStaff']);
-		
+		$ris[]=null;
 		$posizione=$this->_staff->getPosizione();
+		
+		/*foreach($pos['piano'] as $ris)
+		{	
+			$ris[]=array()
+		}*/
+		
 		foreach($posizione as $pos)
 		{
 			foreach($Not as $av)
@@ -58,8 +64,8 @@ class StaffController extends Zend_Controller_Action
 				if($pos['idPosizione']==$av['idPosizione'])
 				{
 					if($pos['edificio']==$user['posizioneStaff'])
-					{	
-						$ris[$pos['piano']];
+					{	$p=$pos['piano'];
+						$ris[$p]=$ris[$p]+1;
 						//$ris[$pos['piano']]++;
 						
 					}
@@ -90,6 +96,7 @@ class StaffController extends Zend_Controller_Action
 			$this->view->assign(array('comp'=>$user));
 		    $this->view->assign(array('Plan'=>$mappa));	
 			$this->view->assign(array('avvisi'=>$ris));	
+			$this->view->assign(array('p'=>$p));	
 	} 
 	
     public function viewstaticAction () 
@@ -122,6 +129,12 @@ class StaffController extends Zend_Controller_Action
 		$this->view->assign(array('avvStaff'=>$avvisi));
         $this->view->assign(array('elAvvStaff'=>$elAvvisi));
         $this->view->assign(array('posStaff'=>$pos));
+	}
+	
+	public function deletesegnalazioniAction()
+	{
+		$idSegn=$_GET["segnalazioni"];
+		$this->_staff->deleteAvvisi($idSegn);
 	}
 	
 	public function modprofiloAction () 
