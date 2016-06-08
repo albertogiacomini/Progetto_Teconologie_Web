@@ -16,6 +16,7 @@ class Application_Form_Staff_Modcredenziali extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Username',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control mt5',
             ));
         
         $this->addElement('password', 'password', array(
@@ -26,11 +27,13 @@ class Application_Form_Staff_Modcredenziali extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Password',
             'decorators' => $this->elementDecorators,
+            'class' => 'form-control mt5',
             ));
 
         $this->addElement('submit', 'aggiorna', array(
             'label'    => 'Aggiorna',
             'decorators' => $this->buttonDecorators,
+            'class' => 'btn-theme form-control mt20'
         ));
 
         $this->setDecorators(array(

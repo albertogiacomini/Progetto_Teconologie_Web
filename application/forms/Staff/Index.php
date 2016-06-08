@@ -16,6 +16,7 @@ class Application_Form_Staff_Index extends App_Form_Abstract
         $this->addElement('submit', 'aggiorna', array(
             'label'    => 'Fottiti Home',
             'decorators' => $this->buttonDecorators,
+            'class' => 'btn-theme form-control mt20'
         ));
 
         $this->setDecorators(array(

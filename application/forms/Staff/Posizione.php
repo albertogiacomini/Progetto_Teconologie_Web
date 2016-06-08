@@ -16,6 +16,7 @@ class Application_Form_Staff_Posizione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Edificio',
             'MultiOptions' => $edificio,
+            'class' => 'form-control mt5',
             ));
             
         $this->addElement('select', 'posizione', array(
