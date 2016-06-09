@@ -44,12 +44,14 @@ class StaffController extends Zend_Controller_Action
 			$mappa[$key]=$this->_staff->getPlanimetriaById($p['idPlanimetria']);
 			$piano[$key]=$this->_staff->getPianoByIdPlan($p['idPlanimetria']);
 		}
-		foreach ($piano as $pkk => $pian) {
+		
+		foreach ($piano as $pkk => $pian) {			
 			$ipbp[$pkk]=$this->_staff->getidPosizioneByPiano($pian['piano']);
+			$avv[$pkk] = null;
 			foreach ($ipbp[$pkk] as $kp => $ipbpf) {
 				foreach ($not as $nk => $n) {
 					if($ipbpf['idPosizione']==$n['idPosizione']){
-						$avv[$pkk]+= 1;
+							$avv[$pkk]+= 1;
 					}
 				}
 			}
@@ -138,13 +140,21 @@ class StaffController extends Zend_Controller_Action
             return $this->render('modprofilo');
         }
         $values=$form->getValues();
+        //conversione del file della form in blob
+        $image=APPLICATION_PATH . '/../public/images/temp/'.$values['imgprofilo'];
+        $data=file_get_contents($image);
+        //immissione del file blob nella variabile imgprofilo
+        $values['imgprofilo']=$data;
+        
         $un=$this->_authService->getIdentity()->username;
-        $this->_utente->updateUser($values,$un);
+        $this->_staff->updateUser($values,$un);
         $us=$this->_authService->getIdentity()->username;
         $pa=$this->_authService->getIdentity()->password;
         $a=array("username"=>$us,"password"=>$pa);
         $this->_authService->getAuth()->clearIdentity();
         $this->_authService->authenticate($a);
+        //eliminazione de file temporaneo immagine
+        unlink($image);
     }
 	
 	public function homeAction () //home action
@@ -161,10 +171,16 @@ class StaffController extends Zend_Controller_Action
             return $this->render('modcredenziali');
         }
         $values=$form->getValues();
-        $un=$this->_authService->getIdentity()->username;
-        $this->_utente->updateUser($values,$un);
-        $this->_authService->getAuth()->clearIdentity();
-        $this->_authService->authenticate($values);
+        if($values['password']==$values['passwordtest']){
+            unset($values['passwordtest']);
+            $un=$this->_authService->getIdentity()->username;
+            $this->_staff->updateUser($values,$un);
+            $this->_authService->getAuth()->clearIdentity();
+            $this->_authService->authenticate($values);
+        }else{
+            $form->setDescription('Attenzione: le password non corrispondono.');
+            return $this->render('modcredenziali');
+        }
     }
 	
 	public function posizioneAction () 
@@ -235,7 +251,7 @@ class StaffController extends Zend_Controller_Action
         $urlHelper = $this->_helper->getHelper('url');
         $this->_epform = new Application_Form_Staff_Eliminaprofilo();
         $this->_epform->setAction($urlHelper->url(array(
-            'controller' => 'user',
+            'controller' => 'staff',
             'action' => 'confermaeliminazioneprofilo'),
             'default'
         ));
@@ -248,18 +264,18 @@ class StaffController extends Zend_Controller_Action
         $this->_mcform = new Application_Form_Staff_Modcredenziali();
         $this->_mcform->setAction($urlHelper->url(array(
             'controller' => 'staff',
-            'action' => 'modcredenziali'),
+            'action' => 'salvamodcredenziali'),
             'default'
         ));
         return $this->_mcform;
     }
 	
-	    protected function getModProfiloForm()
+	protected function getModProfiloForm()
     {
         $urlHelper = $this->_helper->getHelper('url');
         $this->_mpform = new Application_Form_Staff_Modprofilo();
         $this->_mpform->setAction($urlHelper->url(array(
-            'controller' => 'user',
+            'controller' => 'staff',
             'action' => 'salvamodprofilo'),
             'default'
         ));
