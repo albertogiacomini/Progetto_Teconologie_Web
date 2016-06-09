@@ -9,14 +9,14 @@ class Application_Form_Staff_Modcredenziali extends App_Form_Abstract
         $this->setAction('');
         
         $this->addElement('text', 'username', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
+            'filters'    => array('StringTrim'),
             'validators' => array(
                 array('StringLength', true, array(3, 25))
             ),
             'required'   => true,
             'label'      => 'Username',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control mt5',
+            'class'      => 'form-control mt3'
             ));
         
         $this->addElement('password', 'password', array(
@@ -27,13 +27,24 @@ class Application_Form_Staff_Modcredenziali extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Password',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control mt5',
+            'class'      => 'form-control mt3'
+            ));
+            
+        $this->addElement('password', 'passwordtest', array(
+            'filters'    => array('StringTrim'),
+            'validators' => array(
+                array('StringLength', true, array(3, 25))
+            ),
+            'required'   => true,
+            'label'      => 'Rip password',
+            'decorators' => $this->elementDecorators,
+            'class'      => 'form-control mt3'
             ));
 
         $this->addElement('submit', 'aggiorna', array(
-            'label'    => 'Aggiorna',
+            'label'      => 'Aggiorna',
             'decorators' => $this->buttonDecorators,
-            'class' => 'btn-theme form-control mt20'
+            'class'      => 'btn-theme form-control mt20'
         ));
 
         $this->setDecorators(array(
