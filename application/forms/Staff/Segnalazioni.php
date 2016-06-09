@@ -11,16 +11,19 @@ class Application_Form_Staff_Segnalazioni extends App_Form_Abstract
 		$this->addElement('submit', 'Elimina tutte le segnalazioni', array(
             'label'    => 'Eliminati',
             'decorators' => $this->buttonDecorators,
+            'class' => 'btn-theme form-control mt20'
         ));
 		
         $this->addElement('submit', 'Aggiungi segnalazione', array(
             'label'    => 'Aggiungi',
             'decorators' => $this->buttonDecorators,
+            'class' => 'btn-theme form-control mt20'
         ));
 		
 		$this->addElement('submit', 'Elimina segnalazione', array(
             'label'    => 'Aggiungi',
             'decorators' => $this->buttonDecorators,
+            'class' => 'btn-theme form-control mt20'
         ));
 
         $this->setDecorators(array(

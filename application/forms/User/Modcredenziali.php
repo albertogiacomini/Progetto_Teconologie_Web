@@ -36,7 +36,7 @@ class Application_Form_User_Modcredenziali extends App_Form_Abstract
                 array('StringLength', true, array(3, 25))
             ),
             'required'   => true,
-            'label'      => 'Ripeti password',
+            'label'      => 'Rip password',
             'decorators' => $this->elementDecorators,
             'class'      => 'form-control mt3'
             ));

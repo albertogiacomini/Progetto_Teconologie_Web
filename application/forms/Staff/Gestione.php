@@ -20,11 +20,13 @@ class Application_Form_Staff_Gestione extends App_Form_Abstract
             'label'      => $this->comp,
             'MultiOptions' => $piano,
             'onChange' => '',
+            'class' => 'form-control mt5',
         ));
 
         $this->addElement('submit', 'aggiungi', array(
             'label'    => 'Aggiungi',
             'decorators' => $this->buttonDecorators,
+            'class' => 'btn-theme form-control mt20'
         ));
 
         $this->setDecorators(array(

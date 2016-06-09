@@ -11,6 +11,7 @@ class Application_Form_Staff_Eva extends App_Form_Abstract
         $this->addElement('submit', 'evaquazione', array(
             'label'    => 'Evaquazione',
             'decorators' => $this->buttonDecorators,
+            'class' => 'btn-theme form-control mt20'
         ));
 
         $this->setDecorators(array(
