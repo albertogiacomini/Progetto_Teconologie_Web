@@ -9,10 +9,21 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
     public function init()
     {}
     
+    public function aggiungiPosizione($posInfo)
+    {
+       $this->insert($posInfo);
+    }
+    
     public function getPosizione()
     {
         $select = $this->select(); 
         return $this->fetchAll($select); 
+    }
+    
+     public function getPosizioneByIdPlanimetria($idplan)
+    {
+        $select = $this->select()->where('idPlanimetria = ?', $idplan); 
+        return $this->fetchRow($select);
     }
     
     public function getEdifici()
