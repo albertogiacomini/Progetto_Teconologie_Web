@@ -8,6 +8,7 @@ class StaffController extends Zend_Controller_Action
     protected $_mpform;
     protected $_epform;
 	protected $_evaform;
+	protected $_gform;
 	protected $_staff;
 	protected $_sede;
 	protected $_username;
