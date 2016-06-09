@@ -1,4 +1,17 @@
 <div class="content-panel">
+    
+    <?php
+        // Creo il paginator
+        $paginator = Zend_Paginator::factory($this->planimetria);
+        // Setto il numero di elementi per pagina (in questo caso 3)
+        $paginator->setItemCountPerPage(3);
+        // Controlla se vi è una GET se true prende la variabile page e la passa al paginator
+        if($_GET){
+        $page = $_GET['page'];
+        $paginator->setCurrentPageNumber($page);
+        }
+     ?>
+     
 <table class="table">
     <thead>
         <tr>
@@ -16,7 +29,7 @@
     </thead>
     
     <tbody>
-        <?php foreach ($this->planimetria as $f) :?>  
+        <?php foreach ($paginator as $f) :?>  
              <?php
                   $base64 = base64_encode($f->mappa);
                   $image = '<img src="data:image/jpg;base64,' . $base64 . '" width="250" />';
@@ -40,4 +53,7 @@
         <?php endforeach ?>
     </tbody>
 </table>
+    <?php echo $this->paginationControl($paginator,
+                                    'Sliding',
+                                    'admin/_paginatorPlan.phtml'); ?>
 </div>
