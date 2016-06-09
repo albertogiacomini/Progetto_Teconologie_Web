@@ -1,5 +1,9 @@
 <div class="showback">
     <h4><i class="fa fa-angle-right">Controlli l'edificio: <?php echo $this->staffedif ?></i></h4>
+    <?php if('false'==$this->flag) :?>
+    <?php echo 'Nessuna area trovata' ?>
+    <?php endif ?>
+    <?php if('true'==$this->flag) :?>
     <div>
         <table class="table">
     <thead>
@@ -58,6 +62,7 @@
              </tr>
              <?php endif ?>  
         <?php endforeach ?>
+        <?php endif ?>
         <?php endif ?>
         </tbody>
        </table>
