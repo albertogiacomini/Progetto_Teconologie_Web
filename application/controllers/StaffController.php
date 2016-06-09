@@ -8,6 +8,7 @@ class StaffController extends Zend_Controller_Action
     protected $_mpform;
     protected $_epform;
 	protected $_evaform;
+	protected $_gform;
 	protected $_staff;
 	protected $_sede;
 	protected $_username;
@@ -23,13 +24,14 @@ class StaffController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('staff');    
         $this->_authService = new Application_Service_Auth();
 		$this->_staff=new Application_Model_Staff();
-		$this->view->gForm = $this->getGestioneForm();
+		
 		$this->view->mcForm=$this->getModcredenzialiForm();
 		$this->view->mpForm=$this->getModprofiloForm();
         $this->view->pForm=$this->getPosizioneForm();
 		$this->view->iForm=$this->getIndexForm();
 		$this->view->epForm=$this->getEliminaprofiloForm();
 		$this->view->segnForm=$this->getSegnalazioniForm();
+		$this->view->gForm = $this->getGestioneForm();
 		$session = new Zend_Session_Namespace('session'); 
 		$session->_username = $this->_authService->getIdentity()->username;
     }
@@ -74,6 +76,8 @@ class StaffController extends Zend_Controller_Action
     
     public function avvisiareeAction ()
     {
+        $flag='false';
+        $cou[]=null;
         $staffedif=$this->_authService->getIdentity()->posizioneStaff;
         $elavv=$this->_staff->getAllElAvvisi();
         $dove=$this->_staff->getPosizione();
@@ -83,6 +87,7 @@ class StaffController extends Zend_Controller_Action
             foreach ($dove as $dk => $d) {
                 if($d['idPosizione']==$a['idPosizione']){
                     $cou[$ak] +=1;
+                    $flag='true';
                 }
             }
         }
@@ -91,12 +96,16 @@ class StaffController extends Zend_Controller_Action
         $this->view->assign(array('avvisi'=>$avv));
         $this->view->assign(array('elavvisi'=>$elavv));
         $this->view->assign(array('staffedif'=>$staffedif));
+        $this->view->assign('flag',$flag);
         
     }
 	
 
 	public function datiareeAction () 
     {
+        $flag='false';
+        $cou[]=null;
+        $coua[]=null;
         $dove=$this->_staff->getPosizione();
         $nutenti=$this->_staff->getUserOrderById();
         $avv=$this->_staff->getAvvisi();
@@ -108,10 +117,12 @@ class StaffController extends Zend_Controller_Action
                 foreach ($nutenti as $nu){
                     if($d['idPosizione']==$nu['idPosizione'])
                         $cou[$dk]+=1;
+                        $flag='true';
                 }
                 foreach ($avv as $a){
                     if($d['idPosizione']==$a['idPosizione'])
                         $coua[$dk]+=1;
+                        $flag='true';
                 }
              }
         }
@@ -124,6 +135,7 @@ class StaffController extends Zend_Controller_Action
         $this->view->assign('piano',$_GET["piano"]);
         if(null==$_GET)
         $this->view->assign('piano',null);
+        $this->view->assign('flag',$flag);
         
     }
 
@@ -172,9 +184,14 @@ class StaffController extends Zend_Controller_Action
 		$avvisi=$this->_staff->getAvvisi();
 		$elAvvisi=$this->_staff->getAllElAvvisi();
 		$pos=$this->_staff->getPosizione();
+        $flag='false';
+        foreach ($avvisi as $a) {
+            $flag='true';
+        }
 		$this->view->assign(array('avvStaff'=>$avvisi));
         $this->view->assign(array('elAvvStaff'=>$elAvvisi));
         $this->view->assign(array('posStaff'=>$pos));
+        $this->view->assign('flag',$flag);
 	}
 	
 	public function deletesegnalazioneAction()
@@ -203,12 +220,19 @@ class StaffController extends Zend_Controller_Action
 	
     public function gestioneAction()
 	{
-		$this->_sede=new Application_Model_Staff();
-		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
+		$user =$this->_staff->getUserByUName($un);
+		$_edificio=$user['posizioneStaff'];
+		$piano=$this->_staff->getPianoByEdificio($_edificio);
 		
-		$comp =$this->_sede->getPosizionestaffByUName($un);
-		$this->view->assign(array('comp'=>$comp));
+		foreach ($piano as $k => $pstaff) 
+		{
+			$mappaeva=$this->_staff->getMappaEvaquazioneByEdifPiano($_edificio, $pstaff['piano']);
+		}
+		
+		$this->view->assign(array('comp'=>$user['posizioneStaff']));
+		$this->view->assign(array('mappaeva'=>$mappaeva));
+        $this->view->assign(array('piano'=>$piano));
 	}
 	
 	public function salvamodprofiloAction () 

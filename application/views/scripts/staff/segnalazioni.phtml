@@ -1,16 +1,26 @@
 <h2>SEGNALAZIONI</h2>
 <div class="content-panel">
-    <?php echo '<h2><i class="fa fa-angle-right">Segnalazioni per area:</i> ' .$this->authInfo('posizioneStaff').'</h2>' ?>
+    <h4><i class="fa fa-angle-right">Segnalazioni per area:&nbsp;</i><?php echo $this->authInfo('posizioneStaff') ?></h4>
+    <?php if('false'==$this->flag) :?>
+    <?php echo '&nbsp Nessuna segnalazione trovata' ?>
+    <?php endif ?>
+    <?php if('true'==$this->flag) :?>
     <hr>
-
-	<table class="table">
+    <table class="table">
    	 <thead>
         <tr>
            <th  width="15%">Edificio</th>
            <th  width="15%">Piano</th>
            <th  width="15%">Aula</th>
            <th  width="40%">Tipo Avviso</th>
-           <th  width="15%">Data</th>   	  
+           <th  width="15%">Data</th>   	
+           <th  width="15%">	
+              <a href="<?= $this->url(array(
+                                  'controller' => 'staff',
+                                  'action'     => 'getSegnalazioni',),
+                                  'default',true );?> ?>">
+              <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button> 
+     </a> </th>    
         </tr>
     </thead>   
 	       <?php foreach ($this->avvStaff as $af) :?>
@@ -44,12 +54,9 @@
 		   
     	</tbody>
 	</table>
-	 <a href="<?= $this->url(array(
-                                                    'controller' => 'staff',
-                                                    'action'     => 'getSegnalazioni',),
-                                                    'default',true );?>/?segnalazione=<?php echo $af->idAvviso ?>">
-                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button> 
-     </a>        
+
+     <?php endif ?>       
+
 </div>
 		 	
 		 	
