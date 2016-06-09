@@ -67,7 +67,7 @@ class StaffController extends Zend_Controller_Action
 	public function profiloAction () //profilo action
     {}
 	
-	public function evaAction () //evaquazione ingegneria action
+	public function evaAction () 
     {	//lato staff
     	$this->_sede=new Application_Model_Staff();
 		$this->_authService = Zend_Auth::getInstance();

@@ -81,7 +81,7 @@ class Application_Model_Staff extends App_Model_Abstract
 	public function getPosizionestaffByUName($username)
 	{	
 		$utente = $this->getResource('Utente')->getPosizionestaffByUName($username);
-		return $utente['PosizioneStaff'];
+		return $utente['posizioneStaff'];
 	}
 	
 	//Staff
