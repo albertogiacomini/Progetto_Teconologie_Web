@@ -31,6 +31,16 @@ class Application_Resource_MappaEvaquazione extends Zend_Db_Table_Abstract
 											  ->where('piano = ?', $piano)
 											  ->where('selected = ?', '1'));
     }
+	
+	public function getMappaEvaquazioneByEdifPianoZona($edificio, $piano, $zona)
+	{
+		return $this->fetchRow($this->select()->where('edificio = ?', $edificio)
+											  ->where('piano = ?', $piano)
+											  ->where('zona = ?', $zona));
+	}
+	
+	
+	
     
     public function getMappaEvaquazioneById($idmap)
     {

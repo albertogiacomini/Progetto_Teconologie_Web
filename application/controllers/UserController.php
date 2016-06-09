@@ -30,7 +30,7 @@ class UserController extends Zend_Controller_Action
 		if(($idPos['idPosizione']) != null){
 			$datiPosizione = $this->_utente->getDataByIdPosizione($idPos['idPosizione']);
 			$this->view->data = $datiPosizione;
-			$imm = $this->_utente->getMappaEvaquazioneByEdifPianoSel($datiPosizione['edificio'], $datiPosizione['piano']);
+			$imm = $this->_utente->getMappaEvaquazioneByEdifPianoZona($datiPosizione['edificio'], $datiPosizione['piano'], $datiPosizione['zona']);
 			$base64 = base64_encode($imm['mappaEvaquazione']);
 			$this->view->planimetriaCorretta = 'data:image/png;base64,'.$base64;
             $this->view->assign('posizione',$datiPosizione['edificio']);
@@ -139,7 +139,7 @@ class UserController extends Zend_Controller_Action
 			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);	
 			//Istanzio la session e salvo i parametri piano ed edificio		
 			$session = new Zend_Session_Namespace('session');
-            $session->_piano = $this->_getParam('pia');;
+            $session->_piano = $this->_getParam('pia');
 			$session->_edificio = $this->_getParam('edif'); 
 			//Codifico l'immagine e assieme metto il map           
             $base64 = base64_encode($mappa['mappa']);
