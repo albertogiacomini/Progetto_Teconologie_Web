@@ -145,4 +145,8 @@ class Application_Model_Staff extends App_Model_Abstract
 	 		return $this->getResource('ElencoAvvisi')->getElAvvisoById($id);
 	 }
 
+	public function getElAvvisi()
+    {
+			return $this->getResource('ElencoAvvisi')->getElAvvisi();
+	}
 }

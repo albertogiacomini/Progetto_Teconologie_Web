@@ -8,12 +8,15 @@ class StaffController extends Zend_Controller_Action
     protected $_mpform;
     protected $_epform;
 	protected $_evaform;
-	protected $_edificio;
-	protected $_piano;
 	protected $_staff;
 	protected $_sede;
+	protected $_username;
 	protected $_segnform;
 	protected $_iform;
+	protected $_edificio;
+	protected $_piano;
+	protected $_avviso;
+
 	
     public function init()
     {
@@ -28,7 +31,8 @@ class StaffController extends Zend_Controller_Action
 		$this->view->epForm=$this->getEliminaprofiloForm();
 		$this->view->evaForm=$this->getEvaForm();
 		$this->view->segnForm=$this->getSegnalazioniForm();
-		
+		$session = new Zend_Session_Namespace('session'); 
+		$session->_username = $this->_authService->getIdentity()->username;
     }
 	
     public function indexAction()
@@ -77,12 +81,35 @@ class StaffController extends Zend_Controller_Action
 		
 		$user=$this->_sede->getUserByUName($un);
 		$idPlan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['posizioneStaff']);
-		//$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
-       
-	    $comp =$this->_sede->getPosizionestaffByUName($un);
-				$this->view->assign(array('comp'=>$comp));
-		//lato utente
+		$this->view->assign(array('comp'=>$user['posizioneStaff']));
 		
+		//$this->_helper->layout()->disableLayout();
+       // $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+        	//Prendo i due parametri passati con l'ajax
+            $this->_piano = $this->_getParam('pia');
+			$this->_edificio = $user['posizioneStaff'];
+			
+			//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
+            $idPlan = $this->_staff->getIdPlanimetriaByEdificioPiano($this->_edificio, $this->_piano);
+			$mappa = $this->_staff->getPlanimetriaById($idPlan['idPlanimetria']);	
+			//Istanzio la session e salvo i parametri piano ed edificio		
+			$session = new Zend_Session_Namespace('session');
+            $session->_piano = $this->_getParam('pia');
+			$session->_edificio = $this->_getParam('edif'); 
+			//Codifico l'immagine e assieme metto il map           
+            $base64 = base64_encode($mappa['mappa']);
+			$image = 'data:image/png;base64,'.$base64;
+			$map = $mappa['map'];
+			$a = array("mappa"=>$image,
+					   "map"=>$map);
+						require_once 'Zend/Json.php';
+			//Codifico i dati in formato Json e li rimando indietro
+			require_once 'Zend/Json.php';
+            $a = Zend_Json::encode($a);
+			echo $a;
+		}
     }
     
 	public function segnalazioniAction()
@@ -183,32 +210,62 @@ class StaffController extends Zend_Controller_Action
         }
     }
 	
-	public function posizioneAction () 
+	public function posizioneevacuazioneAction () 
     {
     	$this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 		
         if ($this->getRequest()->isXmlHttpRequest()) {
+
+			$_edificio = $this->_authService->getIdentity()->posizioneStaff;
             $_piano = $this->_getParam('pia');
-			$_edificio = $this->_getParam('edif');
-            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($_edificio, $_piano);
-			$mappa = $this->_utente->getPlanimetriaById('1');
-            $dojoData= new Zend_Dojo_Data('mappa',$mappa);
-            echo $dojoData->toJson();
+			
+			//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
+            $idPlan = $this->_utente->getIdPlanimetriaByEdificioPiano($this->_edificio, $this->_piano);
+			$mappa = $this->_utente->getPlanimetriaById($idPlan['idPlanimetria']);	
+			//Istanzio la session e salvo i parametri piano ed edificio		
+			$session = new Zend_Session_Namespace('session');
+            $session->_piano = $this->$this->_edificio;
+			$session->_edificio = $this->$this->_piano; 
+			//Codifico l'immagine e assieme metto il map           
+            $base64 = base64_encode($mappa['mappa']);
+			$image = 'data:image/png;base64,'.$base64;
+			$map = $mappa['map'];
+			$a = array("mappa"=>$image,
+					   "map"=>$map);
+						require_once 'Zend/Json.php';
+			//Codifico i dati in formato Json e li rimando indietro
+			require_once 'Zend/Json.php';
+            $a = Zend_Json::encode($a);
+			echo $a;
         } 
     }
     
-    public function pianoAction () 
+    public function aulaevacuazioneAction () 
     {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender();
+    	//Prendo l'aula passata attraverso la selezione dall'immagine
+    	$aula = $this->getParam('aue');
+		$us=$this->_authService->getIdentity()->username;
+		$utente	 = $this->_utente->getUserByUName($us);	
+			
+		$dat = $this->_utente->getDataByIdPosizione($utente['idPosizione']);	
 		
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            $_edificio = $this->_getParam('edif');
-            $edif = $this->_utente->getPianoByEdificio($_edificio);
-            $dojoData= new Zend_Dojo_Data('edificio',$edif);
-            echo $dojoData->toJson();
-        } 
+		$idPos = $this->_utente->getIdPosizioneByEdPiAl($dat['edificio'], $dat['piano'], $aula);
+		
+		$date = new Zend_Date(); 
+		$createdDate= $date->get('YYYY-MM-dd HH:mm:ss');
+		 
+		//Creo un'istanza della sessione per poter prendere i parametri precedentemente salvati
+    	$session = new Zend_Session_Namespace('session');
+		
+		$avviso = (array('idPosizione'=>$idPos['idPosizione'],
+					  'idUtente'=> $utente['idUtente'],
+					  'data'=>$createdDate,
+					  'idElencoAvviso'=>$session->_idavviso,
+		));
+		$session = new Zend_Session_Namespace('session');
+		$session->_avviso = $avviso;
+		
     }
 	
 	protected function getIndexForm()
