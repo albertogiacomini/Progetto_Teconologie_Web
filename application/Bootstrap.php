@@ -10,10 +10,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front = $this->getResource('FrontController');
         $request = new Zend_Controller_Request_Http();
         $front->setRequest($request);
+
     }
     
     protected function _initViewSettings()
     {
+
         $this->bootstrap('view');
         $this->_view = $this->getResource('view');
         $this->_view->headMeta()->setCharset('UTF-8');

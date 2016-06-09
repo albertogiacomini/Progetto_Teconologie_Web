@@ -1,0 +1,65 @@
+<div class="showback">
+    <h4><i class="fa fa-angle-right">Controlli l'edificio: <?php echo $this->staffedif ?></i></h4>
+    <div>
+        <table class="table">
+    <thead>
+        <tr>
+           <th  width="10%">Piano</th>
+           <th  width="10%">Aula</th>
+           <th  width="10%">N° persone</th>
+           <th  width="10%">N° segnalaziani</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if(null==$this->piano) :?>
+        <?php foreach ($this->dove as $dk => $d) :?> 
+             <?php if($this->staffedif==$d['edificio']) :?>
+            <tr>
+                <td width="20%"> <?php echo $d->piano ?> </td>
+                <td width="20%"> <?php echo $d->aula ?> </td>
+                <td width="20%"> <?php if(!null==$this->cou[$dk])
+                                       echo $this->cou[$dk] ;
+                                       if(null==$this->cou[$dk])
+                                       echo 'Nessuno' ?> </td>
+                <td width="20%"> <?php if(!null==$this->coua[$dk])
+                                       echo $this->coua[$dk] ;
+                                       if(null==$this->coua[$dk])
+                                       echo 'Nessuno' ?> </td>
+                <td width="10%"> <a href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'evapiano',),
+                                                    'default',true );?>/?piano=<?php echo $d->piano ?>&aula=<?php echo $d->aula ?>">
+                        <button class="btn btn-warning btn-xs">
+                        <i title="avvia evaquazione" class="fa fa-warning "></i></button> </a></td>
+             </tr>
+        <?php endif ?>     
+        <?php endforeach ?>
+        <?php endif ?>
+        <?php if(!null==$this->piano) :?>
+        <?php foreach ($this->dove as $dk => $d) :?>  
+             <?php if($this->piano==$d->piano) :?>
+            <tr>
+                <td width="20%"> <?php echo $d->piano ?> </td>
+                <td width="20%"> <?php echo $d->aula ?> </td>
+                <td width="20%"> <?php if(!null==$this->cou[$dk])
+                                       echo $this->cou[$dk] ;
+                                       if(null==$this->cou[$dk])
+                                       echo 'Nessuno' ?> </td>
+                <td width="20%"> <?php if(!null==$this->coua[$dk])
+                                       echo $this->coua[$dk] ;
+                                       if(null==$this->coua[$dk])
+                                       echo 'Nessuno' ?> </td>
+                <td width="10%"> <a href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'evapiano',),
+                                                    'default',true );?>/?piano=<?php echo $d->piano ?>&aula=<?php echo $d->aula ?>">
+                        <button title="avvia evaquazione" class="btn btn-warning btn-xs">
+                        <i class="fa fa-warning "></i></button> </a></td>
+             </tr>
+             <?php endif ?>  
+        <?php endforeach ?>
+        <?php endif ?>
+        </tbody>
+       </table>
+     </div> 
+</div>

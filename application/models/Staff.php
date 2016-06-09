@@ -7,7 +7,7 @@ class Application_Model_Staff extends App_Model_Abstract
     {
         
     }
-	
+    
 	public function getPianoByIdPlan($idplan)
     {
    	   return $this->getResource('Posizione')->getPianoByIdPlan($idplan);
@@ -30,6 +30,11 @@ class Application_Model_Staff extends App_Model_Abstract
     public function  getUserByUName($uname)
     {
         return $this->getResource('Utente')-> getUserByUName($uname);
+    }
+    
+    public function  getUserOrderById()
+    {
+        return $this->getResource('Utente')-> getUserOrderById();
     }	
 	
 	public function  getPianoByComp($uname)

@@ -12,9 +12,9 @@
    			<?php $base64 = base64_encode($m['mappa'])?>
    			<?php $url= $this->url(array(
                                                     'controller' => 'staff',
-                                                    'action'     => 'eva',),
+                                                    'action'     => 'datiaree',),
                                                     'default',true );?> 
-			<?php $image = '<a href='.$url.'/?pian='.$p['piano'].'><img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="100em height=100em" /></a>';?>
+			<?php $image = '<a href='.$url.'/?piano='.$p['piano'].'><img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="100em height=100em" /></a>';?>
 			<?php echo $image ?>
             <?php if(!null == $this->avv[$pk]):?>
             <?php echo '<h4>Numero segnalazioni: '.$this->avv[$pk] .'</h4>'?>
