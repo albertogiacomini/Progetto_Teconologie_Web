@@ -74,6 +74,8 @@ class StaffController extends Zend_Controller_Action
     
     public function avvisiareeAction ()
     {
+        $flag='false';
+        $cou[]=null;
         $staffedif=$this->_authService->getIdentity()->posizioneStaff;
         $elavv=$this->_staff->getAllElAvvisi();
         $dove=$this->_staff->getPosizione();
@@ -83,6 +85,7 @@ class StaffController extends Zend_Controller_Action
             foreach ($dove as $dk => $d) {
                 if($d['idPosizione']==$a['idPosizione']){
                     $cou[$ak] +=1;
+                    $flag='true';
                 }
             }
         }
@@ -91,12 +94,16 @@ class StaffController extends Zend_Controller_Action
         $this->view->assign(array('avvisi'=>$avv));
         $this->view->assign(array('elavvisi'=>$elavv));
         $this->view->assign(array('staffedif'=>$staffedif));
+        $this->view->assign('flag',$flag);
         
     }
 	
 
 	public function datiareeAction () 
     {
+        $flag='false';
+        $cou[]=null;
+        $coua[]=null;
         $dove=$this->_staff->getPosizione();
         $nutenti=$this->_staff->getUserOrderById();
         $avv=$this->_staff->getAvvisi();
@@ -108,10 +115,12 @@ class StaffController extends Zend_Controller_Action
                 foreach ($nutenti as $nu){
                     if($d['idPosizione']==$nu['idPosizione'])
                         $cou[$dk]+=1;
+                        $flag='true';
                 }
                 foreach ($avv as $a){
                     if($d['idPosizione']==$a['idPosizione'])
                         $coua[$dk]+=1;
+                        $flag='true';
                 }
              }
         }
@@ -124,6 +133,7 @@ class StaffController extends Zend_Controller_Action
         $this->view->assign('piano',$_GET["piano"]);
         if(null==$_GET)
         $this->view->assign('piano',null);
+        $this->view->assign('flag',$flag);
         
     }
 
@@ -172,9 +182,14 @@ class StaffController extends Zend_Controller_Action
 		$avvisi=$this->_staff->getAvvisi();
 		$elAvvisi=$this->_staff->getAllElAvvisi();
 		$pos=$this->_staff->getPosizione();
+        $flag='false';
+        foreach ($avvisi as $a) {
+            $flag='true';
+        }
 		$this->view->assign(array('avvStaff'=>$avvisi));
         $this->view->assign(array('elAvvStaff'=>$elAvvisi));
         $this->view->assign(array('posStaff'=>$pos));
+        $this->view->assign('flag',$flag);
 	}
 	
 	public function deletesegnalazioneAction()
