@@ -18,31 +18,20 @@ class Application_Form_Staff_Segnalazioni extends App_Form_Abstract
             ));
         
 		$edificio = $_staffModel->getEdifici();
-		$this->addElement('select', 'livello', array(
-            'label'      => 'Livello',
+		$this->addElement('select', 'edificio', array(
+            'label'      => 'Edificio',
             'MultiOptions'=> $edificio,
                 'decorators' => $this->elementDecorators, 
                 'class' => 'form-control mt3',
         ));
-		
-        $this->addElement('text', 'edificio', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
-            'validators' => array(
-                array('StringLength', true, array(3, 25))
-            ),
-            'required'   => true,
-            'label'      => 'Edificio',
-            'decorators' => $this->elementDecorators,
-            'class' => 'form-control',
-            ));
             
-        $this->addElement('text', 'cognome', array(
+        $this->addElement('text', 'aula', array(
             'filters'    => array('StringTrim', 'StringToLower'),
             'validators' => array(
                 array('StringLength', true, array(3, 25))
             ),
             'required'   => true,
-            'label'      => 'Cognome',
+            'label'      => 'Aula',
             'decorators' => $this->elementDecorators,
             'class' => 'form-control mt3',
             ));
