@@ -13,6 +13,11 @@ class Application_Model_Staff extends App_Model_Abstract
    	   return $this->getResource('Posizione')->getPianoByIdPlan($idplan);
 	}
 	
+	public function getMappaEvaquazioneByEdifPiano($edificio, $piano)
+    {
+        return $this->getResource('MappaEvaquazione')->getMappaEvaquazioneByEdifPiano($edificio, $piano);		  
+    }
+	
 	public function getidPosizioneByPiano($piano)
     {
 		return $this->getResource('Posizione')->getidPosizioneByPiano($piano);
