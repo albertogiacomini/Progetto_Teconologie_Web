@@ -12,7 +12,7 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
     
     public function getAvvisi()
     {
-        $select = $this->select(); 
+        $select = $this->select()->order('idElencoAvviso'); 
         return $this->fetchAll($select); 
     }
     

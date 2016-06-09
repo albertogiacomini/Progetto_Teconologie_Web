@@ -7,7 +7,6 @@ class StaffController extends Zend_Controller_Action
     protected $_avvisi;
     protected $_mpform;
     protected $_epform;
-	protected $_evaform;
 	protected $_edificio;
 	protected $_piano;
 	protected $_staff;
@@ -26,7 +25,6 @@ class StaffController extends Zend_Controller_Action
         $this->view->pForm=$this->getPosizioneForm();
 		$this->view->iForm=$this->getIndexForm();
 		$this->view->epForm=$this->getEliminaprofiloForm();
-		$this->view->evaForm=$this->getEvaForm();
 		$this->view->segnForm=$this->getSegnalazioniForm();
 		
     }
@@ -66,23 +64,60 @@ class StaffController extends Zend_Controller_Action
     public function viewstaticAction () 
     {}
 	
-	public function profiloAction () //profilo action
+	public function profiloAction ()
     {}
+    
+    public function avvisiareeAction ()
+    {
+        $staffedif=$this->_authService->getIdentity()->posizioneStaff;
+        $elavv=$this->_staff->getAllElAvvisi();
+        $dove=$this->_staff->getPosizione();
+        $avv=$this->_staff->getAvvisi();
+        foreach ($avv as $ak => $a) {
+            $cou[]=null;
+            foreach ($dove as $dk => $d) {
+                if($d['idPosizione']==$a['idPosizione']){
+                    $cou[$ak] +=1;
+                }
+            }
+        }
+        $this->view->assign(array('cou'=>$cou));
+        $this->view->assign(array('dov'=>$dove));
+        $this->view->assign(array('avvisi'=>$avv));
+        $this->view->assign(array('elavvisi'=>$elavv));
+        $this->view->assign(array('staffedif'=>$staffedif));
+        
+    }
 	
-	public function evaAction () 
-    {	//lato staff
-    	$this->_sede=new Application_Model_Staff();
-		$this->_authService = Zend_Auth::getInstance();
-		$un=$this->_authService->getIdentity()->username;
-		
-		$user=$this->_sede->getUserByUName($un);
-		$idPlan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['posizioneStaff']);
-		//$plan=$this->_sede->getPlanimetriaById($idPlan['idPlanimetria']);
-       
-	    $comp =$this->_sede->getPosizionestaffByUName($un);
-				$this->view->assign(array('comp'=>$comp));
-		//lato utente
-		
+	public function datiareeAction () 
+    {
+        $dove=$this->_staff->getPosizione();
+        $nutenti=$this->_staff->getUserOrderById();
+        $avv=$this->_staff->getAvvisi();
+        $staffedif=$this->_authService->getIdentity()->posizioneStaff;
+        foreach ($dove as $dk => $d) {
+            $cou[]=null;
+            $coua[]=null;
+            if($staffedif==$d['edificio']){
+                foreach ($nutenti as $nu){
+                    if($d['idPosizione']==$nu['idPosizione'])
+                        $cou[$dk]+=1;
+                }
+                foreach ($avv as $a){
+                    if($d['idPosizione']==$a['idPosizione'])
+                        $coua[$dk]+=1;
+                }
+             }
+        }
+        $this->view->assign(array('nutenti'=>$nutenti));
+        $this->view->assign(array('staffedif'=>$staffedif));
+        $this->view->assign(array('dove'=>$dove));
+        $this->view->assign(array('cou'=>$cou));
+        $this->view->assign(array('coua'=>$coua));
+        if(!null==$_GET)
+        $this->view->assign('piano',$_GET["piano"]);
+        if(null==$_GET)
+        $this->view->assign('piano',null);
     }
     
 	public function segnalazioniAction()
@@ -282,18 +317,6 @@ class StaffController extends Zend_Controller_Action
         return $this->_mpform;
     }
 	
-	 protected function getEvaForm()
-    {
-        $urlHelper = $this->_helper->getHelper('url');
-        $this->_evaform = new Application_Form_Staff_Eva();
-        $this->_evaform->setAction($urlHelper->url(array(
-            'controller' => 'staff',
-            'action' => 'eva'),
-            'default'
-        ));
-        return $this->_evaform;
-    }
-    
     protected function getPosizioneForm()
     {
         $urlHelper = $this->_helper->getHelper('url');

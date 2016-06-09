@@ -40,6 +40,7 @@
                                                     'controller' => 'staff',
                                                     'action'     => 'modcredenziali', ), 
                                                     'default',true );?>">Modifica credenziali</a></li>
+                          
                     	</ul>
                   </li>
                   
@@ -67,6 +68,23 @@
                  		 	<i class="fa fa-dashboard"></i>	 
                   		 	<span>Evaquazione Area</span>
                   	 	 </a>  
+                  </li>
+                  
+                  <li class="mt">
+                      <a  href="javascript:;" >
+                         <i class="fa fa-dashboard"></i>     
+                   <span>Dati aree</span></a>             
+                         <ul class="sub">
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'datiaree', ), 
+                                                    'default',true );?>">Segnalazioni aree</a></li>
+                          <li><a  href="<?= $this->url(array(
+                                                    'controller' => 'staff',
+                                                    'action'     => 'avvisiaree', ), 
+                                                    'default',true );?>">Segnalazioni avvisi</a></li>
+                          
+                        </ul>
                   </li>
               </ul>
               <!-- sidebar menu end-->
