@@ -1,46 +1,35 @@
 <div class="showback">
     <h4><i class="fa fa-angle-right">Controlli l'edificio: <?php echo $this->staffedif ?></i></h4>
+    Segnalazioni totali: <?php echo $this->tcou ?>
     <?php if('false'==$this->flag) :?>
-    <?php echo 'Nessun avviso trovato' ?>
+    <?php echo 'Nessuna area trovata' ?>
     <?php endif ?>
     <?php if('true'==$this->flag) :?>
     <div>
         <table class="table">
     <thead>
         <tr>
-           <th  width="10%">Avvisi</th>
+           <th  width="10%">Tipo avviso</th>
            <th  width="10%">Piano</th>
            <th  width="10%">N° segnalaziani</th>
         </tr>
     </thead>
     <tbody>
-       <?php foreach ($this->avvisi as $ak => $a) :?>  
-           <?php foreach ($this->dov as $d) :?> 
-             <?php if($d['idPosizione']==$a['idPosizione']) :?>
-                 <?php foreach ($this->elavvisi as $ea) :?> 
-                     <?php if($a['idElencoAvviso']==$ea['idElencoAvviso']) :?>
-                          <?php if($this->staffedif==$d['edificio']) :?>
-             <tr>
-                <td width="20%"> <?php echo $ea->tipoAvviso ?> </td>
-                <td width="20%"> <?php echo $d->piano ?> </td>
-                <td width="20%"> <?php if(!null==$this->cou[$ak])
-                                       echo $this->cou[$ak] ;
-                                       if(null==$this->cou[$ak])
-                                       echo 'Nessuno' ?> </td>
+    
+            
+            <tr>
+                <td width="20%"> <?php echo '$t' ?> </td>
+                <td width="20%"> <?php echo '$p' ?> </td>
+                <td width="20%"> <?php echo '$c' ?> </td>
                 <td width="10%"> <a href="<?= $this->url(array(
                                                     'controller' => 'staff',
                                                     'action'     => 'evapiano',),
-                                                    'default',true );?>/?avviso=<?php echo $ea->tipoAvviso ?>&aula=<?php echo $d->aula ?>">
-                        <button title="avvia evaquazione" class="btn btn-warning btn-xs">
-                        <i class="fa fa-warning "></i></button> </a></td>
+                                                    'default',true );?>/?piano=<?php echo $p ?>&tipo=<?php echo $t['tipoAvviso'] ?>">
+                        <button class="btn btn-warning btn-xs">
+                        <i title="avvia evaquazione" class="fa fa-warning "></i></button> </a></td>
              </tr>
-             <?php endif ?>
-             <?php endif ?>
-             <?php endforeach ?>
-             <?php endif ?>  
-        <?php endforeach ?>
-        <?php endforeach ?>
-        <?php endif ?> 
+            
+        <?php endif ?>
         </tbody>
        </table>
      </div> 

@@ -24,6 +24,18 @@ class Application_Resource_Planimetrie extends Zend_Db_Table_Abstract
        return $this->fetchAll($select);
     }
     
+    public function getMaxIdPlan(){
+                $select = $this->select()
+            ->from(array('t' => 'planimetrie'),array(new Zend_Db_Expr('MAX(idPlanimetria) as maxid')));
+        $row = $this->fetchRow($select);
+        if(!$row){
+            return false;
+        }else{
+            $tData = $row->toArray();
+            return $tData ['maxid'];
+        }
+        }
+    
     public function aggiungiPlanimetria($planInfo)
     {
        $this->insert($planInfo);

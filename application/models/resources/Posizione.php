@@ -9,13 +9,19 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
     public function init()
     {}
     
+    public function aggiungiPosizione($posInfo)
+    {
+       $this->insert($posInfo);
+    }
+    
     public function getPosizione()
     {
         $select = $this->select(); 
         return $this->fetchAll($select); 
     }
     
-	    public function getAllPosizioneByPiano($piano)
+
+	public function getAllPosizioneByPiano($piano)
     {
 		return $this->getAdapter()->fetchAll($this->select()->where('edificio = ?', $piano));
     }
@@ -23,6 +29,12 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
 	public function insertEdificio($edificio)
     {
         $this->insert($edificio);
+    }
+	
+     public function getPosizioneByIdPlanimetria($idplan)
+    {
+        $select = $this->select()->where('idPlanimetria = ?', $idplan); 
+        return $this->fetchRow($select);
     }
 	
     public function getEdifici()
@@ -42,12 +54,20 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
         return $this->getAdapter()->fetchAll($select);
     }
 	
-	public function getidPosizioneByPiano($piano)
+	public function getIdPosizioneByPiano($piano)
     {
         $select = $this->select()->from(array('p' => 'posizione'),
                             	       array('p.idPosizione'))				   
         			  		     ->where('piano = ?', $piano);
         return $this->fetchAll($select);
+    }
+    
+    public function getPianoByIdPosizione($IdPos)
+    {
+        $select = $this->select()->from(array('p' => 'posizione'),
+                                       array('p.piano'))                 
+                                 ->where('idPosizione = ?', $IdPos);
+        return $this->fetchRow($select);
     }
 	
 	public function getPianoByIdPlan($idplan)
@@ -112,4 +132,11 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
 	{
 		return $this->getAdapter()->fetchRow($this->select()->where('idPosizione = ?', $idPos));
 	}
+
+     public function deletePosizioneByIdPlan($IdPlan)
+    {
+        $dove="idPlanimetria='". $IdPlan. "'";
+        $this->delete($dove);
+    }
+   
 }

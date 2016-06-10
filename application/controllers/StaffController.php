@@ -79,28 +79,16 @@ class StaffController extends Zend_Controller_Action
     
     public function avvisiareeAction ()
     {
-        $flag='false';
-        $cou[]=null;
+       
+        $flag='true';
+        $count[]=0;
+        $totcount=0;
         $staffedif=$this->_authService->getIdentity()->posizioneStaff;
-        $elavv=$this->_staff->getAllElAvvisi();
-        $dove=$this->_staff->getPosizione();
-        $avv=$this->_staff->getAvvisi();
-        foreach ($avv as $ak => $a) {
-            $cou[]=null;
-            foreach ($dove as $dk => $d) {
-                if($d['idPosizione']==$a['idPosizione']){
-                    $cou[$ak] +=1;
-                    $flag='true';
-                }
-            }
-        }
-        $this->view->assign(array('cou'=>$cou));
-        $this->view->assign(array('dov'=>$dove));
-        $this->view->assign(array('avvisi'=>$avv));
-        $this->view->assign(array('elavvisi'=>$elavv));
+        $pian=$this->_staff->getPianoByEdificio($staffedif);
+        
         $this->view->assign(array('staffedif'=>$staffedif));
         $this->view->assign('flag',$flag);
-        
+        $this->view->assign('tcou',$totcount);
     }
 	
 
