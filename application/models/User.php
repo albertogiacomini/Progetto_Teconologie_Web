@@ -181,6 +181,11 @@ class Application_Model_User extends App_Model_Abstract
 	{
 		return $this->getResource('Posizione')->getDataByIdPosizione($idPos);
 	}
+    
+    public function deletePosizioneByIdPlan($IdPlan)
+    {
+        return $this->getResource('Posizione')->deletePosizioneByIdPlan($IdPlan);
+    }
 	
 	//UTENTE
 	public function insertUser($usrInfo)

@@ -39,12 +39,7 @@
                 <td width="30%">   <?= $image  ?> </td>
                 <td width="30%">   <?= $this->posizione[$fk]['edificio']  ?> </td>
                 <td width="30%">   <?= $this->posizione[$fk]['piano']  ?> </td>
-                <td width="10%"> <a href="<?= $this->url(array(
-                                                    'controller' => 'admin',
-                                                    'action'     => 'modificaplanimetria',),
-                                                    'default',true );?>/?idplan=<?php echo $f->idPlanimetria ?>">
-                       <button class="btn btn-primary btn-xs">
-                       <i class="fa fa-pencil"></i></button> </a></td>
+
                 <td width="10%"> <a href="<?= $this->url(array(
                                                     'controller' => 'admin',
                                                     'action'     => 'deleteplanimetria',),

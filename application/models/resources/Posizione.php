@@ -117,5 +117,10 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
 		return $this->getAdapter()->fetchRow($this->select()->where('idPosizione = ?', $idPos));
 	}
 
+     public function deletePosizioneByIdPlan($IdPlan)
+    {
+        $dove="idPlanimetria='". $IdPlan. "'";
+        $this->delete($dove);
+    }
    
 }
