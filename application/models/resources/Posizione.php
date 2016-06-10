@@ -20,12 +20,23 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
         return $this->fetchAll($select); 
     }
     
+
+	public function getAllPosizioneByPiano($piano)
+    {
+		return $this->getAdapter()->fetchAll($this->select()->where('edificio = ?', $piano));
+    }
+	
+	public function insertEdificio($edificio)
+    {
+        $this->insert($edificio);
+    }
+	
      public function getPosizioneByIdPlanimetria($idplan)
     {
         $select = $this->select()->where('idPlanimetria = ?', $idplan); 
         return $this->fetchRow($select);
     }
-    
+	
     public function getEdifici()
     {
         $select = $this->select()
@@ -82,6 +93,11 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
 	public function getIdPosizioneByPosizionestaff($Pos)
 	{
 		return $this->getAdapter()->fetchAll($this->select()->where('edificio = ?', $Pos));
+	}
+	
+	public function getIdPosizioneByEdificio($Pos)
+	{
+		return $this->fetchRow($this->select()->where('edificio = ?', $Pos));
 	}
 	
 	public function getIdPlanimetriaByPosizionestaff($Pos)

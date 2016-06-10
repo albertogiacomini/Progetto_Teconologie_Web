@@ -20,7 +20,7 @@ class Application_Form_Staff_Gestione extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Piano',
             'MultiOptions' => array('0' => '-- Seleziona Piano --'),
-            'onChange' => 'FillMap()',
+            'onChange' => 'MappeEvacuazione()',
             'class'    => 'form-control'
             ));
 			

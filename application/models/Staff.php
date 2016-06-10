@@ -35,6 +35,51 @@ class Application_Model_Staff extends App_Model_Abstract
        return $this->getResource('Posizione')->getPianoByIdPosizione($IdPos);
     }
 	
+	public function getAllPosizioneByPiano($piano)
+    {
+		return $this->getResource('Posizione')->getAllPosizioneByPiano($piano);
+	}
+	
+	public function getZonaByPiano($piano)
+    {
+    	$zone = $this->getResource('MappaEvaquazione')->getZonaByPiano($piano);
+		$i=1;
+		foreach ($zone as $k => $z) {
+			if($z>$i)
+					$i=$z;
+			}
+		return $i;
+	}
+	
+	public function updatePericoloByPosizioneStaff($posizioneStaff)
+    {
+	return $this->getResource('Avvisi')->updatePericoloByPosizioneStaff($posizioneStaff);
+	}
+	
+	public function insertEdificio($edificio)
+    {
+		return $this->getResource('Posizione')->insertEdificio($edificio);
+	}
+	
+	public function getIdPosizioneByEdificio($Pos)
+	{
+		return $this->getResource('Posizione')->getIdPosizioneByEdificio($Pos);
+	}
+	public function getDataByIdPosizione()
+	{
+		return $this->getResource('Posizione')->getDataByIdPosizione();
+	}
+	
+		public function inserisciSegnalazione($seInfo)
+    {
+		return $this->getResource('Avvisi')->inserisciSegnalazione($seInfo);
+	}
+	
+	public function getPericolo($edificio)
+	{
+			return $this->getResource('Avvisi')->getPericolo($edificio);
+	}
+	
 	public function getMappaEvaquazioneByEdifPiano($edificio, $piano)
     {
         return $this->getResource('MappaEvaquazione')->getMappaEvaquazioneByEdifPiano($edificio, $piano);		  
@@ -177,4 +222,5 @@ class Application_Model_Staff extends App_Model_Abstract
     {
 			return $this->getResource('ElencoAvvisi')->getElAvvisi();
 	}
+	
 }

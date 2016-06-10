@@ -6,6 +6,7 @@ class StaffController extends Zend_Controller_Action
     protected $_pform;
     protected $_avvisi;
     protected $_mpform;
+	protected $_asform;
     protected $_epform;
 	protected $_evaform;
 	protected $_gform;
@@ -29,8 +30,10 @@ class StaffController extends Zend_Controller_Action
 		$this->view->mpForm=$this->getModprofiloForm();
         $this->view->pForm=$this->getPosizioneForm();
 		$this->view->iForm=$this->getIndexForm();
+		$this->view->asForm=$this->getAggiungisegnalazioneForm();
 		$this->view->epForm=$this->getEliminaprofiloForm();
-		$this->view->segnForm=$this->getSegnalazioniForm();
+		$this->view->evaForm=$this->getEvaForm();
+		//$this->view->segnForm=$this->getSegnalazioniForm();
 		$this->view->gForm = $this->getGestioneForm();
 		$session = new Zend_Session_Namespace('session'); 
 		$session->_username = $this->_authService->getIdentity()->username;
@@ -126,45 +129,56 @@ class StaffController extends Zend_Controller_Action
         $this->view->assign('flag',$flag);
         
     }
-
-	public function evaAction () //evaquazione ingegneria action
-    {	//lato staff
-    	$this->_sede=new Application_Model_Staff();
-		$this->_authService = Zend_Auth::getInstance();
+	
+	public function evaannullAction (){
 		$un=$this->_authService->getIdentity()->username;
-		
-		$user=$this->_sede->getUserByUName($un);
-		$idPlan=$this->_sede->getIdPlanimetriaByPosizionestaff($user['posizioneStaff']);
-		$this->view->assign(array('comp'=>$user['posizioneStaff']));
-		
-		//$this->_helper->layout()->disableLayout();
-       // $this->_helper->viewRenderer->setNoRender();
-		
-        if ($this->getRequest()->isXmlHttpRequest()) {
-        	//Prendo i due parametri passati con l'ajax
-            $this->_piano = $this->_getParam('pia');
-			$this->_edificio = $user['posizioneStaff'];
-			
-			//Prendo l'id planimetria corretto e attraverso quello prendo la mappa corrispondente
-            $idPlan = $this->_staff->getIdPlanimetriaByEdificioPiano($this->_edificio, $this->_piano);
-			$mappa = $this->_staff->getPlanimetriaById($idPlan['idPlanimetria']);	
-			//Istanzio la session e salvo i parametri piano ed edificio		
-			$session = new Zend_Session_Namespace('session');
-            $session->_piano = $this->_getParam('pia');
-			$session->_edificio = $this->_getParam('edif'); 
-			//Codifico l'immagine e assieme metto il map           
-            $base64 = base64_encode($mappa['mappa']);
-			$image = 'data:image/png;base64,'.$base64;
-			$map = $mappa['map'];
-			$a = array("mappa"=>$image,
-					   "map"=>$map);
-						require_once 'Zend/Json.php';
-			//Codifico i dati in formato Json e li rimando indietro
-			require_once 'Zend/Json.php';
-            $a = Zend_Json::encode($a);
-			echo $a;
+		$user=$this->_staff->getUserByUName($un);
+		$this->_staff->updatePericoloByPosizioneStaff($user['posizioneStaff']);
+		$this->_helper->redirector('eva');
+	}
+	
+	
+	public function evaAction () {
+		$un=$this->_authService->getIdentity()->username;
+		$user=$this->_staff->getUserByUName($un);
+		if($this->_staff->getPericolo($user['posizioneStaff']))
+		{
+			$this->view->per = '1';
 		}
-
+	}
+	
+	public function evauAction () //evaquazione ingegneria action
+    {
+		if(!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('eva');
+        }
+        $form=$this->_evaform;
+        if (!$form->isValid($_POST)) {
+            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
+            return $this->render('eva');
+        }
+        $idAvv=$form->getValue('avvisi');
+		
+		if($idAvv != '0'){
+			$un=$this->_authService->getIdentity()->username;
+			$user=$this->_staff->getUserByUName($un);
+			$idPos = $this->_staff->getIdPosizioneByEdificio($user['posizioneStaff']);
+			$date = new Zend_Date(); 
+			$createdDate= $date->get('YYYY-MM-dd HH:mm:ss');
+			$avviso = (array('idPosizione'=>$idPos['idPosizione'],
+							  'idUtente'=> $user['idUtente'],
+							  'data'=>$createdDate,
+							  'idElencoAvviso'=>$idAvv,
+							  'pericolo'=>'1',
+							  'posizioneStaff'=>$user['posizioneStaff'],
+			));
+			$this->_staff->inserisciSegnalazione($avviso);
+			$this->_helper->redirector('eva');			
+		}else{
+			$form->setDescription('Attenzione: seleziona un cataclisma.');
+            return $this->render('eva');
+		}
+		
     }
     
 	public function segnalazioniAction()
@@ -191,7 +205,14 @@ class StaffController extends Zend_Controller_Action
 	
 	public function aggiungisegnalazioneAction()
 	{
-		
+		/*if (!$this->getRequest()->isPost()) {
+            $this->_helper->redirector('segnalazioni');
+		}
+ 		$form=$this->_asform;
+		$values = $form->getValues();
+		echo $values['edificio'];
+		//$this->_staff->insertEdificio($values['edificio']);*/
+       
 	}
 	
 	public function modprofiloAction () 
@@ -208,19 +229,36 @@ class StaffController extends Zend_Controller_Action
 	
     public function gestioneAction()
 	{
-		$un=$this->_authService->getIdentity()->username;
-		$user =$this->_staff->getUserByUName($un);
-		$_edificio=$user['posizioneStaff'];
-		$piano=$this->_staff->getPianoByEdificio($_edificio);
+    			
+	}
+	
+	public function gestione2Action()
+	{
+		$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
 		
-		foreach ($piano as $k => $pstaff) 
-		{
-			$mappaeva=$this->_staff->getMappaEvaquazioneByEdifPiano($_edificio, $pstaff['piano']);
-		}
-		
-		$this->view->assign(array('comp'=>$user['posizioneStaff']));
-		$this->view->assign(array('mappaeva'=>$mappaeva));
-        $this->view->assign(array('piano'=>$piano));
+        if ($this->getRequest()->isXmlHttpRequest()) {
+        	//Prendo i due parametri passati con l'ajax
+            $piano = $this->_getParam('pia');
+			$un=$this->_authService->getIdentity()->username;
+			$user =$this->_staff->getUserByUName($un);
+			$_edificio=$user['posizioneStaff'];
+				
+			$mappaeva=$this->_staff->getMappaEvaquazioneByEdifPiano($_edificio, $piano);
+			$zone = $this->_staff->getZonaByPiano($piano);
+			
+			foreach ($mappaeva as $m) {
+				$base64 = base64_encode($m['mappaEvaquazione']);
+				$image = 'data:image/png;base64,'.$base64;
+				$mappeEv[] = array('idMapp'=>$m['idMappaEvaquazione'],
+									'mappa'=>$image,
+									'zone' =>$zone);
+			}
+			
+			$a = Zend_Json::encode($mappeEv);
+			echo $a;
+			
+		}	
 	}
 	
 	public function salvamodprofiloAction () 
@@ -381,6 +419,18 @@ class StaffController extends Zend_Controller_Action
         ));
         return $this->_epform;
     }
+	
+	protected function getEvaForm()
+    {
+        $urlHelper = $this->_helper->getHelper('url');
+        $this->_evaform = new Application_Form_Staff_Eva();
+        $this->_evaform->setAction($urlHelper->url(array(
+            'controller' => 'staff',
+            'action' => 'evau'),
+            'default'
+        ));
+        return $this->_evaform;
+    }
 		
     protected function getModcredenzialiForm()
     {
@@ -418,15 +468,19 @@ class StaffController extends Zend_Controller_Action
         return $this->_pform;
 	}	
 	
-	protected function getSegnalazioniForm()
+	protected function getAggiungisegnalazioneForm()
 	{
 		$urlHelper = $this->_helper->getHelper('url');
-        $this->_segnform = new Application_Form_Staff_Segnalazioni();
-        $this->_segnform->setAction($urlHelper->url(array(
+        $this->_asform = new Application_Form_Staff_Aggiungisegnalazione();
+        $this->_asform->setAction($urlHelper->url(array(
             'controller' => 'staff',
             'action' => 'aggiungisegnalazione'),
             'default'
         ));
-        return $this->_segnform;
+        return $this->_asform;
+	}
+	
+	protected function confermaselezioneAction(){
+		
 	}
 }

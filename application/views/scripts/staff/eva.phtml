@@ -1,17 +1,19 @@
-<h2>EVACUAZIONE</h2>
-<hr>
-<div class="showback">
-    <h4><i class="fa fa-angle-right"><?php echo $this->comp ?></i></h4>
-    <div>  
-    	
-    	<?=$this->evaForm; ?>
-    	<h3><i class="fa fa-angle-right">MAPPA</i></h3>
-   		 Indica la tua posizione sulla mappa:
-    		<br>
-    		<img id="mappaPosizione" />
-    		<map id="mapPosizione" name="mapPosizione"></map>
-        		
-        			
-      
+
+<?php if (($this->per) == NULL): ?>
+<div class="showback">    	
+    <h2>EVACUAZIONE</h2>	<h3><i class="fa fa-angle-right">Edificio: <?php echo $this->edificio ?></i></h3>
+    	<br>
+        <?=$this->evaForm; ?>		
      </div> 
 </div>
+<?php else: ?>
+<div class="showback">    	
+    <h2>EVACUAZIONE</h2>	<h3><i class="fa fa-angle-right">Edificio: <?php echo $this->edificio ?></i></h3>
+    	<br>
+        <a href="<?= $this->url(array('controller' => 'staff',
+                                      'action'     => 'evaannull', ), 
+                                      'default',true );?>"><button class="btn btn-round btn-default">
+                INTERROMPI EVACUAZIONE</button>	</a>	
+     </div> 
+</div>
+<?php endif;?>
