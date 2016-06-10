@@ -1,9 +1,10 @@
-<?php echo $this->doctype() ?>
+<?php echo $this->doctype(); ?>
 <html>
 <head>
     <?= $this->headMeta(); ?>
     <?= $this->headLink(); ?>
     <?= $this->headTitle(); ?>
+    <?= $this->render('js_admin.phtml');?>
 </head>
 <body>
 <section id="container" >
