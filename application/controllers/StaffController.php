@@ -75,35 +75,41 @@ class StaffController extends Zend_Controller_Action
     
     public function avvisiareeAction ()
     {
-         $flag='false';  
-         $cou=array();
-         $x=0;
-         $staffedif=$this->_authService->getIdentity()->posizioneStaff;
-         $elAvvisi=$this->_staff->getAvvisi();  
-         $avv=$this->_staff->getAvvisi();
-         foreach ($avv as $ak => $av) {
-             $idPos[$ak]=$this->_staff->getIdPosizioneByIdAvviso($av['idAvviso']);
-             $piano[$ak]=$this->_staff->getPianoByIdPosizione($idPos[$ak]['idPosizione']);
-             $tipAvv[$ak]=$this->_staff->getElAvvisoById($av['idElencoAvviso']);
-             $flag='true';
-         }
-         $x=0;
-         $a=array();
-         foreach($tipAvv as $tak => $ta){
-            foreach($piano as $pck => $p){
-                
+        $flag='false';
+        $coua[]=0;
+        $pianTemp['idPosizione']=0;
+        $avv=$this->_staff->getAvvisi();
+        $staffedif=$this->_authService->getIdentity()->posizioneStaff;
+        foreach ($dove as $dk => $d) {
+            if($staffedif==$d['edificio']){
+                $cou[$dk]=0;
+                foreach ($avv as $a){
+                    if($d['idPosizione']==$a['idPosizione']){
+                        $coua[$dk]+=1;
+                        $pianTemp[$dk]=$d['idPosizione'];
+                        $flag='true';
+                    }
+                 }
+              }
+          }
+        
+
+         foreach ($pianTemp as $a => $v) {
+         foreach ($coua as $b => $va) {
+                if($a==$b){
+                 echo $v.'&nbsp'.$va.'<br/>';
+                }
             }
-         }
-    
-         
-         foreach ($a as $key => $value) {
-             echo $value.'<br/>';
-         }
-         $this->view->assign(array('staffedif'=>$staffedif)); 
-         $this->view->assign('flag',$flag);
-         $this->view->assign('piano',$piano);
-         $this->view->assign('tipAvv',$tipAvv);
-          
+        }
+        foreach ($pia as $key => $value) {
+            echo $value;
+        }
+        
+        
+        $this->view->assign(array('staffedif'=>$staffedif));
+        $this->view->assign(array('dove'=>$pia));
+        $this->view->assign(array('coua'=>$coua));
+        $this->view->assign('flag',$flag);   
     }
 	
 
