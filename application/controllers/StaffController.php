@@ -75,28 +75,35 @@ class StaffController extends Zend_Controller_Action
     
     public function avvisiareeAction ()
     {
-        $flag='false';
-        $cou[]=null;
-        $staffedif=$this->_authService->getIdentity()->posizioneStaff;
-        $elavv=$this->_staff->getAllElAvvisi();
-        $dove=$this->_staff->getPosizione();
-        $avv=$this->_staff->getAvvisi();
-        foreach ($avv as $ak => $a) {
-            $cou[]=null;
-            foreach ($dove as $dk => $d) {
-                if($d['idPosizione']==$a['idPosizione']){
-                    $cou[$ak] +=1;
-                    $flag='true';
-                }
+         $flag='false';  
+         $cou=array();
+         $x=0;
+         $staffedif=$this->_authService->getIdentity()->posizioneStaff;
+         $elAvvisi=$this->_staff->getAvvisi();  
+         $avv=$this->_staff->getAvvisi();
+         foreach ($avv as $ak => $av) {
+             $idPos[$ak]=$this->_staff->getIdPosizioneByIdAvviso($av['idAvviso']);
+             $piano[$ak]=$this->_staff->getPianoByIdPosizione($idPos[$ak]['idPosizione']);
+             $tipAvv[$ak]=$this->_staff->getElAvvisoById($av['idElencoAvviso']);
+             $flag='true';
+         }
+         $x=0;
+         $a=array();
+         foreach($tipAvv as $tak => $ta){
+            foreach($piano as $pck => $p){
+                
             }
-        }
-        $this->view->assign(array('cou'=>$cou));
-        $this->view->assign(array('dov'=>$dove));
-        $this->view->assign(array('avvisi'=>$avv));
-        $this->view->assign(array('elavvisi'=>$elavv));
-        $this->view->assign(array('staffedif'=>$staffedif));
-        $this->view->assign('flag',$flag);
-        
+         }
+    
+         
+         foreach ($a as $key => $value) {
+             echo $value.'<br/>';
+         }
+         $this->view->assign(array('staffedif'=>$staffedif)); 
+         $this->view->assign('flag',$flag);
+         $this->view->assign('piano',$piano);
+         $this->view->assign('tipAvv',$tipAvv);
+          
     }
 	
 
