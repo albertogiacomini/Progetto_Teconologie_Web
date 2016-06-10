@@ -34,4 +34,5 @@ class Application_Resource_ElencoAvvisi extends Zend_Db_Table_Abstract
     {
         return $this->getAdapter()->fetchRow($this->select()->where('tipoAvviso = ?', $TAvviso));
     }
+    
 }
