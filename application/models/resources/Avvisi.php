@@ -52,9 +52,25 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
 		return $this->getAdapter()->fetchAll($select);
 	}
 	
-	public function getPericolo()
+	public function updatePericoloByPosizioneStaff($posizioneStaff)
     {
-        return $this->getAdapter()->fetchRow($this->select()->where('pericolo= 1'));
+    	
+		$db = new Zend_Db_Adapter_Pdo_Mysql(array(
+												    'host'     => 'localhost',
+												    'username' => 'root',
+												    'password' => 'root',
+												    'dbname'   => 'grp_04_db'
+												));
+		$data      = array('pericolo' => '0',
+							'posizioneStaff' => null);
+		$where[] = $db->quoteInto('posizioneStaff = ?', $posizioneStaff); 
+		$db->update($this->_name, $data, $where); 
+    }
+	
+	public function getPericolo($edificio)
+    {
+        return $this->fetchRow($this->select()->where('pericolo= 1')
+											  ->where('posizioneStaff= ?',$edificio));
     }
 }
 

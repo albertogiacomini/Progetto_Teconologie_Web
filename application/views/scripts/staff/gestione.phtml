@@ -1,3 +1,5 @@
+
+
 <h2>GESTIONE PERCORSI</h2>
 <hr>
 <div class="showback"> 
@@ -6,38 +8,19 @@
     <h4><i class="fa fa-angle-right">Seleziona le vie di fuga relative ad ogni Piano e ad ogni zona di evacuazione</i></h4>
    
     <?=$this->gForm; ?> 
-    
+
     <table class="table">
    	 <thead>
         <tr>
            <th  width="15%">Mappa</th>
-           <th  width="15%">Zona</th>
-           <th  width="15%">Aule</th>   	  
+           <th  width="15%">Zona</th>  	  
         </tr>
     </thead>   
-		<?//php foreach ($this->piano as $kp->$p) :?>
-	    	<?php foreach ($this->mappaeva as $me) :?>
-     <tbody> 
-            <tr>    
-                <td width="15%"> 
-                	<?php $base64 = base64_encode($me['mappaEvaquazione'])?>
-					<?php $image = '<img src="data:image/gif;base64,' . $base64 . '" class="img-rectangolar" width="100em height=100em" />';?>
-					<?php echo $image ?> 
-				</td>     
-	            <td width="10%"> 
-                	<fieldset> 
-                		<input type="checkbox" name="zona1" value="zona1"/> Zona1
- 							</br>
- 						<input type="checkbox" name="zona2" value="zona2"/> Zona2 
-                </td>
-                <td width="15%"> <?php echo '$pf->aula' ?> </td>    
-
-             </tr>
     
-  	    <?//php endforeach ?>
-    <?php endforeach ?>	   
-    	</tbody>
+     <tbody id="tabEvac">
+     	 
+    </tbody>
 	</table>
-    
+	<button id="btnc" class="btn btn-round btn-default" onClick="VerificaIns()" "display:none">CONFERMA SELEZIONE</button>
     
 </div>

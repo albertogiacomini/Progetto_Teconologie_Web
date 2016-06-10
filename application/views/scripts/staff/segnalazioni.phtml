@@ -17,10 +17,11 @@
            <th  width="15%">	
               <a href="<?= $this->url(array(
                                   'controller' => 'staff',
-                                  'action'     => 'getSegnalazioni',),
-                                  'default',true );?> ?>">
+                                  'action'     => 'aggiungisegnalazione',),
+                                  'default',true );?>">
               <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button> 
-     </a> </th>    
+     		  </a>
+     	   </th>    
         </tr>
     </thead>   
 	       <?php foreach ($this->avvStaff as $af) :?>
@@ -53,10 +54,8 @@
 		   <?php endforeach ?>
 		   
     	</tbody>
-	</table>
-
+	 </table>
      <?php endif ?>       
-
 </div>
 		 	
 		 	

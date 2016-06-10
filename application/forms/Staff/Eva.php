@@ -17,40 +17,19 @@ class Application_Form_Staff_Eva extends App_Form_Abstract
         $avvisi=$this->_stf->getElAvvisi();
         $this->addElement('select', 'avvisi', array(
             'required'   => true,
-            'label'      => 'Avviso',
-            
-            'MultiOptions' => array('0' => '-- Seleziona Avviso --'),
-            'onChange' => 'MappaSegnalazione()',
+            'label'      => 'Selezionare CATACLISMA',
+            'MultiOptions' => array('0' => '-- Seleziona Cataclisma --'),
             'class'    => 'form-control'
             ));
 		
 		$i = 1;
 		foreach ($avvisi as $av) {
 			$this->avvisi->addMultiOption($i,$av['value']);
-			$i = $i+1;
-
-        $un = $session->_username;
-		$idPos = $this->_stf->getUserByUName($un);
-		$piani = $this->_stf->getPianoByEdificio($idPos['posizioneStaff']);
-        $this->addElement('select', 'piano', array(
-            'required'   => true,
-            'label'      => 'Piano',
-            'MultiOptions' => array('0' => '-- Seleziona Piano --'),
-            'onChange' => 'FillMap()',
-            'class'    => 'form-control'
-            ));
-			
-		$i = 1;
-		foreach ($piani as $ed) {
-			$this->piano->addMultiOption($i,$ed['piano']);
-			$i = $i+1;
-		}
-		
-
+			$i = $i+1;		
 		}			
 			
 		$this->addElement('submit', 'evacuazione', array(
-            'label'    => 'Evacuazione',
+            'label'    => 'Avvia Evacuazione',
             'decorators' => $this->buttonDecorators,
             'class' => 'btn-theme form-control mt20'
         ));	

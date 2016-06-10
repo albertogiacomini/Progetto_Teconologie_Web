@@ -1,3 +1,4 @@
+<script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
 <script>
 	
 	function FillMap()
@@ -33,7 +34,83 @@
 	}
 	
 	
+	var zoneTot = 0;
 	
+	function MappeEvacuazione()
+    {
+    	//Metodo per prelevare l'elemento selezionato nel select
+    	var p = document.getElementById('piano');
+		var piano = p.options[p.selectedIndex].text;
+		if(piano != '-- Seleziona Piano --'){
+	        new Ajax.Request(
+	        "<?=$this->url(array('controller' => 'staff','action' => 'gestione2'))?>",
+	            {
+	                method:'GET',
+	                parameters: {pia : piano},
+	                onSuccess: function MappEvac(mappeERsp)
+							   {
+							   	
+							   	var json = JSON.parse(mappeERsp.responseText);
+							   	var dim = json.size();
+							   	
+							   	var tb = document.getElementById('tabEvac');
+							   	
+							   	
+							   	for(var i=0; i<dim; i++){
+							   		var tr = document.createElement('tr');
+							   		var tdMap = document.createElement('td');
+							   		var tdCk = document.createElement('td');
+							   		var img = document.createElement('img');							   		
+							   		
+							   		tdMap.appendChild(img);
+							   		img.src = json[i]['mappa'];
+							   		img.id = json[i]['idMapp'];
+							   		var zone = json[i]['zone'];
+							   		zoneTot = zone['zona'];
+							   		for(var x=0; x<zone['zona']; x++){
+							   			var lbl = document.createElement('label');
+							   			lbl.innerHTML = "Zona"+x;
+							   			var ck = document.createElement('input');
+							   			ck.type = "radio";
+							   			ck.setAttribute("id", json[i]['idMapp']+x);
+							   			ck.setAttribute("name", "zona"+x);
+							   			tdCk.appendChild(lbl);
+							   			tdCk.appendChild(ck);
+							   			
+							   		} 
+							   		tr.appendChild(tdMap);
+							   		tr.appendChild(tdCk);
+							   		tb.appendChild(tr);							   		
+							   	}
+							   	document.getElementById("btnc").setAttribute("display","block");
+							   	
+					}
+	        });
+        }
+	}
+	
+	function VerificaIns()
+    {
+    	var a = $("input:radio");
+    	var rad = a.length;
+    	var idPlan;
+    	
+    	for(var m=0; m<zoneTot; m++){
+    	var radios = document.getElementsByName('zona'+m);
+
+			for (var i = 0, length = radios.length; i < length; i++) {
+			    if (radios[i].checked) {
+			        // do whatever you want with the checked radio
+			        alert(radios[i].id);
+			        alert(radios[i].length)
+					//idPlan[m] = radios[i].id;
+			        // only one radio can be logically checked, don't check the rest
+			    }
+			}
+    	}
+    }
+    	
+    	
 	
 	
 </script>
