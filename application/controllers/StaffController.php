@@ -24,13 +24,14 @@ class StaffController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('staff');    
         $this->_authService = new Application_Service_Auth();
 		$this->_staff=new Application_Model_Staff();
-		$this->view->gForm = $this->getGestioneForm();
+		
 		$this->view->mcForm=$this->getModcredenzialiForm();
 		$this->view->mpForm=$this->getModprofiloForm();
         $this->view->pForm=$this->getPosizioneForm();
 		$this->view->iForm=$this->getIndexForm();
 		$this->view->epForm=$this->getEliminaprofiloForm();
 		$this->view->segnForm=$this->getSegnalazioniForm();
+		$this->view->gForm = $this->getGestioneForm();
 		$session = new Zend_Session_Namespace('session'); 
 		$session->_username = $this->_authService->getIdentity()->username;
     }
@@ -232,12 +233,19 @@ class StaffController extends Zend_Controller_Action
 	
     public function gestioneAction()
 	{
-		$this->_sede=new Application_Model_Staff();
-		$this->_authService = Zend_Auth::getInstance();
 		$un=$this->_authService->getIdentity()->username;
+		$user =$this->_staff->getUserByUName($un);
+		$_edificio=$user['posizioneStaff'];
+		$piano=$this->_staff->getPianoByEdificio($_edificio);
 		
-		$comp =$this->_sede->getPosizionestaffByUName($un);
-		$this->view->assign(array('comp'=>$comp));
+		foreach ($piano as $k => $pstaff) 
+		{
+			$mappaeva=$this->_staff->getMappaEvaquazioneByEdifPiano($_edificio, $pstaff['piano']);
+		}
+		
+		$this->view->assign(array('comp'=>$user['posizioneStaff']));
+		$this->view->assign(array('mappaeva'=>$mappaeva));
+        $this->view->assign(array('piano'=>$piano));
 	}
 	
 	public function salvamodprofiloAction () 

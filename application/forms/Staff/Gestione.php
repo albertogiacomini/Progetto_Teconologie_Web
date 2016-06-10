@@ -3,32 +3,34 @@
 class Application_Form_Staff_Gestione extends App_Form_Abstract
 {
 	protected $_stf;
-	protected $piano;
 	
     public function init()
     {
     	$this->_stf=new Application_Model_Staff();
-        $piano=$this->_stf->getEdifici();
-		
+		$session = new Zend_Session_Namespace('session');
 		
         $this->setMethod('post');
         $this->setName('getGestione');
         $this->setAction('');
 		
-		$this->addElement('select', 'piano', array(
+        $un = $session->_username;
+		$idPos = $this->_stf->getUserByUName($un);
+		$piani = $this->_stf->getPianoByEdificio($idPos['posizioneStaff']);
+        $this->addElement('select', 'piano', array(
             'required'   => true,
-            'label'      => $this->comp,
-            'MultiOptions' => $piano,
-            'onChange' => '',
-            'class' => 'form-control mt5',
-        ));
-
-        $this->addElement('submit', 'aggiungi', array(
-            'label'    => 'Aggiungi',
-            'decorators' => $this->buttonDecorators,
-            'class' => 'btn-theme form-control mt20'
-        ));
-
+            'label'      => 'Piano',
+            'MultiOptions' => array('0' => '-- Seleziona Piano --'),
+            'onChange' => 'FillMap()',
+            'class'    => 'form-control'
+            ));
+			
+		$i = 1;
+		foreach ($piani as $ed) {
+			$this->piano->addMultiOption($i,$ed['piano']);
+			$i = $i+1;
+		}
+		
+		
         $this->setDecorators(array(
             'FormElements',
             array('HtmlTag', array('tag' => 'table', 'class' => 'zend_form')),

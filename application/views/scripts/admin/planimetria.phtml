@@ -15,8 +15,9 @@
 <table class="table">
     <thead>
         <tr>
-           <th  width="30%">Mappa</th>
-           <th  width="70%"></th>
+           <th  width="40%">Mappa</th>
+           <th  width="30%">Edificio</th>
+           <th  width="30%">Piano</th>
            <th  width="5%">
                <a href="<?= $this->url(array(
                                                     'controller' => 'admin',
@@ -29,14 +30,15 @@
     </thead>
     
     <tbody>
-        <?php foreach ($paginator as $f) :?>  
+        <?php foreach ($paginator as $fk=>$f) :?>  
              <?php
                   $base64 = base64_encode($f->mappa);
                   $image = '<img src="data:image/jpg;base64,' . $base64 . '" width="250" />';
                   ?>
             <tr>
-                <td width="20%">   <?= $image  ?> </td>
-                <td width="60%">
+                <td width="30%">   <?= $image  ?> </td>
+                <td width="30%">   <?= $this->posizione[$fk]['edificio']  ?> </td>
+                <td width="30%">   <?= $this->posizione[$fk]['piano']  ?> </td>
                 <td width="10%"> <a href="<?= $this->url(array(
                                                     'controller' => 'admin',
                                                     'action'     => 'modificaplanimetria',),

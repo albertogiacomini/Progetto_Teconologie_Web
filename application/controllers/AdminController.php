@@ -38,8 +38,14 @@ class AdminController extends Zend_Controller_Action
     
     public function planimetriaAction()
     {
+        
          $Planimetria=$this->_user->getPlanimetrieOrderById();
+         foreach ($Planimetria as $fk=>$f) {
+            $Posizione[$fk]=$this->_user->getPosizioneByIdPlanimetria($f['idPlanimetria']);
+            
+         }
          $this->view->assign(array('planimetria'=>$Planimetria));
+         $this->view->assign(array('posizione'=>$Posizione));
     }
     
      public function mappaevaquazioneAction()
@@ -198,13 +204,21 @@ class AdminController extends Zend_Controller_Action
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('aggiungiplanimetria');
         }
-        $values=$form->getValues();
+        $value=$form->getValue('mappa');
         //conversione del file della form in blob
-        $image=APPLICATION_PATH . '/../public/images/temp/'.$values['mappa'];
+        $image=APPLICATION_PATH . '/../public/images/temp/'.$value;
         $data=file_get_contents($image);
         //immissione del file blob nella variabile imgprofilo
-        $values['mappa']=$data;
-        $this->_user->aggiungiPlanimetria($values);
+        
+        $valoriplan=array("mappa"=>$data,"map"=>$form->getValue('map'));
+        
+        $this->_user->aggiungiPlanimetria($valoriplan);
+        
+        $valoripos=array("edificio"=>$form->getValue('edificio'),"piano"=>$form->getValue('piano'),"aula"=>$form->getValue('aula'),"zona"=>$form->getValue('zona'));
+
+        
+        $this->_user->aggiungiPosizione($valoripos);
+        
         //eliminazione de file temporaneo immagine
         unlink($image);
         $this->_helper->redirector('planimetria');
@@ -250,7 +264,7 @@ class AdminController extends Zend_Controller_Action
         $data=file_get_contents($image);
         //immissione del file blob nella variabile imgprofilo
         $values['mappa']=$data;
-        $id=$_POST["idPlanimetria"];;
+        $id=$_POST["idPlanimetria"];
         $this->_user->modificaPlanimetria($values,$id);
         //eliminazione de file temporaneo immagine
         unlink($image);
@@ -348,5 +362,31 @@ class AdminController extends Zend_Controller_Action
         $this->_helper->redirector('mappaevaquazione');
     }
     
+    public function aggiungiaulaAction(){
+        $form->addElement('text', 'aula', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('Int')
+            ),
+            'value'      => 1,
+            'readonly'   => true,
+            'required'   => true,
+            'label'      => 'Aula',
+            'decorators' => $this->element2Decorators,
+            'class' => 'form-control mt5',
+        ));
+        
+         $form->addElement('text', 'zona', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('Int')
+            ),
+            'required'   => true,
+            'label'      => ' --->  Zona ',
+            'decorators' => $this->element2Decorators,
+            'class' => 'form-control mt5',
+        ));
+        $this->_helper->redirector('aggiungiplanimetria');
+    }
  
 }

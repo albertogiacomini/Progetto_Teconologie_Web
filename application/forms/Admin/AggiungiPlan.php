@@ -11,6 +11,7 @@ class Application_Form_Admin_AggiungiPlan extends App_Form_Abstract
         $this->setName('aggiungiPlan');
         $this->setAction('');
         
+        
          $this->addElement('file', 'mappa', array(
             'label' => 'Planimetria',
             'destination' => APPLICATION_PATH . '/../public/images/temp',
@@ -29,12 +30,64 @@ class Application_Form_Admin_AggiungiPlan extends App_Form_Abstract
             'required'   => true,
             'label'      => 'Mappatura',
             'decorators' => $this->elementDecorators,
-            'class' => 'form-control',
+            'class' => 'form-control mt5',
+        ));
+        
+        $this->addElement('text', 'edificio', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 45))
+            ),
+            'required'   => true,
+            'label'      => 'Edificio',
+            'decorators' => $this->elementDecorators,
+            'class' => 'form-control mt5',
+        ));
+        
+        $this->addElement('text', 'piano', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('StringLength', true, array(3, 45))
+            ),
+            'required'   => true,
+            'label'      => 'Piano',
+            'decorators' => $this->elementDecorators,
+            'class' => 'form-control mt5',
+        ));
+        
+         $this->addElement('button', 'aggiungiAula', array(
+            'label'      => 'Aggiungi aula',
+            'decorators' => $this->buttonDecorators,
+            'class' => 'form-control btn-theme  mt5',
+            'onClick' => 'AggiungiAula()',
+        ));
+        
+        $this->addElement('text', 'aula', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('Int')
+            ),
+            'value'      => 1,
+            'readonly'   => true,
+            'required'   => true,
+            'label'      => 'Aula',
+            'decorators' => $this->element2Decorators,
+            'class' => 'form-control mt5',
+        ));
+        
+         $this->addElement('text', 'zona', array(
+            'filters'    => array('StringTrim', 'StringToLower'),
+            'validators' => array(
+                array('Int')
+            ),
+            'required'   => true,
+            'label'      => ' --->  Zona ',
+            'decorators' => $this->element2Decorators,
             'class' => 'form-control mt5',
         ));
         
         $this->addElement('submit', 'aggiungi', array(
-            'label'    => 'Aggiungi',
+            'label'    => 'Conferma',
             'decorators' => $this->buttonDecorators,
             'class' => 'btn-theme form-control mt20'
         ));

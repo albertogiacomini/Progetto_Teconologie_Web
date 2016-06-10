@@ -138,9 +138,18 @@ class Application_Model_User extends App_Model_Abstract
 	
     
 	//POSIZIONE
+	public function aggiungiPosizione($posInfo)
+	{
+	    return $this->getResource('Posizione')->aggiungiPosizione($posInfo);
+	}
+	
 	public function getPosizione()
     {
         return $this->getResource('Posizione')->getPosizione();
+    }
+    
+    public function getPosizioneByIdPlanimetria($idplan){
+        return $this->getResource('Posizione')->getPosizioneByIdPlanimetria($idplan);
     }
 	
 	public function getEdifici()

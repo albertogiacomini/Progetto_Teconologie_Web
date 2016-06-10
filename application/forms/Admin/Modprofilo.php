@@ -6,7 +6,9 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
     
     public function init()
     {
-        $this->_userModel = new Application_Model_User();              
+        $this->_userModel = new Application_Model_User();  
+        $edifici=$this->_userModel->getEdifici(); 
+                    
         $this->setMethod('post');
         $this->setName('modProfilo');
         $this->setAction('');
@@ -112,6 +114,20 @@ class Application_Form_Admin_Modprofilo extends App_Form_Abstract
                 'decorators' => $this->elementDecorators, 
                 'class' => 'form-control mt3',
         ));
+        
+       $this->addElement('select', 'posizioneStaff', array(
+            'required'   => true,
+            'label'      => 'Edificio',
+            'MultiOptions' => array('0' => '-- Seleziona Immobile --'),
+            'decorators' => $this->elementDecorators, 
+            'class'    => 'form-control mt3'
+            ));
+        
+        $i = 1;
+        foreach ($edifici as $ed) {
+            $this->posizioneStaff->addMultiOption($i,$ed['value']);
+            $i = $i+1;
+        }
             
         $this->addElement('submit', 'aggiorna', array(
             'label'    => 'Aggiorna',
