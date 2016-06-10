@@ -116,6 +116,11 @@ class Application_Model_User extends App_Model_Abstract
 		return $this->getResource('Planimetrie')->getPlanimetriaById($idPlanimetria);
 	}
     
+     public function getMaxIdPlan()
+    {
+       return $this->getResource('Planimetrie')->getMaxIdPlan();
+    }
+    
     public function getPlanimetrieOrderById()
     {
         return $this->getResource('Planimetrie')->getPlanimetrieOrderById();
@@ -176,6 +181,11 @@ class Application_Model_User extends App_Model_Abstract
 	{
 		return $this->getResource('Posizione')->getDataByIdPosizione($idPos);
 	}
+    
+    public function deletePosizioneByIdPlan($IdPlan)
+    {
+        return $this->getResource('Posizione')->deletePosizioneByIdPlan($IdPlan);
+    }
 	
 	//UTENTE
 	public function insertUser($usrInfo)

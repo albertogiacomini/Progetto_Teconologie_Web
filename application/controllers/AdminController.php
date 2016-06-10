@@ -9,7 +9,6 @@ class AdminController extends Zend_Controller_Action
     protected $_faqform;
     protected $_aggiungifaqform;
     protected $_aggiungiplanimetriaform;
-    protected $_modplanimetriaform;
     protected $_aggiungimapevform;
     protected $_modmapevform;
     
@@ -22,7 +21,6 @@ class AdminController extends Zend_Controller_Action
         $this->view->faqForm=$this->getModFaqForm(); 
         $this->view->aggiungifaqForm=$this->getAggiungiFaqForm(); 
         $this->view->aggiungiplanimetriaForm=$this->getAggiungiPlanimetriaForm(); 
-        $this->view->modplanimetriaForm=$this->getModificaPlanimetriaForm();
         $this->view->aggiungimapevForm=$this->getAggiungiMapEvForm();
         $this->view->modmapevForm=$this->getModificaMapEvForm(); 
     }
@@ -200,25 +198,30 @@ class AdminController extends Zend_Controller_Action
             $this->_helper->redirector('aggiungiplanimetria');
         }
         $form=$this->_aggiungiplanimetriaform;
+        
         if (!$form->isValid($_POST)) {
             $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
             return $this->render('aggiungiplanimetria');
         }
+        
+        $form->preValidation($_POST);
+        
         $value=$form->getValue('mappa');
         //conversione del file della form in blob
         $image=APPLICATION_PATH . '/../public/images/temp/'.$value;
         $data=file_get_contents($image);
         //immissione del file blob nella variabile imgprofilo
         
-        $valoriplan=array("mappa"=>$data,"map"=>$form->getValue('map'));
+        $idplan = ($this->_user->getMaxIdPlan()+1);
+        
+        $valoriplan=array("idPlanimetria"=>$idplan,"mappa"=>$data,"map"=>$form->getValue('map'));
         
         $this->_user->aggiungiPlanimetria($valoriplan);
-        
-        $valoripos=array("edificio"=>$form->getValue('edificio'),"piano"=>$form->getValue('piano'),"aula"=>$form->getValue('aula'),"zona"=>$form->getValue('zona'));
-
-        
-        $this->_user->aggiungiPosizione($valoripos);
-        
+  
+        for($i=1; $i<$form->getValue('id')+1;$i++){        
+            $valoripos=array("idPlanimetria"=>$idplan,"edificio"=>$form->getValue('edificio'),"piano"=>$form->getValue('piano'),"aula"=>$form->getValue('aula'.($i-1)),"zona"=>$form->getValue('zona'.($i-1)));
+            $this->_user->aggiungiPosizione($valoripos);
+        }
         //eliminazione de file temporaneo immagine
         unlink($image);
         $this->_helper->redirector('planimetria');
@@ -226,53 +229,12 @@ class AdminController extends Zend_Controller_Action
     
     public function deleteplanimetriaAction(){
          $pl=$_GET["idplan"];
+         $this->_user->deletePosizioneByIdPlan($pl);
          $this->_user->deletePlan($pl);
          $Planimetria=$this->_user->getPlanimetrieOrderById();
          $this->view->assign(array('planimetria'=>$Planimetria));
          $this->_helper->redirector('planimetria');
     }
-    
-    public function modificaplanimetriaAction(){
-        $id=$_GET["idplan"];
-        $this->_modplanimetriaform->populate($this->_user->getPlanimetriaById($id)->toArray());
-    }
-    
-    public function getModificaPlanimetriaForm(){
-        $urlHelper = $this->_helper->getHelper('url');
-        $this->_modplanimetriaform = new Application_Form_Admin_Modificaplanimetria();
-        $this->_modplanimetriaform->setAction($urlHelper->url(array(
-            'controller' => 'admin',
-            'action' => 'salvamodplan'),
-            'default'
-        ));
-        return $this->_modplanimetriaform;
-    }
-    
-    public function salvamodplanAction()
-    {
-        if(!$this->getRequest()->isPost()) {
-            $this->_helper->redirector('modificaplanimetria');
-        }
-        $form=$this->_aggiungiplanimetriaform;
-        if (!$form->isValid($_POST)) {
-            $form->setDescription('Attenzione: alcuni dati inseriti sono errati.');
-            return $this->render('modificaplanimetria');
-        }
-        $values=$form->getValues();
-        //conversione del file della form in blob
-        $image=APPLICATION_PATH . '/../public/images/temp/'.$values['mappa'];
-        $data=file_get_contents($image);
-        //immissione del file blob nella variabile imgprofilo
-        $values['mappa']=$data;
-        $id=$_POST["idPlanimetria"];
-        $this->_user->modificaPlanimetria($values,$id);
-        //eliminazione de file temporaneo immagine
-        unlink($image);
-        $this->_helper->redirector('planimetria');
-    }
-    
-    
-    
     
     
     public function aggiungimapevAction(){
@@ -363,30 +325,58 @@ class AdminController extends Zend_Controller_Action
     }
     
     public function aggiungiaulaAction(){
-        $form->addElement('text', 'aula', array(
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $id = $this->_getParam('id');
+            
+            
+            $element = new Zend_Form_Element_Text("aula$id", array(
             'filters'    => array('StringTrim', 'StringToLower'),
             'validators' => array(
                 array('Int')
             ),
-            'value'      => 1,
+            'value'      => $id+1,
             'readonly'   => true,
             'required'   => true,
             'label'      => 'Aula',
-            'decorators' => $this->element2Decorators,
             'class' => 'form-control mt5',
         ));
         
-         $form->addElement('text', 'zona', array(
+        $element->setDecorators(array(
+        'ViewHelper',
+        array(array('alias1' => 'HtmlTag'),array('tag' => 'td', 'class' => 'element',)),
+        array(array('alias2' => 'HtmlTag'), array('tag' => 'td', 'class' => 'errors','openOnly' => true, 'placement' => 'append')),
+        'Errors',
+        array(array('alias3' => 'HtmlTag'), array('tag' => 'td', 'closeOnly' => true, 'placement' => 'append')),
+        array('Label', array('tag' => 'td')),
+        
+        ));
+             
+             $element2 = new Zend_Form_Element_Text("zona$id", array(
             'filters'    => array('StringTrim', 'StringToLower'),
             'validators' => array(
                 array('Int')
             ),
             'required'   => true,
             'label'      => ' --->  Zona ',
-            'decorators' => $this->element2Decorators,
             'class' => 'form-control mt5',
         ));
-        $this->_helper->redirector('aggiungiplanimetria');
+        
+        $element2->setDecorators(array(
+        'ViewHelper',
+        array(array('alias1' => 'HtmlTag'),array('tag' => 'td', 'class' => 'element',)),
+        array(array('alias2' => 'HtmlTag'), array('tag' => 'td', 'class' => 'errors','openOnly' => true, 'placement' => 'append')),
+        'Errors',
+        array(array('alias3' => 'HtmlTag'), array('tag' => 'td', 'closeOnly' => true, 'placement' => 'append')),
+        array('Label', array('tag' => 'td')),
+        
+        ));
+        
+            echo ($element.' '.$element2);
+        }
     }
+    
+
  
 }

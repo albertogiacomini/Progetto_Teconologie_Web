@@ -1,33 +1,36 @@
 <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
-<script>
 
+<script>
+    
+        
+        
     function AggiungiAula()
-    {
-      var id = $("#aula").val();            
+    { 
+      var id = $("#id").val();  
+            
       new Ajax.Request(
       "<?=$this->url(array('controller' => 'admin','action' => 'aggiungiaula'))?>",
                 {
                     method:'POST',
-                    data: 'id='+id,
-                    onSuccess: function FillMapP(mappaRsp)
-                               {
-                                    var mappaEmap = eval('(' + mappaRsp.responseText + ')');
-                                    var mappa = document.getElementById('mappaPosizione');
-                                    mappa.src = mappaEmap.mappa;
-                                    var map = document.getElementById('mapPosizione');
-                                    map.innerHTML = mappaEmap.map;  
-                                    mappa.setAttribute("usemap", "#mapPosizione");
-                                    
-                                    var area = map.getElementsByTagName("area"); 
-                                    for (var i = 0; i < area.length; i++) { 
-                                        var a = i+1;
-                                        var url = "<?= $this->url(array('module'=>'default','controller' => 'user','action' => 'aulaevacuazione'))?>";
+                    parameters: {id: id},
+                    onSuccess: function (newElement) {
+                            console.log(newElement);
+                            
+                            var a = document.getElementById('tabellaAddPlan');
+                            var b = document.getElementsByTagName('tbody');
+                            var countTr = document.getElementsByTagName('tr').length;
+                            b[0].id = 'bodyTab';
+                            
+                            var tr = document.createElement('tr');
+                            tr.innerHTML = newElement.responseText;
+                            document.getElementById('bodyTab').appendChild(tr);
+                    
+                            // Increment and store id
+                            $("#id").val(++id);
+                            }
                         
-                                        var status = area[i].setAttribute("href", url+"/aue/"+a);   
-                                    }                                   
-                               }
             });
         }
-    }
+  
     
 </script>
