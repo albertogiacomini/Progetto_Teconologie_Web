@@ -50,6 +50,14 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
         			  		     ->where('piano = ?', $piano);
         return $this->fetchAll($select);
     }
+    
+    public function getPianoByIdPosizione($IdPos)
+    {
+        $select = $this->select()->from(array('p' => 'posizione'),
+                                       array('p.piano'))                 
+                                 ->where('idPosizione = ?', $IdPos);
+        return $this->fetchRow($select);
+    }
 	
 	public function getPianoByIdPlan($idplan)
     {
@@ -108,4 +116,6 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
 	{
 		return $this->getAdapter()->fetchRow($this->select()->where('idPosizione = ?', $idPos));
 	}
+
+   
 }

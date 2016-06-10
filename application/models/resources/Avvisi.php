@@ -52,6 +52,14 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
 		return $this->getAdapter()->fetchAll($select);
 	}
 	
+    public function getIdPosizioneByIdAvviso($IdAvviso)
+    {
+        $select = $this->select()->from(array('a' => 'avvisi'),
+                                     array('a.idPosizione'))    
+                                  ->where('idAvviso = ?', $IdAvviso);
+        return $this->fetchRow($select);
+    }
+    
 	public function getPericolo()
     {
         return $this->getAdapter()->fetchRow($this->select()->where('pericolo= 1'));

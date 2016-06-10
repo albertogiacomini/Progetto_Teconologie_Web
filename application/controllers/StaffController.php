@@ -77,27 +77,40 @@ class StaffController extends Zend_Controller_Action
     public function avvisiareeAction ()
     {
         $flag='false';
-        $cou[]=null;
-        $staffedif=$this->_authService->getIdentity()->posizioneStaff;
-        $elavv=$this->_staff->getAllElAvvisi();
-        $dove=$this->_staff->getPosizione();
+        $coua[]=0;
+        $pianTemp['idPosizione']=0;
         $avv=$this->_staff->getAvvisi();
-        foreach ($avv as $ak => $a) {
-            $cou[]=null;
-            foreach ($dove as $dk => $d) {
-                if($d['idPosizione']==$a['idPosizione']){
-                    $cou[$ak] +=1;
-                    $flag='true';
+        $staffedif=$this->_authService->getIdentity()->posizioneStaff;
+        foreach ($dove as $dk => $d) {
+            if($staffedif==$d['edificio']){
+                $cou[$dk]=0;
+                foreach ($avv as $a){
+                    if($d['idPosizione']==$a['idPosizione']){
+                        $coua[$dk]+=1;
+                        $pianTemp[$dk]=$d['idPosizione'];
+                        $flag='true';
+                    }
+                 }
+              }
+          }
+        
+
+         foreach ($pianTemp as $a => $v) {
+         foreach ($coua as $b => $va) {
+                if($a==$b){
+                 echo $v.'&nbsp'.$va.'<br/>';
                 }
             }
         }
-        $this->view->assign(array('cou'=>$cou));
-        $this->view->assign(array('dov'=>$dove));
-        $this->view->assign(array('avvisi'=>$avv));
-        $this->view->assign(array('elavvisi'=>$elavv));
-        $this->view->assign(array('staffedif'=>$staffedif));
-        $this->view->assign('flag',$flag);
+        foreach ($pia as $key => $value) {
+            echo $value;
+        }
         
+        
+        $this->view->assign(array('staffedif'=>$staffedif));
+        $this->view->assign(array('dove'=>$pia));
+        $this->view->assign(array('coua'=>$coua));
+        $this->view->assign('flag',$flag);   
     }
 	
 

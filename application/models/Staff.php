@@ -8,10 +8,20 @@ class Application_Model_Staff extends App_Model_Abstract
         
     }
     
+    public function getIdPosizioneByIdAvviso($IdAvviso)
+    {
+        return $this->getResource('Avvisi')->getIdPosizioneByIdAvviso($IdAvviso);
+    }
+   
 	public function getPianoByIdPlan($idplan)
     {
    	   return $this->getResource('Posizione')->getPianoByIdPlan($idplan);
 	}
+    
+    public function getPianoByIdPosizione($IdPos)
+    {
+       return $this->getResource('Posizione')->getPianoByIdPosizione($IdPos);
+    }
 	
 	public function getMappaEvaquazioneByEdifPiano($edificio, $piano)
     {
