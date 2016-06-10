@@ -43,7 +43,7 @@ class Application_Resource_Posizione extends Zend_Db_Table_Abstract
         return $this->getAdapter()->fetchAll($select);
     }
 	
-	public function getidPosizioneByPiano($piano)
+	public function getIdPosizioneByPiano($piano)
     {
         $select = $this->select()->from(array('p' => 'posizione'),
                             	       array('p.idPosizione'))				   
