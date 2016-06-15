@@ -276,31 +276,24 @@ class UserController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender();
 		
         if ($this->getRequest()->isXmlHttpRequest()) {
-        	$pericolo = $this->_utente->getPericolo();
+        	$us = $this->_authService->getIdentity()->username;
+			$utente	 = $this->_utente->getUserByUName($us);
+			$posUser = $this->_utente->getDataByIdPosizione($utente['idPosizione']);
+        	$pericolo = $this->_utente->getPericolo($posUser['edificio']);
 			if($pericolo){
-				$posPericolo = $this->_utente->getDataByIdPosizione($pericolo['idPosizione']);
-				$us = $this->_authService->getIdentity()->username;
-				$utente	 = $this->_utente->getUserByUName($us);
-				$posUser = $this->_utente->getDataByIdPosizione($utente['idPosizione']);
-				if(($posPericolo['edificio']==$posUser['edificio']) && ($posPericolo['piano']==$posUser['piano'])){
 					$tipoAvv = $this->_utente->getAvvisoById($pericolo['idElencoAvviso']);
-					$pos = $this->_utente->getDataByIdPosizione($pericolo['idPosizione']);
+					$immag = $this->_utente->getMappaEvaquazioneByEdifPianoZona($posUser['edificio'], $posUser['piano'], $posUser['zona']);
 					
-					$immag = $this->_utente->getMappaEvaquazioneByEdifPianoSel($posPericolo['edificio'], $posPericolo['piano']);
 					$base64 = base64_encode($immag['mappaEvaquazione']);
 					$planimetriaEvacuazione = 'data:image/png;base64,'.$base64;
-							
-									
-					
-					$arrayPericolo = array('aula' => $pos['aula'],
-										   'tipoAvviso'=> $tipoAvv['tipoAvviso'],
+					$arrayPericolo = array('tipoAvviso'=> $tipoAvv['tipoAvviso'],
 										   'immEvac'=>$planimetriaEvacuazione);
 										   
 		        	require_once 'Zend/Json.php';
 		            $ap = Zend_Json::encode($arrayPericolo);
 					
 		        	echo $ap;
-				}
+				
 			}
         }
     }

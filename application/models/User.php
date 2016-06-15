@@ -43,9 +43,9 @@ class Application_Model_User extends App_Model_Abstract
 		return true;
 	}
 	
-	public function getPericolo()
+	public function getPericolo($edificio)
 	{
-		return $this->getResource('Avvisi')->getPericolo();
+		return $this->getResource('Avvisi')->getPericolo($edificio);
 	}
 	
 	//CATEGORIE

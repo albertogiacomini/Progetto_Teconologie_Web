@@ -54,8 +54,11 @@
 							   	var dim = json.size();
 							   	
 							   	var tb = document.getElementById('tabEvac');
+							   	var t = $("tr");
 							   	
-							   	
+							   	if (t.length != 1){
+							   		t.remove();
+							   	}
 							   	for(var i=0; i<dim; i++){
 							   		var tr = document.createElement('tr');
 							   		var tdMap = document.createElement('td');
@@ -69,7 +72,7 @@
 							   		zoneTot = zone['zona'];
 							   		for(var x=0; x<zone['zona']; x++){
 							   			var lbl = document.createElement('label');
-							   			lbl.innerHTML = "Zona"+x;
+							   			lbl.innerHTML = "Zona"+(x+1);
 							   			var ck = document.createElement('input');
 							   			ck.type = "radio";
 							   			ck.setAttribute("id", json[i]['idMapp']+x);
@@ -93,21 +96,62 @@
     {
     	var a = $("input:radio");
     	var rad = a.length;
-    	var idPlan;
     	
+    	var idPlan;
+    	var IdZona = {       
+             'id': 0,
+             'zona': 0              
+         };
+    	var dim = 0;
     	for(var m=0; m<zoneTot; m++){
-    	var radios = document.getElementsByName('zona'+m);
-
+			var radios = document.getElementsByName('zona'+m);
 			for (var i = 0, length = radios.length; i < length; i++) {
 			    if (radios[i].checked) {
-			        // do whatever you want with the checked radio
-			        alert(radios[i].id);
-			        alert(radios[i].length)
-					//idPlan[m] = radios[i].id;
-			        // only one radio can be logically checked, don't check the rest
+			    	//Substring
+			    	var str = radios[i].id;
+					str = str.substring(0, str.length - 1);
+				        IdZona[m] = {       
+							             'id': str,
+							             'zona': m+1              
+							         };
+					dim++;
 			    }
 			}
     	}
+    	if(dim<zoneTot){
+    		alert("Per continuare è necessario assegnare tutte le zone");
+    	}else{
+	    	var control = 0;
+	    	for(var g=0; g<dim; g++){
+	    		var cId = IdZona[g].id;
+	    		for(var c=0; c<dim; c++){
+	    			if(cId == IdZona[c].id){
+	    				control++;
+	    			}
+	    		}
+	    	}
+	    	
+	    	if(control<=dim){
+		    	var idZona = JSON.stringify(IdZona);
+		    	new Ajax.Request(
+			        "<?=$this->url(array('controller' => 'staff','action' => 'defzone'))?>",
+			            {	            	
+			                method:'POST',
+			                parameters: {idzona : idZona},
+			                dataType: "json",
+			                onSuccess: function MappEvac(mappeERsp){
+			                	var ur = "<?= $this->url(array('controller' => 'staff','action' => 'index'))?>";
+			                	location.href = ur;
+			                }
+			            });
+		   }else{
+		   		alert("Ad ogni mappa può essere assegnata una sola zona di competenza");
+		   }
+		   
+		   
+	   }
+	   
+	   
     }
     	
     	

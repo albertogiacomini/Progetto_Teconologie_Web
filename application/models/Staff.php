@@ -42,7 +42,7 @@ class Application_Model_Staff extends App_Model_Abstract
 	
 	public function getZonaByPiano($piano)
     {
-    	$zone = $this->getResource('MappaEvaquazione')->getZonaByPiano($piano);
+    	$zone = $this->getResource('Posizione')->getZonaByPiano($piano);
 		$i=1;
 		foreach ($zone as $k => $z) {
 			if($z>$i)
@@ -53,7 +53,16 @@ class Application_Model_Staff extends App_Model_Abstract
 	
 	public function updatePericoloByPosizioneStaff($posizioneStaff)
     {
-	return $this->getResource('Avvisi')->updatePericoloByPosizioneStaff($posizioneStaff);
+		return $this->getResource('Avvisi')->updatePericoloByPosizioneStaff($posizioneStaff);
+	}
+	
+	public function azzeraZoneByEdPiano($edificio, $piano)
+	{
+		$idMappEv = $this->getMappaEvaquazioneByEdifPiano($edificio, $piano);
+		foreach ($idMappEv as $k => $IMp) {
+			$this->updateZonaByIdMappaEv($IMp['idMappaEvaquazione'], '0');
+		}	
+		return true;
 	}
 	
 	public function insertEdificio($edificio)
@@ -77,7 +86,7 @@ class Application_Model_Staff extends App_Model_Abstract
 	
 	public function getPericolo($edificio)
 	{
-			return $this->getResource('Avvisi')->getPericolo($edificio);
+		return $this->getResource('Avvisi')->getPericolo($edificio);
 	}
 	
 	public function getMappaEvaquazioneByEdifPiano($edificio, $piano)
@@ -88,6 +97,11 @@ class Application_Model_Staff extends App_Model_Abstract
 	public function deleteAvviso($idAvviso)
 	{
 		return $this->getResource('Avvisi')->deleteAvviso($idAvviso);
+	}
+	
+	public function updateZonaByIdMappaEv($idMappaEv, $zona)
+	{
+		return $this->getResource('MappaEvaquazione')->updateZonaByIdMappaEv($idMappaEv, $zona);
 	}
 	
 	public function getPosizione()
@@ -145,11 +159,6 @@ class Application_Model_Staff extends App_Model_Abstract
 	{
 		return $this->getResource('Posizione')->getIdPosizioneByIdPlanimetria($idPlan);
 	}
-	
-	public function getUtenteByUName($username)
-    {
-        return $this->getResource('Utente')->getUtenteByUName($username);
-    }
 	
 	public function getPosizionestaffByUName($username)
 	{	

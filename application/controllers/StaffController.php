@@ -33,8 +33,8 @@ class StaffController extends Zend_Controller_Action
 		$this->view->asForm=$this->getAggiungisegnalazioneForm();
 		$this->view->epForm=$this->getEliminaprofiloForm();
 		$this->view->evaForm=$this->getEvaForm();
-		//$this->view->segnForm=$this->getSegnalazioniForm();
 		$this->view->gForm = $this->getGestioneForm();
+		
 		$session = new Zend_Session_Namespace('session'); 
 		$session->_username = $this->_authService->getIdentity()->username;
     }
@@ -240,6 +240,10 @@ class StaffController extends Zend_Controller_Action
         if ($this->getRequest()->isXmlHttpRequest()) {
         	//Prendo i due parametri passati con l'ajax
             $piano = $this->_getParam('pia');
+			
+			$session = new Zend_Session_Namespace('session'); 
+			$session->_piano = $piano;
+			
 			$un=$this->_authService->getIdentity()->username;
 			$user =$this->_staff->getUserByUName($un);
 			$_edificio=$user['posizioneStaff'];
@@ -259,6 +263,29 @@ class StaffController extends Zend_Controller_Action
 			echo $a;
 			
 		}	
+	}
+	
+	public function defzoneAction()
+	{
+		$this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		
+        if ($this->getRequest()->isXmlHttpRequest()) {
+        	$session = new Zend_Session_Namespace('session'); 
+			$piano = $session->_piano;
+			
+			$un=$this->_authService->getIdentity()->username;
+			$user =$this->_staff->getUserByUName($un);
+			$edificio=$user['posizioneStaff'];
+			
+        	$this->_staff->azzeraZoneByEdPiano($edificio, $piano);
+        	$idzona = $this->_getParam('idzona');
+			$IdZona = Zend_Json::decode($idzona);
+			
+			foreach ($IdZona as $k => $IZ) {
+				$this->_staff->updateZonaByIdMappaEv($IZ['id'], $IZ['zona']);
+			}		
+        }
 	}
 	
 	public function salvamodprofiloAction () 
@@ -386,7 +413,7 @@ class StaffController extends Zend_Controller_Action
 	}
 	  
 	protected function getGestioneForm()
-		{
+	{
 		$urlHelper = $this->_helper->getHelper('url');
         $this->_gform = new Application_Form_Staff_Gestione();
         $this->_gform->setAction($urlHelper->url(array(

@@ -107,7 +107,8 @@
 		}
 		
 		var myVar = window.setInterval("PericoloFunc()", 60000);	
-		var timer = null;			
+		var timer = null;	
+				
 		function PericoloFunc(){
 			new Ajax.Request(
 	        "<?=$this->url(array('controller' => 'user','action' => 'pericolo'))?>",
@@ -123,7 +124,6 @@
     								inviaS.setAttribute("style","display:none");
     								
     								document.getElementById('pericoloText').innerHTML = "Pericolo: "+pericolo.tipoAvviso;
-    								document.getElementById('aulaPText').innerHTML = "Aula: "+pericolo.aula;
     								document.getElementById('mappaPericolo').src = pericolo.immEvac;
     								
     								window.clearTimeout(timer);

@@ -10,13 +10,7 @@ class Application_Resource_MappaEvaquazione extends Zend_Db_Table_Abstract
     {
     }
     
-	public function getZonaByPiano($piano)
-    {
-    	$select = $this->select()->from(array('p' => 'mappaevaquazione'),
-                            	       array('p.zona'))			   
-        			  		    ->where('piano = ?', $piano);
-		return $this->getAdapter()->fetchAll($select);
-    }
+	
 	
      public function aggiungiMappaEvaquazione($mappaInfo)
     {
@@ -31,13 +25,6 @@ class Application_Resource_MappaEvaquazione extends Zend_Db_Table_Abstract
     public function getPosizioneById($PosMap)
     {
         return $this->fetchRow($this->select()->where('idPosizioneMap = ?', $PosMap));
-    }
-	
-	public function getMappaEvaquazioneByEdifPianoSel($edificio, $piano)
-    {
-        return $this->fetchRow($this->select()->where('edificio = ?', $edificio)
-											  ->where('piano = ?', $piano)
-											  ->where('selected = ?', '1'));
     }
 	
 	public function getMappaEvaquazioneByEdifPianoZona($edificio, $piano, $zona)
@@ -70,5 +57,20 @@ class Application_Resource_MappaEvaquazione extends Zend_Db_Table_Abstract
     {
         $dove="idMappaEvaquazione='". $ID ."'";
         $this->update($mapInfo,$dove);
+    }	
+	
+	public function updateZonaByIdMappaEv($idMappaEv, $zona)
+    {
+    	
+		$db = new Zend_Db_Adapter_Pdo_Mysql(array(
+												    'host'     => 'localhost',
+												    'username' => 'root',
+												    'password' => 'root',
+												    'dbname'   => 'grp_04_db'
+												));
+		$data      = array('zona' => $zona);
+		$where[] = $db->quoteInto('idMappaEvaquazione = ?', $idMappaEv); 
+		$db->update($this->_name, $data, $where); 
     }
+	
 }

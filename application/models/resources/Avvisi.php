@@ -61,7 +61,7 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
         return $this->fetchRow($select);
     }
     
-	public function getPericolo()
+	public function updatePericoloByPosizioneStaff($posizioneStaff)
     {
     	
 		$db = new Zend_Db_Adapter_Pdo_Mysql(array(
@@ -81,7 +81,7 @@ class Application_Resource_Avvisi extends Zend_Db_Table_Abstract
         return $this->fetchRow($this->select()->where('pericolo= 1')
 											  ->where('posizioneStaff= ?',$edificio));
     }
-    
+	
     public function getIdPosizioneByIdElencoAvviso($IdElencoAvviso)
     {
         $select = $this->select()->from(array('a' => 'avvisi'),
