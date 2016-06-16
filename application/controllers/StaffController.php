@@ -33,10 +33,11 @@ class StaffController extends Zend_Controller_Action
 		$this->view->asForm=$this->getAggiungisegnalazioneForm();
 		$this->view->epForm=$this->getEliminaprofiloForm();
 		$this->view->evaForm=$this->getEvaForm();
-		$this->view->gForm = $this->getGestioneForm();
 		
 		$session = new Zend_Session_Namespace('session'); 
 		$session->_username = $this->_authService->getIdentity()->username;
+		
+		$this->view->gForm = $this->getGestioneForm();	
     }
 	
     public function indexAction()

@@ -72,13 +72,14 @@
 							   		zoneTot = zone['zona'];
 							   		for(var x=0; x<zone['zona']; x++){
 							   			var lbl = document.createElement('label');
-							   			lbl.innerHTML = "Zona"+(x+1);
+							   			lbl.innerHTML = "Zona "+(x+1);
 							   			var ck = document.createElement('input');
 							   			ck.type = "radio";
 							   			ck.setAttribute("id", json[i]['idMapp']+x);
 							   			ck.setAttribute("name", "zona"+x);
 							   			tdCk.appendChild(lbl);
 							   			tdCk.appendChild(ck);
+							   			tdCk.appendChild(document.createElement('br'));
 							   			
 							   		} 
 							   		tr.appendChild(tdMap);

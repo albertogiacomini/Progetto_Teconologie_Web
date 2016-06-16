@@ -7,14 +7,16 @@ class Application_Form_Staff_Gestione extends App_Form_Abstract
     public function init()
     {
     	$this->_stf=new Application_Model_Staff();
-		$session = new Zend_Session_Namespace('session');
+		
 		
         $this->setMethod('post');
         $this->setName('getGestione');
         $this->setAction('');
 		
+		$session = new Zend_Session_Namespace('session');
         $un = $session->_username;
 		$idPos = $this->_stf->getUserByUName($un);
+		
 		$piani = $this->_stf->getPianoByEdificio($idPos['posizioneStaff']);
         $this->addElement('select', 'piano', array(
             'required'   => true,
